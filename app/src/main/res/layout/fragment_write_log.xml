@@ -20,7 +20,6 @@
         tools:listitem="@layout/category_view"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
-
         />
 
     <com.google.android.material.textfield.TextInputLayout
