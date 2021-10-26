@@ -21,5 +21,18 @@
         android:id="@+id/navigation_statistics"
         android:name="com.example.openlog.ui.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
-        tools:layout="@layout/fragment_statistics" />
+        tools:layout="@layout/fragment_statistics" >
+        <action
+            android:id="@+id/action_navigation_statistics_to_editLogFragment"
+            app:destination="@id/editLogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editLogFragment"
+        android:name="com.example.openlog.EditLogFragment"
+        android:label="fragment_edit_log"
+        tools:layout="@layout/fragment_edit_log" >
+        <action
+            android:id="@+id/action_editLogFragment_to_navigation_statistics"
+            app:destination="@id/navigation_statistics" />
+    </fragment>
 </navigation>
