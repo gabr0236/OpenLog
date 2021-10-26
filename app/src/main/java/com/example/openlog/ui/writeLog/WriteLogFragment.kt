@@ -15,7 +15,6 @@ import com.example.openlog.databinding.FragmentWriteLogBinding
 
 class WriteLogFragment : Fragment() {
 
-    private lateinit var writeLogViewModel: WriteLogViewModel
     private var _binding: FragmentWriteLogBinding? = null
 
     // This property is only valid between onCreateView and
@@ -29,8 +28,6 @@ class WriteLogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        writeLogViewModel =
-            ViewModelProvider(this).get(WriteLogViewModel::class.java)
 
         _binding = FragmentWriteLogBinding.inflate(inflater, container, false)
         val root: View = binding.root

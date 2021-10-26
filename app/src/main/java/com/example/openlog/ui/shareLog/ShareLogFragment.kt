@@ -12,7 +12,6 @@ import com.example.openlog.databinding.FragmentShareLogBinding
 
 class ShareLogFragment : Fragment() {
 
-    private lateinit var shareLogViewModel: ShareLogViewModel
     private var _binding: FragmentShareLogBinding? = null
 
     // This property is only valid between onCreateView and
@@ -24,16 +23,9 @@ class ShareLogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shareLogViewModel =
-            ViewModelProvider(this).get(ShareLogViewModel::class.java)
 
         _binding = FragmentShareLogBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textShareLog
-        shareLogViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 

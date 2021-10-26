@@ -14,7 +14,6 @@ import com.example.openlog.databinding.FragmentStatisticsBinding
 
 class StatisticsFragment : Fragment() {
 
-    private lateinit var statisticsViewModel: StatisticsViewModel
     private var _binding: FragmentStatisticsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -28,9 +27,6 @@ class StatisticsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        statisticsViewModel =
-            ViewModelProvider(this).get(StatisticsViewModel::class.java)
-
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
