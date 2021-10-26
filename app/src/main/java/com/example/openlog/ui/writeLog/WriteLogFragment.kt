@@ -29,11 +29,6 @@ class WriteLogFragment : Fragment() {
 
         _binding = FragmentWriteLogBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textWriteLog
-        writeLogViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 
