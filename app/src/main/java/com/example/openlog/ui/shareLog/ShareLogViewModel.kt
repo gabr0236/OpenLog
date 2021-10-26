@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class ShareLogViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is a share log Fragment"
+        value = "This should probably be a popup, not a fragment"
     }
     val text: LiveData<String> = _text
 }
