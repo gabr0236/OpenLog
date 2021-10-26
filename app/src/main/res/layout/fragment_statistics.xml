@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".ui.statistics.StatisticsFragment">
 
     <!--TODO: commenteret ud så man lige kan se lidt mere af skærmen
@@ -116,8 +116,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logs"
         tools:itemCount="3"
-        tools:listitem="@layout/previous_log_view"/>
+        tools:listitem="@layout/previous_log_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

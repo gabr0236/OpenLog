@@ -12,7 +12,7 @@
         <entry key="app/src/main/res/layout/category_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_share_log.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.3002680965147453" />
+        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_write_log.xml" value="0.335" />
         <entry key="app/src/main/res/layout/log_view.xml" value="0.4" />
         <entry key="app/src/main/res/layout/previous_log_view.xml" value="0.20364583333333333" />

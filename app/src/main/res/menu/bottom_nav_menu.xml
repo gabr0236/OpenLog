@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_share_log"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@android:drawable/ic_menu_share"
         android:title="@string/title_share_log" />
 
     <item
         android:id="@+id/navigation_write_log"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/title_write_log" />
 
     <item
         android:id="@+id/navigation_statistics"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="?android:attr/actionModeFindDrawable"
         android:title="@string/title_statistics" />
 
 </menu>
