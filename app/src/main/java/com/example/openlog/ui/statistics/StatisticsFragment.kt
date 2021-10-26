@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.adapter.CategoryAdapter
+import com.example.openlog.adapter.PreviousLogAdapter
 import com.example.openlog.databinding.FragmentStatisticsBinding
 
 class StatisticsFragment : Fragment() {
@@ -21,7 +20,8 @@ class StatisticsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewCategories: RecyclerView
+    private lateinit var recyclerViewPreviousLogs: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +34,13 @@ class StatisticsFragment : Fragment() {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        recyclerView = binding.categories
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerView.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
+        recyclerViewCategories = binding.categories
+        recyclerViewCategories.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recyclerViewCategories.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
+
+        recyclerViewPreviousLogs = binding.previousLogs
+        recyclerViewPreviousLogs.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerViewPreviousLogs.adapter = PreviousLogAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
         return root
     }
 
