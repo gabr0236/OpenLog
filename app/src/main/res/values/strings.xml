@@ -3,4 +3,6 @@
     <string name="title_share_log">Del Log</string>
     <string name="title_write_log">Indtast Log</string>
     <string name="title_statistics">Statistikker</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
