@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.statistics.StatisticsFragment">
 
-   <!-- <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">-->
-
     <TextView
         android:id="@+id/today"
         android:layout_width="wrap_content"
@@ -20,10 +13,10 @@
         android:layout_marginTop="16dp"
         android:text="Today"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:text="Today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Today" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -43,13 +36,13 @@
         android:id="@+id/statisticsCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        android:layout_margin="16dp"
-        app:cardUseCompatPadding="true"
-        android:padding="16dp"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -60,8 +53,8 @@
                 android:layout_height="161dp"
 
                 android:background="@color/grey"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -75,7 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logGraph"
-                tools:text="Gennemsnit: 2216 Kcal"/>
+                tools:text="Gennemsnit: 2216 Kcal" />
 
             <TextView
                 android:id="@+id/standardDeviation"
@@ -108,13 +101,25 @@
         android:id="@+id/logs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp"
-        android:text="Logger"
+        android:layout_marginTop="16dp"
+        android:text="Tidligere logge"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        tools:text="Logger" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/previousLogs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logs"
+        tools:itemCount="3"
+        tools:listitem="@layout/previous_log_view"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
