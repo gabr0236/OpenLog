@@ -1,0 +1,39 @@
+package com.example.openlog.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.R
+import com.google.android.material.card.MaterialCardView
+
+class CategoryAdapter(private val dataSet: Array<String>) :
+    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
+    /**
+     * Provide a reference to the type of views that you are using
+     * (custom ViewHolder).
+     */
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val cardView: MaterialCardView = view.findViewById(R.id.category_cardView)
+        val categoryTextview: TextView = view.findViewById(R.id.category_textview)
+        val runningLogCountTextview: TextView = view.findViewById(R.id.running_log_count_textview)
+    }
+
+    // Create new views (invoked by the layout manager)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+        // Create a new view, which defines the UI of the list item
+        val view = LayoutInflater.from(viewGroup.context)
+            .inflate(R.layout.category_view, viewGroup, false)
+        return ViewHolder(view)
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    override fun getItemCount() = dataSet.size
+
+}

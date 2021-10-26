@@ -8,6 +8,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.adapter.CategoryAdapter
 import com.example.openlog.databinding.FragmentWriteLogBinding
 
 class WriteLogFragment : Fragment() {
@@ -18,6 +21,8 @@ class WriteLogFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +34,10 @@ class WriteLogFragment : Fragment() {
 
         _binding = FragmentWriteLogBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        recyclerView = binding.categories
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recyclerView.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
         return root
     }
 
