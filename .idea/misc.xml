@@ -11,8 +11,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/category_view.xml" value="0.625" />
         <entry key="app/src/main/res/layout/fragment_share_log.xml" value="0.1328125" />
-        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_write_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_write_log.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
