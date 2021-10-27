@@ -11,11 +11,6 @@ import com.google.android.material.button.MaterialButton
 class PreviousLogAdapter(private val dataSet: Array<String>) :
         RecyclerView.Adapter<PreviousLogAdapter.ViewHolder>() {
 
-
-        /**
-         * Provide a reference to the type of views that you are using
-         * (custom ViewHolder).
-         */
         class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val editButton: MaterialButton = itemView.findViewById(R.id.edit_previous_log_button)
         }

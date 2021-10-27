@@ -3,10 +3,8 @@ package com.example.openlog.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
-import com.google.android.material.card.MaterialCardView
 
 class CategoryAdapter(private val dataSet: Array<String>) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
