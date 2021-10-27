@@ -34,6 +34,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="0dp"
                 android:text="*Kalorier*"
+                android:textStyle="bold"
+
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,8 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="*XX Kcal*"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/category_textview"
