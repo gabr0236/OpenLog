@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.SharedViewModel
 import com.example.openlog.adapter.CategoryAdapter
 import com.example.openlog.adapter.PreviousLogAdapter
 import com.example.openlog.databinding.FragmentStatisticsBinding
@@ -21,6 +23,7 @@ class StatisticsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategories: RecyclerView
     private lateinit var recyclerViewPreviousLogs: RecyclerView
+    private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +43,11 @@ class StatisticsFragment : Fragment() {
 
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel
     }
 
     override fun onDestroyView() {

@@ -1,4 +1,7 @@
 package com.example.openlog
 
-class SharedViewModel {
+import androidx.lifecycle.ViewModel
+
+class SharedViewModel : ViewModel() {
+
 }
