@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.adapter.CategoryAdapter
-import com.example.openlog.databinding.FragmentWriteLogBinding
+import com.example.openlog.databinding.FragmentEditLogBinding
 
 class EditLogFragment : Fragment() {
-    private var _binding: FragmentWriteLogBinding? = null
+    private var _binding: FragmentEditLogBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,7 +23,7 @@ class EditLogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentWriteLogBinding.inflate(inflater, container, false)
+        _binding = FragmentEditLogBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         recyclerView = binding.categories

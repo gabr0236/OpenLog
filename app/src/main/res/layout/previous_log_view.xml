@@ -7,8 +7,8 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/category_cardView"
-        android:layout_width="match_parent"
+        android:id="@+id/previous_cardView"
+        android:layout_width="fill_parent"
         android:layout_height="100dp"
         app:cardUseCompatPadding="true"
         tools:ignore="MissingConstraints">
@@ -68,6 +68,5 @@
                 app:layout_constraintStart_toEndOf="@+id/category_textview"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>

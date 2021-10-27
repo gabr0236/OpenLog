@@ -24,10 +24,10 @@
         tools:layout="@layout/fragment_statistics" >
         <action
             android:id="@+id/action_navigation_statistics_to_editLogFragment"
-            app:destination="@id/editLogFragment" />
+            app:destination="@id/navigation_edit_log" />
     </fragment>
     <fragment
-        android:id="@+id/editLogFragment"
+        android:id="@+id/navigation_edit_log"
         android:name="com.example.openlog.EditLogFragment"
         android:label="fragment_edit_log"
         tools:layout="@layout/fragment_edit_log" >
