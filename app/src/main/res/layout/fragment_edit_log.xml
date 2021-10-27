@@ -72,6 +72,7 @@
         android:layout_marginTop="16dp"
         android:textAlignment="center"
         android:gravity="center"
+        app:icon="@drawable/ic_baseline_edit_24"
         android:text="@string/rediger_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
