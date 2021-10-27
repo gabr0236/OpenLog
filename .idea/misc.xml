@@ -17,7 +17,7 @@
         <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_write_log.xml" value="0.25" />
         <entry key="app/src/main/res/layout/log_view.xml" value="0.4" />
-        <entry key="app/src/main/res/layout/previous_log_view.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/previous_log_view.xml" value="0.335" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.15648148148148147" />
       </map>

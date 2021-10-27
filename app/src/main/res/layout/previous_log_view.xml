@@ -55,7 +55,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/category_textview"
                 tools:text="312 Kcal" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/edit_previous_log_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="EDIT"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/category_textview"
