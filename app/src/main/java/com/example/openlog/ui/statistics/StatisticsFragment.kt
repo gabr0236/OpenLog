@@ -41,7 +41,6 @@ class StatisticsFragment : Fragment() {
         recyclerViewPreviousLogs.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recyclerViewPreviousLogs.adapter = PreviousLogAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
 
-
         return root
     }
 

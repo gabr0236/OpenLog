@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.adapter.CategoryAdapter
 import com.example.openlog.databinding.FragmentEditLogBinding
 
+
 class EditLogFragment : Fragment() {
     private var _binding: FragmentEditLogBinding? = null
 
@@ -21,14 +22,12 @@ class EditLogFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentEditLogBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
         recyclerView = binding.categories
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recyclerView.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
-        return root
+        return binding.root
     }
 }

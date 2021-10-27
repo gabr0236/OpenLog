@@ -16,9 +16,6 @@ class CategoryAdapter(private val dataSet: Array<String>) :
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView: MaterialCardView = view.findViewById(R.id.category_cardView)
-        val categoryTextview: TextView = view.findViewById(R.id.category_textview)
-        val runningLogCountTextview: TextView = view.findViewById(R.id.running_log_count_textview)
     }
 
     // Create new views (invoked by the layout manager)

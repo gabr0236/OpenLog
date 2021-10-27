@@ -9,7 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.22291666666666668" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/category_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_share_log.xml" value="0.1" />
