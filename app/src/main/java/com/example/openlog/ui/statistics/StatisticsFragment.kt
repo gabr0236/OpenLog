@@ -37,6 +37,8 @@ class StatisticsFragment : Fragment() {
         recyclerViewPreviousLogs = binding.previousLogs
         recyclerViewPreviousLogs.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recyclerViewPreviousLogs.adapter = PreviousLogAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
+
+
         return root
     }
 
@@ -44,4 +46,6 @@ class StatisticsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

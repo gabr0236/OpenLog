@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.google.android.material.card.MaterialCardView
@@ -16,7 +17,6 @@ class PreviousLogAdapter(private val dataSet: Array<String>) :
          * (custom ViewHolder).
          */
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            //TODO: add members
         }
 
         // Create new views (invoked by the layout manager)
@@ -24,6 +24,7 @@ class PreviousLogAdapter(private val dataSet: Array<String>) :
             // Create a new view, which defines the UI of the list item
             val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.previous_log_view, viewGroup, false)
+
             return ViewHolder(view)
         }
 
@@ -31,6 +32,10 @@ class PreviousLogAdapter(private val dataSet: Array<String>) :
         override fun getItemCount() = dataSet.size
 
         override fun onBindViewHolder(viewHolder: PreviousLogAdapter.ViewHolder, position: Int) {
+            //TODO : midlertidig løsning
+            viewHolder.itemView.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_navigation_statistics_to_editLogFragment)
+            )
         }
 
     }
