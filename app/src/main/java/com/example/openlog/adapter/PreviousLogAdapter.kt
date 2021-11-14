@@ -32,5 +32,4 @@ class PreviousLogAdapter(private val dataSet: Array<String>) :
                 Navigation.createNavigateOnClickListener(R.id.action_navigation_statistics_to_editLogFragment)
             )
         }
-
     }

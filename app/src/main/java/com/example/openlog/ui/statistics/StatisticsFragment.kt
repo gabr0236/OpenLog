@@ -33,7 +33,7 @@ class StatisticsFragment : Fragment() {
 
         recyclerViewCategories = binding.categories
         recyclerViewCategories.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerViewCategories.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
+        recyclerViewCategories.adapter = CategoryAdapter(SharedViewModel.categories)
 
         recyclerViewPreviousLogs = binding.previousLogs
         recyclerViewPreviousLogs.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.SharedViewModel
 import com.example.openlog.adapter.CategoryAdapter
 import com.example.openlog.databinding.FragmentWriteLogBinding
 
 class WriteLogFragment : Fragment() {
 
     private var _binding: FragmentWriteLogBinding? = null
+
+    private val viewModel: SharedViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,7 +34,7 @@ class WriteLogFragment : Fragment() {
 
         recyclerView = binding.categories
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerView.adapter = CategoryAdapter(arrayOf("TEST1","TEST2","TEST3","TEST4","TEST5"))
+        recyclerView.adapter = CategoryAdapter(SharedViewModel.categories)
         return binding.root
     }
 
