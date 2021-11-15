@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OpenLog</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="log_category_req">Choose a category to log</string>
+    <string name="log_value_req">Enter a value to log</string>
+    <string name="save_action">Create Log</string>
+</resources>

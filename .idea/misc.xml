@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_add_log.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_add_log_entry.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_category.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_item.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_item_list.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_log.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_log_list.xml" value="0.2" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/fragment_start.xml" value="0.1" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/list_category.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
