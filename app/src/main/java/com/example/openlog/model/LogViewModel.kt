@@ -4,13 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.openlog.constants.Category
-import com.example.openlog.data.Log
-import com.example.openlog.data.LogDao
+import com.example.openlog.data.dao.CategoryDao
+import com.example.openlog.data.entity.Log
+import com.example.openlog.data.dao.LogDao
+import com.example.openlog.data.entity.Category
+import com.example.openlog.data.entity.CategoryWithLogs
 import kotlinx.coroutines.launch
 import java.util.*
 
-class LogViewModel(private val logDao: LogDao) : ViewModel() {
+class LogViewModel(
+    private val categoryDao: CategoryDao,
+    private val logDao: LogDao
+) : ViewModel() {
+    val allCategoryWithLogs: LiveData<List<CategoryWithLogs>> = categoryDao.getCategoriesWithLogs().asLiveData()
+    val allCategories: LiveData<List<Category>> = categoryDao.getCategories().asLiveData()
     val allLogs: LiveData<List<Log>> = logDao.getLogs().asLiveData()
 
     private fun insertLog(log: Log) {
@@ -24,6 +31,7 @@ class LogViewModel(private val logDao: LogDao) : ViewModel() {
     ) : Log {
         return Log(
             value = value.toInt(),
+            categoryOwnerId = 1,
             date = getCurrentDateTime()
         )
     }

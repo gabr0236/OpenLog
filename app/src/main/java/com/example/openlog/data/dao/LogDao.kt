@@ -1,7 +1,7 @@
-package com.example.openlog.data
+package com.example.openlog.data.dao
 
 import androidx.room.*
-import com.example.openlog.constants.Category
+import com.example.openlog.data.entity.Log
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,9 +15,9 @@ interface LogDao {
     @Delete
     suspend fun delete(log: Log)
 
-    @Query("SELECT * from log WHERE id = :id")
+    @Query("SELECT * from log WHERE log_id = :id")
     fun getLog(id: Int): Flow<Log>
 
-    @Query("SELECT * from log ORDER BY date ASC")
+    @Query("SELECT * from log ORDER BY log_date ASC")
     fun getLogs(): Flow<List<Log>>
 }

@@ -1,6 +1,7 @@
 package com.example.openlog.ui.log
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +18,11 @@ import com.example.openlog.model.LogViewModelFactory
 
 class LogListFragment : Fragment() {
     private val viewModel: LogViewModel by activityViewModels {
+        val db = (activity?.application as LogApplication).database
+
         LogViewModelFactory(
-            (activity?.application as LogApplication).database.logDao()
+            db.categoryDao(),
+            db.logDao()
         )
     }
 

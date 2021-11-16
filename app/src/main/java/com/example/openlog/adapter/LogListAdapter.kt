@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.constants.Category
-import com.example.openlog.data.Log
-import com.example.openlog.data.getFormattedDate
+import com.example.openlog.data.entity.Log
+import com.example.openlog.data.entity.getFormattedDate
 import com.example.openlog.databinding.FragmentLogBinding
 
 class LogListAdapter(

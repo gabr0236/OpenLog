@@ -1,11 +1,10 @@
-package com.example.openlog.data
+package com.example.openlog.data.converter
 
 import androidx.room.TypeConverter
-import com.example.openlog.constants.Category
 import java.util.*
 
 // https://developer.android.com/training/data-storage/room/referencing-data
-class LogConverters {
+class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }

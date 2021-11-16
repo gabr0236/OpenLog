@@ -7,19 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.switchMap
 import androidx.navigation.fragment.findNavController
 import com.example.openlog.LogApplication
-import com.example.openlog.data.Log
+import com.example.openlog.R
+import com.example.openlog.data.entity.Log
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.model.LogViewModel
 import com.example.openlog.model.LogViewModelFactory
 
 class AddLogFragment : Fragment() {
     private val viewModel: LogViewModel by activityViewModels {
+        val db = (activity?.application as LogApplication).database
+
         LogViewModelFactory(
-            (activity?.application as LogApplication).database
-                .logDao()
+            db.categoryDao(),
+            db.logDao()
         )
     }
 
@@ -42,9 +48,10 @@ class AddLogFragment : Fragment() {
         binding.saveAction.setOnClickListener {
             addNewLogEntry()
         }
+        // TODO: Use categories from db
         // https://material.io/components/menus/android#exposed-dropdown-menus
-        // val adapter = ArrayAdapter(requireContext(), R.layout.fragment_category, categories)
-        // (binding.logCategory.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        val adapter = ArrayAdapter(requireContext(), R.layout.fragment_category, listOf("Item 1", "Item 2", "...", "Item N"))
+        (binding.logCategory.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     override fun onDestroyView() {
@@ -57,7 +64,7 @@ class AddLogFragment : Fragment() {
     }
 
     private fun addNewLogEntry() {
-        if (isEntryValid()) {
+        if (isLogEntryValid()) {
             viewModel.addNewLogEntry(
                 binding.logValue.text.toString()
             )
@@ -68,7 +75,7 @@ class AddLogFragment : Fragment() {
         }
     }
 
-    private fun isEntryValid(): Boolean {
+    private fun isLogEntryValid(): Boolean {
         return viewModel.isLogEntryValid(
             binding.logValue.text.toString()
         )

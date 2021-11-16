@@ -51,35 +51,34 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/log_category_label"
+        android:id="@+id/log_category"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin"
-        android:hint="@string/log_value_req"
+        android:hint="@string/log_category_req"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/log_value_label">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/log_category"
+        <AutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textAutoComplete|textCapWords"
-            android:singleLine="true" />
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            />
+
     </com.google.android.material.textfield.TextInputLayout>
-    -->
 
     <Button
         android:id="@+id/save_action"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/margin"
         android:text="@string/save_action"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/log_value_label" />
+        app:layout_constraintTop_toBottomOf="@+id/log_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
