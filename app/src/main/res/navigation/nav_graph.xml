@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/add_log_item_fragment">
+
+    <fragment
+        android:id="@+id/add_log_item_fragment"
+        android:name="com.example.openlog.ui.AddLogItemFragment"
+        android:label="{title}"
+        tools:layout="@layout/add_log_item_layout" >
+        <!-- TODO: Fix title error!!! -->
+        <argument
+            android:name="title"
+            android:defaultValue="OpenLog"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_add_log_item_fragment_to_log_category_list_fragment"
+            app:destination="@id/log_category_list_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_item_list_fragment"
+        android:name="com.example.openlog.ui.LogItemListFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/log_item_list_layout" >
+        <action
+            android:id="@+id/action_log_item_list_fragment_to_log_item_detail_fragment"
+            app:destination="@id/log_item_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_item_detail_fragment"
+        android:name="com.example.openlog.ui.LogItemDetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/log_item_detail_layout" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_log_item_detail_fragment_to_log_item_list_fragment"
+            app:destination="@id/log_item_list_fragment" />
+        <action
+            android:id="@+id/action_log_item_detail_fragment_to_add_log_item_fragment"
+            app:destination="@id/add_log_item_fragment" />
+        <action
+            android:id="@+id/action_log_item_detail_fragment_to_log_category_detail_fragment"
+            app:destination="@id/log_category_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/share_log_item_fragment"
+        android:name="com.example.openlog.ui.ShareLogItemFragment"
+        android:label="Share"
+        tools:layout="@layout/share_log_item_layout" >
+        <action
+            android:id="@+id/action_share_log_item_fragment_to_add_log_item_fragment"
+            app:destination="@id/add_log_item_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_category_detail_fragment"
+        android:name="com.example.openlog.ui.LogCategoryDetailFragment"
+        android:label="log_category_detail_layout"
+        tools:layout="@layout/log_category_detail_layout">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_log_category_detail_fragment_to_log_category_list_fragment"
+            app:destination="@id/log_category_list_fragment" />
+        <action
+            android:id="@+id/action_log_category_detail_fragment_to_log_item_detail_fragment"
+            app:destination="@id/log_item_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/log_category_list_fragment"
+        android:name="com.example.openlog.ui.LogCategoryListFragment"
+        android:label="log_category_list_layout"
+        tools:layout="@layout/log_category_list_layout" >
+        <action
+            android:id="@+id/action_log_category_list_fragment_to_add_log_item_fragment"
+            app:destination="@id/add_log_item_fragment" />
+        <action
+            android:id="@+id/action_log_category_list_fragment_to_log_category_detail_fragment"
+            app:destination="@id/log_category_detail_fragment" />
+        <action
+            android:id="@+id/action_log_category_list_fragment_to_log_item_list_fragment"
+            app:destination="@id/log_item_list_fragment" />
+    </fragment>
+
+</navigation>

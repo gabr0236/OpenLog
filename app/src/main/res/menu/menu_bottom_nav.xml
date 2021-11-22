@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/log_category_list_fragment"
+        android:icon="@drawable/ic_log_item_list"
+        android:title="List" />
+
+    <!--
+    <item
+        android:id="@+id/log_item_list_fragment"
+        android:icon="@drawable/ic_log_item_list"
+        android:title="List" />
+    -->
+
+    <item
+        android:id="@+id/add_log_item_fragment"
+        android:icon="@drawable/ic_log_item_create"
+        android:title="Add" />
+
+    <item
+        android:id="@+id/share_log_item_fragment"
+        android:icon="@drawable/ic_log_item_share"
+        android:title="Share" />
+
+</menu>
