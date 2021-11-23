@@ -1,7 +1,9 @@
 package com.example.openlog.ui
 
+import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.LogCategory
 import com.example.openlog.LogItemApplication
+import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
@@ -31,9 +37,7 @@ class AddLogItemFragment : Fragment() {
 
     lateinit var logItem: LogItem
 
-    lateinit var adapter: ArrayAdapter<String>
-
-    private val navigationArgs: LogItemDetailFragmentArgs by navArgs()
+    private val navigationArgs:  AddLogItemFragmentArgs by navArgs()
 
     private var _binding: AddLogItemLayoutBinding? = null
     private val binding get() = _binding!!
@@ -49,12 +53,32 @@ class AddLogItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = LogCategoryListAdapter {
+            onCategoryClicked(it)
+        }
+
+        binding.recyclerView.adapter = adapter
+
+        sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
+            }
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(
+            this.context,
+            RecyclerView.HORIZONTAL,
+            false
+        )
+
+        /*
         sharedViewModel.allLogCategoryNames.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it)
                 binding.logCategorySpinner.adapter = adapter
             }
         }
+         */
 
         val id = navigationArgs.id
         if (id > 0) {
@@ -65,6 +89,10 @@ class AddLogItemFragment : Fragment() {
         } else {
             binding.saveAction.setOnClickListener {
                 addNewLogItem()
+            }
+
+            sharedViewModel.allLogCategories.value?.first()?.let {
+                sharedViewModel.setCategory(it)
             }
         }
     }
@@ -82,7 +110,7 @@ class AddLogItemFragment : Fragment() {
     private fun addNewLogItem() {
         if (isLogItemValid()) {
             sharedViewModel.addNewLogItem(
-                binding.logCategorySpinner.selectedItem.toString(),
+                // binding.logCategorySpinner.selectedItem.toString(),
                 binding.logValue.text.toString()
             )
             val text = "Log Item added"
@@ -97,9 +125,8 @@ class AddLogItemFragment : Fragment() {
         if (isLogItemValid()) {
             sharedViewModel.updateLogItem(
                 this.navigationArgs.id,
-                this.binding.logCategorySpinner.selectedItem.toString(),
+                // this.binding.logCategorySpinner.selectedItem.toString(),
                 this.binding.logValue.text.toString(),
-                // TODO: Edit date
                 logItem.date
             )
             val action = AddLogItemFragmentDirections.actionAddLogItemFragmentToLogCategoryListFragment()
@@ -109,7 +136,7 @@ class AddLogItemFragment : Fragment() {
 
     private fun isLogItemValid(): Boolean {
         return sharedViewModel.isLogItemValid(
-            binding.logCategorySpinner.selectedItem.toString(),
+            // binding.logCategorySpinner.selectedItem.toString(),
             binding.logValue.text.toString()
         )
     }
@@ -118,9 +145,17 @@ class AddLogItemFragment : Fragment() {
         binding.apply {
             logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
             saveAction.setOnClickListener { updateLogItem() }
+            // TODO: Set selected category
 
-            val position = adapter.getPosition(logItem.categoryOwnerName)
-            logCategorySpinner.setSelection(position)
+            // val position = adapter.getPosition(logItem.categoryOwnerName)
+            // logCategorySpinner.setSelection(position)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onCategoryClicked(logCategory: LogCategory) {
+        if (sharedViewModel.setCategory(logCategory)) {
+            binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.openlog.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.LogCategory
 import com.example.openlog.LogItemApplication
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.adapter.LogItemListAdapter
@@ -39,23 +42,60 @@ class LogCategoryListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = LogCategoryListAdapter {
-            val action = LogCategoryListFragmentDirections.actionLogCategoryListFragmentToLogCategoryDetailFragment(it.name)
-            this.findNavController().navigate(action)
+        sharedViewModel.allLogCategories.value?.first()?.let {
+            sharedViewModel.setCategory(it)
         }
-        binding.recyclerView.adapter = adapter
+
+        val logCategoryAdapter = LogCategoryListAdapter {
+            onCategoryClicked(it)
+        }
+        binding.logCategoryRecyclerView.adapter = logCategoryAdapter
 
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                adapter.submitList(it)
+                logCategoryAdapter.submitList(it)
             }
         }
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.logCategoryRecyclerView.layoutManager = LinearLayoutManager(
+            this.context,
+            RecyclerView.HORIZONTAL,
+            false
+        )
 
-        binding.listAction.setOnClickListener {
-            val action = LogCategoryListFragmentDirections.actionLogCategoryListFragmentToLogItemListFragment()
+        val logItemAdapter = LogItemListAdapter {
+            val action = LogCategoryListFragmentDirections.actionLogCategoryListFragmentToAddLogItemFragment("Edit", it.id)
             findNavController().navigate(action)
+        }
+        binding.logItemRecyclerView.adapter = logItemAdapter
+
+        sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
+            items.logItems.let {
+                logItemAdapter.submitList(it)
+            }
+        }
+
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                logItemAdapter.submitList(it)
+            }
+        }
+
+        binding.logItemRecyclerView.layoutManager = LinearLayoutManager(this.context)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onCategoryClicked(logCategory: LogCategory) {
+        if (sharedViewModel.setCategory(logCategory)) {
+            binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
+
+            binding.logItemRecyclerView.adapter?.notifyDataSetChanged()
+
+            sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
+                items.logItems.let {
+                    (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
+                }
+            }
         }
     }
 }

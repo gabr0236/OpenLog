@@ -2,9 +2,11 @@ package com.example.openlog.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.getFormattedDate
 import com.example.openlog.databinding.LogItemLayoutBinding
@@ -22,7 +24,8 @@ class LogItemListAdapter(
                 LayoutInflater.from(
                     parent.context
                 )
-            )
+            ),
+            onLogItemClicked
         )
     }
 
@@ -34,13 +37,17 @@ class LogItemListAdapter(
         holder.bind(current)
     }
 
-    class ItemViewHolder(private var binding: LogItemLayoutBinding) :
+    class ItemViewHolder(private var binding: LogItemLayoutBinding,
+                         private val onLogItemClicked: (LogItem) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun  bind(logItem: LogItem) {
             binding.apply {
                 logItemValue.text = logItem.value.toString()
                 logItemDate.text = logItem.getFormattedDate()
+                editAction.setOnClickListener {
+                    onLogItemClicked(logItem)
+                }
             }
         }
     }

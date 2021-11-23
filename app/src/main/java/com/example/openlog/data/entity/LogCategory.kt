@@ -2,6 +2,7 @@ package com.example.openlog
 
 import androidx.room.*
 import com.example.openlog.data.entity.LogItem
+import java.text.DateFormat
 
 @Entity(tableName = "log_category")
 data class LogCategory(
@@ -10,7 +11,10 @@ data class LogCategory(
     val name: String,
     @ColumnInfo(name = "log_category_unit")
     val unit: String
-)
+) {
+    @Ignore
+    var isSelected = false
+}
 
 @Entity(tableName = "log_category_with_log_items")
 data class LogCategoryWithLogItems(

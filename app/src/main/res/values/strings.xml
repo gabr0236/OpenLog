@@ -5,4 +5,10 @@
     <string name="delete_question">Are you sure you want to delete this? You cannot undo it.</string>
     <string name="yes">Delete</string>
     <string name="no">Cancel</string>
+
+    <string name="rediger_log">Rediger log</string>
+    <string name="slet_log">Slet log</string>
+    <string name="tidligere_logge">Tidligere logge</string>
+    <string name="gennemsnit">Gennemsnit: %s</string>
+    <string name="standardafvigelse">Standardafvigelse: %s</string>
 </resources>

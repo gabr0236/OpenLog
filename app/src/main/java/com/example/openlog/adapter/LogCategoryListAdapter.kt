@@ -24,24 +24,33 @@ class LogCategoryListAdapter(
                 LayoutInflater.from(
                     parent.context
                 )
-            )
+            ),
+            onLogItemClicked
         )
     }
 
     override fun onBindViewHolder(holder: LogCategoryListAdapter.ItemViewHolder, position: Int) {
         val current = getItem(position)
+        /*
         holder.itemView.setOnClickListener {
             onLogItemClicked(current)
         }
+        */
         holder.bind(current)
     }
 
-    class ItemViewHolder(private var binding: LogCategoryLayoutBinding) :
+    class ItemViewHolder(private var binding: LogCategoryLayoutBinding,
+                         private val onLogItemClicked: (LogCategory) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun  bind(logCategory: LogCategory) {
+        fun bind(logCategory: LogCategory) {
             binding.apply {
                 logCategoryName.text = logCategory.name
+                logCategoryUnit.text = logCategory.unit
+                logCategoryContainer.setOnClickListener {
+                    onLogItemClicked(logCategory)
+                }
+                logCategoryContainer.isChecked = logCategory.isSelected
             }
         }
     }

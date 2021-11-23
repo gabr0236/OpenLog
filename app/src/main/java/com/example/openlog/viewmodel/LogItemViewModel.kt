@@ -1,10 +1,7 @@
 package com.example.openlog.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.openlog.LogCategory
 import com.example.openlog.LogCategoryWithLogItems
 import com.example.openlog.data.dao.LogCategoryDao
@@ -28,6 +25,18 @@ class LogItemViewModel(
     val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
     val allFullLogItems: LiveData<List<LogItemAndLogCategory>> = logItemDao.getFullLogItems().asLiveData()
 
+    private val _selectedCategory = MutableLiveData<LogCategory>()
+    val selectedCategory: LiveData<LogCategory> = _selectedCategory
+
+    fun setCategory(logCategory: LogCategory): Boolean {
+        return if (selectedCategory.value!=logCategory) {
+            _selectedCategory.value?.isSelected = false
+            _selectedCategory.value = logCategory
+            logCategory.isSelected = true
+            true
+        } else false
+    }
+
     private fun insertLogItem(logItem: LogItem) {
         viewModelScope.launch {
             logItemDao.insert(logItem)
@@ -42,11 +51,16 @@ class LogItemViewModel(
 
     fun updateLogItem(
         id: Int,
-        category: String,
+        // category: String,
         value: String,
         date: Date?
     ) {
-        val updatedLogItem = getUpdatedLogItem(id, category, value, date)
+        val updatedLogItem = getUpdatedLogItem(
+            id,
+            selectedCategory.value?.name.toString(),
+            value,
+            date
+        )
         updateLogItem(updatedLogItem)
     }
 
@@ -86,18 +100,21 @@ class LogItemViewModel(
     }
 
     fun addNewLogItem(
-        category: String,
+        // category: String,
         value: String
     ) {
-        val newLog = getNewLogItem(category, value)
+        val newLog = getNewLogItem(
+            selectedCategory.value?.name.toString(),
+            value
+        )
         insertLogItem(newLog)
     }
 
     fun isLogItemValid(
-        category: String,
+        // category: String,
         value: String
     ) : Boolean {
-        if (category.isBlank() || value.isBlank()) {
+        if (/* category.isBlank() ||*/ value.isBlank()) {
             return false
         }
         return true

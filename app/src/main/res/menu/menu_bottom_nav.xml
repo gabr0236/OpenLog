@@ -6,13 +6,6 @@
         android:icon="@drawable/ic_log_item_list"
         android:title="List" />
 
-    <!--
-    <item
-        android:id="@+id/log_item_list_fragment"
-        android:icon="@drawable/ic_log_item_list"
-        android:title="List" />
-    -->
-
     <item
         android:id="@+id/add_log_item_fragment"
         android:icon="@drawable/ic_log_item_create"
