@@ -10,7 +10,6 @@
         android:name="com.example.openlog.ui.AddLogItemFragment"
         android:label="{title}"
         tools:layout="@layout/add_log_item_layout" >
-        <!-- TODO: Fix title error!!! -->
         <argument
             android:name="title"
             android:defaultValue="OpenLog"
@@ -36,7 +35,7 @@
     <fragment
         android:id="@+id/log_category_list_fragment"
         android:name="com.example.openlog.ui.LogCategoryListFragment"
-        android:label="log_category_list_layout"
+        android:label="Logs"
         tools:layout="@layout/log_category_list_layout" >
         <action
             android:id="@+id/action_log_category_list_fragment_to_add_log_item_fragment"

@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .setupWithNavController(navController)
     }
 
+    /*
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+     */
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)

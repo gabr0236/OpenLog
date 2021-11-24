@@ -4,7 +4,7 @@
     <item
         android:id="@+id/log_category_list_fragment"
         android:icon="@drawable/ic_log_item_list"
-        android:title="List" />
+        android:title="Logs" />
 
     <item
         android:id="@+id/add_log_item_fragment"
