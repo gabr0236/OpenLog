@@ -50,9 +50,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:2.4.0"
+    kapt 'androidx.room:room-compiler:2.4.0'
+    implementation "androidx.room:room-ktx:2.4.0"
+    annotationProcessor "androidx.room:room-compiler:2.4.0"
 
     // Java language implementation
     implementation("androidx.navigation:navigation-fragment:$nav_version")
