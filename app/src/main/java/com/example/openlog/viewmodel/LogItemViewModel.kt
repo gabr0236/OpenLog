@@ -110,16 +110,6 @@ class LogItemViewModel(
         insertLogItem(newLog)
     }
 
-    fun isLogItemValid(
-        // category: String,
-        value: String
-    ) : Boolean {
-        if (/* category.isBlank() ||*/ value.isBlank()) {
-            return false
-        }
-        return true
-    }
-
     fun retrieveItem(id: Int): LiveData<LogItem> {
         return logItemDao.getLogItem(id).asLiveData()
     }

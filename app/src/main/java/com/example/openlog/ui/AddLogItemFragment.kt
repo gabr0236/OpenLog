@@ -37,7 +37,7 @@ class AddLogItemFragment : Fragment() {
 
     lateinit var logItem: LogItem
 
-    private val navigationArgs:  AddLogItemFragmentArgs by navArgs()
+    private val navigationArgs: AddLogItemFragmentArgs by navArgs()
 
     private var _binding: AddLogItemLayoutBinding? = null
     private val binding get() = _binding!!
@@ -108,54 +108,45 @@ class AddLogItemFragment : Fragment() {
     }
 
     private fun addNewLogItem() {
-        if (isLogItemValid()) {
-            sharedViewModel.addNewLogItem(
-                // binding.logCategorySpinner.selectedItem.toString(),
-                binding.logValue.text.toString()
-            )
-            val text = "Log Item added"
-            val duration = Toast.LENGTH_SHORT
+        val input = binding.logValue.text.toString()
+        if (input.isNullOrBlank()) return //Return if null or blank
 
-            val toast = Toast.makeText(requireContext(), text, duration)
-            toast.show()
-        }
+        sharedViewModel.addNewLogItem(input)
+
+        val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
+        toast.show()
     }
 
-    private fun updateLogItem() {
-        if (isLogItemValid()) {
-            sharedViewModel.updateLogItem(
-                this.navigationArgs.id,
-                // this.binding.logCategorySpinner.selectedItem.toString(),
-                this.binding.logValue.text.toString(),
-                logItem.date
-            )
-            val action = AddLogItemFragmentDirections.actionAddLogItemFragmentToLogCategoryListFragment()
-            findNavController().navigate(action)
-        }
-    }
+private fun updateLogItem() {
+    val input = binding.logValue.text.toString()
+    if (input.isNullOrBlank()) return //Return if null or blank
 
-    private fun isLogItemValid(): Boolean {
-        return sharedViewModel.isLogItemValid(
-            // binding.logCategorySpinner.selectedItem.toString(),
-            binding.logValue.text.toString()
+        sharedViewModel.updateLogItem(
+            this.navigationArgs.id,
+            // this.binding.logCategorySpinner.selectedItem.toString(),
+            input,
+            logItem.date
         )
-    }
+        val action =
+            AddLogItemFragmentDirections.actionAddLogItemFragmentToLogCategoryListFragment()
+        findNavController().navigate(action)
+}
 
-    private fun bind(logItem: LogItem) {
-        binding.apply {
-            logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
-            saveAction.setOnClickListener { updateLogItem() }
-            // TODO: Set selected category
+private fun bind(logItem: LogItem) {
+    binding.apply {
+        logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
+        saveAction.setOnClickListener { updateLogItem() }
+        // TODO: Set selected category
 
-            // val position = adapter.getPosition(logItem.categoryOwnerName)
-            // logCategorySpinner.setSelection(position)
-        }
+        // val position = adapter.getPosition(logItem.categoryOwnerName)
+        // logCategorySpinner.setSelection(position)
     }
+}
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
-            binding.recyclerView.adapter?.notifyDataSetChanged()
-        }
+@SuppressLint("NotifyDataSetChanged")
+private fun onCategoryClicked(logCategory: LogCategory) {
+    if (sharedViewModel.setCategory(logCategory)) {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
+}
 }
