@@ -1,26 +1,19 @@
 package com.example.openlog.util
 
 import kotlin.math.pow
-import kotlin.math.sqrt
 
 class Statistics {
-    fun calculateMean(values: List<Int>): Double {
-        return values.average()
-    }
-
-    fun calculateVariance(values: List<Int>): Double {
-        val mean = calculateMean(values)
-
-        var sum = 0.0
-
-        values.forEach {
-            sum += (it.toDouble() - mean).pow(2.0)
+    companion object{
+        fun standardDeviation(integerList: List<Int>): Double{
+            val mean = integerList.average()
+            return integerList
+                .fold(0.0, { accumulator, next -> accumulator + (next - mean).pow(2.0) })
+                .let { kotlin.math.sqrt(it / integerList.size) }
         }
-
-        return ((1 / values.size).toDouble()) * sum
-    }
-
-    fun calculateStandardDeviation(values: List<Int>): Double {
-        return sqrt(calculateVariance(values))
+        fun Double.round(decimals: Int): Double {
+            var multiplier = 1.0
+            repeat(decimals) { multiplier *= 10 }
+            return kotlin.math.round(this * multiplier) / multiplier
+        }
     }
 }

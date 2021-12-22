@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/add_log_item_fragment"
         android:name="com.example.openlog.ui.AddLogItemFragment"
-        android:label="{title}"
+        android:label="Skriv Log"
         tools:layout="@layout/add_log_item_layout" >
         <argument
             android:name="title"
@@ -29,13 +29,13 @@
     <fragment
         android:id="@+id/share_log_item_fragment"
         android:name="com.example.openlog.ui.ShareLogItemFragment"
-        android:label="Share"
+        android:label="Del"
         tools:layout="@layout/share_log_item_layout" />
 
     <fragment
         android:id="@+id/log_category_list_fragment"
         android:name="com.example.openlog.ui.LogCategoryListFragment"
-        android:label="Logs"
+        android:label="Logge"
         tools:layout="@layout/log_category_list_layout" >
         <action
             android:id="@+id/action_log_category_list_fragment_to_add_log_item_fragment"

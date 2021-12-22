@@ -30,6 +30,8 @@ class LogCategoryListFragment : Fragment() {
 
     private var _binding: LogCategoryListLayoutBinding? = null
     private val binding get() = _binding!!
+    private lateinit var lineGraph: LineGraph
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,8 @@ class LogCategoryListFragment : Fragment() {
     ): View {
         _binding = LogCategoryListLayoutBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,11 +86,15 @@ class LogCategoryListFragment : Fragment() {
         }
 
         binding.logItemRecyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        lineGraph = LineGraph(sharedViewModel.logValues(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
+            lineGraph.setValues(sharedViewModel.logValues())
+
             binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
 
             binding.logItemRecyclerView.adapter?.notifyDataSetChanged()

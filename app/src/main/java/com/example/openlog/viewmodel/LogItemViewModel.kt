@@ -9,6 +9,7 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
+import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
 import java.io.BufferedWriter
 import java.io.FileOutputStream
@@ -21,9 +22,9 @@ class LogItemViewModel(
 ) : ViewModel() {
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
-    val allLogCategoryNames: LiveData<List<String>> = logCategoryDao.getLogCategoryNames().asLiveData()
+    //val allLogCategoryNames: LiveData<List<String>> = logCategoryDao.getLogCategoryNames().asLiveData()  TODO slet?
     val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
-    val allFullLogItems: LiveData<List<LogItemAndLogCategory>> = logItemDao.getFullLogItems().asLiveData()
+    //val allFullLogItems: LiveData<List<LogItemAndLogCategory>> = logItemDao.getFullLogItems().asLiveData() TODO slet?
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
@@ -37,25 +38,16 @@ class LogItemViewModel(
         } else false
     }
 
-    private fun updateLogItem(logItem: LogItem) {
-        viewModelScope.launch {
-            logItemDao.update(logItem)
-        }
-    }
-
-    fun updateLogItem(
-        id: Int,
-        // category: String,
-        value: String,
-        date: Date?
-    ) {
+    fun updateLogItem(id: Int, value: String, date: Date?) {
         val updatedLogItem = getUpdatedLogItem(
             id,
             selectedCategory.value?.name.toString(),
             value,
             date
         )
-        updateLogItem(updatedLogItem)
+        viewModelScope.launch {
+            logItemDao.update(updatedLogItem)
+        }
     }
 
     fun deleteLogItem(logItem: LogItem) {
@@ -141,5 +133,37 @@ class LogItemViewModel(
 
         bufferedWriter.flush()
         bufferedWriter.close()
+    }
+
+    private val quantityOfLogsForDerivingStatistics =
+        20 //Only derive average and standard deviation from n LogItems
+
+    val mean: LiveData<Double> = MediatorLiveData<Double>()
+        .apply {
+            fun update() {
+                value = logValues()?.average()?.round(2)
+            }
+            //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
+            addSource(selectedCategory) { update() }
+            update()
+        }
+    val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
+        .apply {
+            fun update() {
+                value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
+            }
+            //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
+            addSource(selectedCategory) { update() }
+            update()
+        }
+
+    /**
+     * @return the values of the LogItems where category equals selectedCategoryStatistics
+     */
+    fun logValues(): List<Int>? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
+            ?.take(quantityOfLogsForDerivingStatistics)
+            ?.map { it.value }?.toList()
     }
 }

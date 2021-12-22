@@ -18,8 +18,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/log_category_list_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/log_category_list_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/log_item_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/share_log_item_layout.xml" value="0.19701086956521738" />
+        <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.28229166666666666" />
       </map>
     </option>
   </component>
