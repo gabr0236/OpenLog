@@ -18,9 +18,13 @@ public class LineGraph {
     }
 
     public void setValues(List<Integer> newDataSet) {
-        if (newDataSet==null) return;
+        cubicValueLineChart.clearChart();
+        cubicValueLineChart.setShowIndicator(false);
+        series.getSeries().clear();
 
-        if (dataSet!=null) series.getSeries().clear();
+        if (newDataSet==null || newDataSet.isEmpty()) {
+            return;
+        }
 
         dataSet = newDataSet;
         if (dataSet.size() > 1) {
@@ -31,6 +35,7 @@ public class LineGraph {
             }
 
             cubicValueLineChart.addSeries(series);
+            cubicValueLineChart.setShowIndicator(true);
             cubicValueLineChart.startAnimation();
         }
     }
