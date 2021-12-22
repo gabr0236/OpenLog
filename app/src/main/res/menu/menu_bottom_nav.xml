@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/log_category_list_fragment"
-        android:icon="@drawable/ic_log_item_list"
-        android:title="Logs" />
+        android:id="@+id/share_log_item_fragment"
+        android:icon="@drawable/ic_log_item_share"
+        android:title="Del" />
 
     <item
         android:id="@+id/add_log_item_fragment"
         android:icon="@drawable/ic_log_item_create"
-        android:title="Add" />
+        android:title="Skriv Log" />
+
 
     <item
-        android:id="@+id/share_log_item_fragment"
-        android:icon="@drawable/ic_log_item_share"
-        android:title="Share" />
-
+        android:id="@+id/log_category_list_fragment"
+        android:icon="@drawable/ic_log_item_list"
+        android:title="Tidligere Logge" />
 </menu>
