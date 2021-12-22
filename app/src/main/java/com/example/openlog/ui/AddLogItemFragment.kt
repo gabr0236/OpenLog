@@ -112,6 +112,7 @@ class AddLogItemFragment : Fragment() {
         if (input.isNullOrBlank()) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input)
+        binding.logValue.text?.clear()
 
         val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
         toast.show()
@@ -127,6 +128,7 @@ private fun updateLogItem() {
             input,
             logItem.date
         )
+    binding.logValue.text?.clear()
         val action =
             AddLogItemFragmentDirections.actionAddLogItemFragmentToLogCategoryListFragment()
         findNavController().navigate(action)
