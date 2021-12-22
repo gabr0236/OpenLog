@@ -130,7 +130,7 @@ private fun updateLogItem() {
         )
     binding.logValue.text?.clear()
         val action =
-            AddLogItemFragmentDirections.actionAddLogItemFragmentToLogCategoryListFragment()
+            AddLogItemFragmentDirections.actionAddLogItemFragmentToPreviousLogsFragment()
         findNavController().navigate(action)
 }
 

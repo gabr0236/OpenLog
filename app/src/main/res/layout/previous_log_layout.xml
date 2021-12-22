@@ -10,7 +10,7 @@
             type="com.example.openlog.viewmodel.LogItemViewModel" />
         <variable
             name="statisticsFragment"
-            type="com.example.openlog.ui.LogCategoryListFragment"/>
+            type="com.example.openlog.ui.PreviousLogsFragment"/>
     </data>
 
     <androidx.core.widget.NestedScrollView

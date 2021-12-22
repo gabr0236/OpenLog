@@ -19,8 +19,8 @@
             android:defaultValue="-1"
             app:argType="integer" />
         <action
-            android:id="@+id/action_add_log_item_fragment_to_log_category_list_fragment"
-            app:destination="@id/log_category_list_fragment" />
+            android:id="@+id/action_add_log_item_fragment_to_previous_logs_fragment"
+            app:destination="@id/previous_logs_fragment" />
         <action
             android:id="@+id/action_add_log_item_fragment_to_share_log_item_fragment"
             app:destination="@id/share_log_item_fragment" />
@@ -33,12 +33,12 @@
         tools:layout="@layout/share_log_item_layout" />
 
     <fragment
-        android:id="@+id/log_category_list_fragment"
-        android:name="com.example.openlog.ui.LogCategoryListFragment"
+        android:id="@+id/previous_logs_fragment"
+        android:name="com.example.openlog.ui.PreviousLogsFragment"
         android:label="Logge"
-        tools:layout="@layout/log_category_list_layout" >
+        tools:layout="@layout/previous_log_layout" >
         <action
-            android:id="@+id/action_log_category_list_fragment_to_add_log_item_fragment"
+            android:id="@+id/action_previous_logs_fragment_to_add_log_item_fragment"
             app:destination="@id/add_log_item_fragment" />
     </fragment>
 
