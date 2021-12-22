@@ -17,7 +17,7 @@
             android:clickable="true"
             android:focusable="true"
             android:checkable="true"
-            app:rippleColor="@color/teal_200">
+            app:rippleColor="@color/pink_200">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -37,12 +37,6 @@ class LogItemViewModel(
         } else false
     }
 
-    private fun insertLogItem(logItem: LogItem) {
-        viewModelScope.launch {
-            logItemDao.insert(logItem)
-        }
-    }
-
     private fun updateLogItem(logItem: LogItem) {
         viewModelScope.launch {
             logItemDao.update(logItem)
@@ -74,17 +68,6 @@ class LogItemViewModel(
         TODO()
     }
 
-    private fun getNewLogItem(
-        category: String,
-        value: String
-    ) : LogItem {
-        return LogItem(
-            categoryOwnerName = category,
-            value = value.toInt(),
-            date = getCurrentDateTime()
-        )
-    }
-
     private fun getUpdatedLogItem(
         id: Int,
         category: String,
@@ -99,15 +82,22 @@ class LogItemViewModel(
         )
     }
 
-    fun addNewLogItem(
-        // category: String,
+    private fun getNewLogItem(
+        category: String,
         value: String
-    ) {
-        val newLog = getNewLogItem(
-            selectedCategory.value?.name.toString(),
-            value
+    ) : LogItem {
+        return LogItem(
+            categoryOwnerName = category,
+            value = value.toInt(),
+            date = getCurrentDateTime()
         )
-        insertLogItem(newLog)
+    }
+
+    fun addNewLogItem(value: String) {
+        val newLog = getNewLogItem(selectedCategory.value?.name.toString(), value)
+        viewModelScope.launch {
+            logItemDao.insert(newLog)
+        }
     }
 
     fun retrieveItem(id: Int): LiveData<LogItem> {

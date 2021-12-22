@@ -71,7 +71,7 @@ class AddLogItemFragment : Fragment() {
             false
         )
 
-        /*
+        /* TODO: slet?
         sharedViewModel.allLogCategoryNames.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it)
