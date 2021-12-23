@@ -163,6 +163,7 @@ private fun bind(logItem: LogItem) {
     binding.apply {
         logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
         saveAction.setOnClickListener { updateLogItem() }
+        binding.textDate.text=logItem.date.toString()
         // TODO: Set selected category
 
         // val position = adapter.getPosition(logItem.categoryOwnerName)
