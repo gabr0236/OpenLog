@@ -27,6 +27,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/edit_log_fragment"
+        android:name="com.example.openlog.ui.EditLogFragment"
+        android:label="Rediger Log"
+        tools:layout="@layout/edit_log_layout" >
+        <action
+            android:id="@+id/action_edit_log_fragment_to_previous_logs_fragment"
+            app:destination="@id/previous_logs_fragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/share_log_item_fragment"
         android:name="com.example.openlog.ui.ShareLogItemFragment"
         android:label="Del"
@@ -38,8 +48,8 @@
         android:label="Logge"
         tools:layout="@layout/previous_log_layout" >
         <action
-            android:id="@+id/action_previous_logs_fragment_to_add_log_item_fragment"
-            app:destination="@id/add_log_item_fragment" />
+            android:id="@+id/action_previous_logs_fragment_to_edit_log_fragment"
+            app:destination="@id/edit_log_fragment" />
     </fragment>
 
 </navigation>

@@ -35,10 +35,11 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog.OnTimeSetListener
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
+import com.example.openlog.databinding.EditLogLayoutBinding
 import java.util.*
 
 
-class AddLogItemFragment : Fragment() {
+class EditLogFragment : Fragment() {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -48,10 +49,7 @@ class AddLogItemFragment : Fragment() {
         )
     }
 
-
-    private val navigationArgs: AddLogItemFragmentArgs by navArgs()
-
-    private var _binding: AddLogItemLayoutBinding? = null
+    private var _binding: EditLogLayoutBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var logItem: LogItem
@@ -61,10 +59,10 @@ class AddLogItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val addLogItemLayoutBinding: AddLogItemLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.add_log_item_layout,container, false)
-        addLogItemLayoutBinding.addLogItemFragment = this
-        _binding=addLogItemLayoutBinding
-        return addLogItemLayoutBinding.root
+        val editLogLayoutBinding: EditLogLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.edit_log_layout,container, false)
+        //EditLogLayoutBinding.addLogItemFragment = this TODO gab: noget her ift skift til databinding
+        _binding=editLogLayoutBinding
+        return editLogLayoutBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,13 +70,12 @@ class AddLogItemFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            this@AddLogItemFragment
+            this@EditLogFragment
         }
 
         val adapter = LogCategoryListAdapter {
             onCategoryClicked(it)
         }
-
         binding.recyclerView.adapter = adapter
 
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
@@ -86,20 +83,20 @@ class AddLogItemFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+        logItem= sharedViewModel.allLogItems.value?.first()!! //TODO: GAB skal hente den log der er trykket på
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(
+        binding.recyclerView.layoutManager  = LinearLayoutManager(
             this.context,
             RecyclerView.HORIZONTAL,
             false
         )
 
-            binding.saveAction.setOnClickListener {
-                addNewLogItem()
-            }
-
-            sharedViewModel.allLogCategories.value?.first()?.let {
-                sharedViewModel.setCategory(it)
-            }
+        //TODO: gab brug databinding istedet
+        binding.apply {
+            logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
+            saveAction.setOnClickListener { updateLogItem() }
+            binding.textDate.text = logItem.date.toString()
+        }
     }
 
     override fun onDestroyView() {
@@ -112,25 +109,12 @@ class AddLogItemFragment : Fragment() {
         _binding = null
     }
 
-    private fun addNewLogItem() {
-        val input = binding.logValue.text.toString()
-        if (input.isNullOrBlank()) return //Return if null or blank
-
-        sharedViewModel.addNewLogItem(input, date)
-        binding.logValue.text?.clear()
-
-        val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
-        toast.show()
-        date=null
-    }
-
 private fun updateLogItem() {
     val input = binding.logValue.text.toString()
     if (input.isNullOrBlank()) return //Return if null or blank
 
         sharedViewModel.updateLogItem(
-            this.navigationArgs.id,
-            // this.binding.logCategorySpinner.selectedItem.toString(),
+            logItem.id,
             input,
             date?: logItem.date
         )
@@ -141,17 +125,9 @@ private fun updateLogItem() {
         findNavController().navigate(action)
 }
 
-private fun bind(logItem: LogItem) {
-    binding.apply {
-        logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
-        saveAction.setOnClickListener { updateLogItem() }
-        binding.textDate.text=logItem.date.toString()
-        // TODO: Set selected category
-
-        // val position = adapter.getPosition(logItem.categoryOwnerName)
-        // logCategorySpinner.setSelection(position)
+    fun deleteLog(){
+        TODO()
     }
-}
 
 @SuppressLint("NotifyDataSetChanged")
 private fun onCategoryClicked(logCategory: LogCategory) {
@@ -160,6 +136,7 @@ private fun onCategoryClicked(logCategory: LogCategory) {
     }
 }
 
+    //TODO gab: lav i anden klasse så denne metode ikke skrives i 2 fragments
     fun pickDateTime() {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()

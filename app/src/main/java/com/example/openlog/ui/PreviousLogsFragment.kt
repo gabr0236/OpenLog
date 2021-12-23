@@ -68,7 +68,7 @@ class PreviousLogsFragment : Fragment() {
         )
 
         val logItemAdapter = LogItemListAdapter {
-            val action = PreviousLogsFragmentDirections.actionPreviousLogsFragmentToAddLogItemFragment("Edit", it.id)
+            val action = PreviousLogsFragmentDirections.actionPreviousLogsFragmentToEditLogFragment()
             findNavController().navigate(action)
         }
         binding.logItemRecyclerView.adapter = logItemAdapter
