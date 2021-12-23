@@ -60,7 +60,7 @@ class EditLogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val editLogLayoutBinding: EditLogLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.edit_log_layout,container, false)
-        //EditLogLayoutBinding.addLogItemFragment = this TODO gab: noget her ift skift til databinding
+        editLogLayoutBinding.editLogFragment = this
         _binding=editLogLayoutBinding
         return editLogLayoutBinding.root
     }
@@ -126,7 +126,8 @@ private fun updateLogItem() {
 
     fun deleteLog(){
         Log.d("TEST", "Delete log clicked")
-        TODO() //TODO gab
+        sharedViewModel.deleteLogItem(logItem)
+        findNavController().navigate(R.id.previous_logs_fragment)
     }
 
 @SuppressLint("NotifyDataSetChanged")
