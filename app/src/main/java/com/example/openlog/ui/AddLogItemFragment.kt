@@ -48,22 +48,18 @@ class AddLogItemFragment : Fragment() {
         )
     }
 
-
-    private val navigationArgs: AddLogItemFragmentArgs by navArgs()
-
     private var _binding: AddLogItemLayoutBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var logItem: LogItem
     private var date: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val addLogItemLayoutBinding: AddLogItemLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.add_log_item_layout,container, false)
+        val addLogItemLayoutBinding: AddLogItemLayoutBinding =
+            DataBindingUtil.inflate(inflater, R.layout.add_log_item_layout, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
-        _binding=addLogItemLayoutBinding
+        _binding = addLogItemLayoutBinding
         return addLogItemLayoutBinding.root
     }
 
@@ -93,13 +89,9 @@ class AddLogItemFragment : Fragment() {
             false
         )
 
-            binding.saveAction.setOnClickListener {
-                addNewLogItem()
-            }
-
-            sharedViewModel.allLogCategories.value?.first()?.let {
-                sharedViewModel.setCategory(it)
-            }
+        sharedViewModel.allLogCategories.value?.first()?.let {
+            sharedViewModel.setCategory(it)
+        }
     }
 
     override fun onDestroyView() {
@@ -112,7 +104,7 @@ class AddLogItemFragment : Fragment() {
         _binding = null
     }
 
-    private fun addNewLogItem() {
+    fun addNewLogItem() {
         val input = binding.logValue.text.toString()
         if (input.isNullOrBlank()) return //Return if null or blank
 
@@ -121,44 +113,15 @@ class AddLogItemFragment : Fragment() {
 
         val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
         toast.show()
-        date=null
+        date = null
     }
 
-private fun updateLogItem() {
-    val input = binding.logValue.text.toString()
-    if (input.isNullOrBlank()) return //Return if null or blank
-
-        sharedViewModel.updateLogItem(
-            this.navigationArgs.id,
-            // this.binding.logCategorySpinner.selectedItem.toString(),
-            input,
-            date?: logItem.date
-        )
-        binding.logValue.text?.clear()
-        date=null
-    val action =
-            AddLogItemFragmentDirections.actionAddLogItemFragmentToPreviousLogsFragment()
-        findNavController().navigate(action)
-}
-
-private fun bind(logItem: LogItem) {
-    binding.apply {
-        logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
-        saveAction.setOnClickListener { updateLogItem() }
-        binding.textDate.text=logItem.date.toString()
-        // TODO: Set selected category
-
-        // val position = adapter.getPosition(logItem.categoryOwnerName)
-        // logCategorySpinner.setSelection(position)
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onCategoryClicked(logCategory: LogCategory) {
+        if (sharedViewModel.setCategory(logCategory)) {
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+        }
     }
-}
-
-@SuppressLint("NotifyDataSetChanged")
-private fun onCategoryClicked(logCategory: LogCategory) {
-    if (sharedViewModel.setCategory(logCategory)) {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
-    }
-}
 
     fun pickDateTime() {
         Log.d("TEST", "PickDateTime clicked")

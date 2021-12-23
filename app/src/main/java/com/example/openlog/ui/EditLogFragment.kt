@@ -112,7 +112,6 @@ class EditLogFragment : Fragment() {
 private fun updateLogItem() {
     val input = binding.logValue.text.toString()
     if (input.isNullOrBlank()) return //Return if null or blank
-
         sharedViewModel.updateLogItem(
             logItem.id,
             input,
@@ -126,7 +125,8 @@ private fun updateLogItem() {
 }
 
     fun deleteLog(){
-        TODO()
+        Log.d("TEST", "Delete log clicked")
+        TODO() //TODO gab
     }
 
 @SuppressLint("NotifyDataSetChanged")
