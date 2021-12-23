@@ -16,12 +16,13 @@
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/share_log_item_layout.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.18802583863056438" />
         <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/log_category_list_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/log_item_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/previous_log_layout.xml" value="0.2617283950617284" />
         <entry key="app/src/main/res/layout/share_log_item_layout.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
       </map>
     </option>
   </component>

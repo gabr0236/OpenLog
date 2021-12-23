@@ -24,6 +24,19 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 import com.example.openlog.databinding.AddLogItemLayoutBinding
+import android.widget.TimePicker
+
+import android.app.TimePickerDialog
+
+import android.widget.DatePicker
+
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.TimePickerDialog.OnTimeSetListener
+import androidx.databinding.DataBindingUtil
+import com.example.openlog.R
+import java.util.*
+
 
 class AddLogItemFragment : Fragment() {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
@@ -46,12 +59,19 @@ class AddLogItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = AddLogItemLayoutBinding.inflate(inflater, container, false)
-        return binding.root
+        val addLogItemLayoutBinding: AddLogItemLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.add_log_item_layout,container, false)
+        addLogItemLayoutBinding.addLogItemFragment = this
+        _binding=addLogItemLayoutBinding
+        return addLogItemLayoutBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            this@AddLogItemFragment
+        }
 
         val adapter = LogCategoryListAdapter {
             onCategoryClicked(it)
@@ -151,4 +171,21 @@ private fun onCategoryClicked(logCategory: LogCategory) {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
+    fun pickDateTime() {
+        Log.d("TEST", "PickDateTime clicked")
+        val currentDateTime = Calendar.getInstance()
+        val startYear = currentDateTime.get(Calendar.YEAR)
+        val startMonth = currentDateTime.get(Calendar.MONTH)
+        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
+        val startMinute = currentDateTime.get(Calendar.MINUTE)
+
+        DatePickerDialog(requireContext(), { _, year, month, day ->
+            TimePickerDialog(requireContext(), { _, hour, minute ->
+                val pickedDateTime = Calendar.getInstance()
+                pickedDateTime.set(year, month, day, hour, minute)
+                //TODO: doSomethingWith(pickedDateTime)
+            }, startHour, startMinute, false).show()
+        }, startYear, startMonth, startDay).show()
+    }
 }
