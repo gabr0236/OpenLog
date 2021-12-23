@@ -63,16 +63,37 @@
                 android:digits="0123456789." />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="380dp"
+            android:layout_height="49dp"
             android:layout_margin="16dp"
-            android:onClick="@{() -> addLogItemFragment.pickDateTime()}"
-            android:text="Skift dato"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textfield_container_edit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/textfield_container_edit_text">
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="237dp"
+                android:layout_height="29dp"
+                android:layout_margin="0dp"
+                android:gravity="center_vertical"
+                android:text="I dag"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_edit_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_edit_date"
+                android:layout_width="127dp"
+                android:layout_height="43dp"
+                android:onClick="@{() -> addLogItemFragment.pickDateTime()}"
+                android:text="Skift dato"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/save_action"
@@ -88,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialButton" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <View
             android:id="@+id/divider"

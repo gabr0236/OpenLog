@@ -48,12 +48,14 @@ class AddLogItemFragment : Fragment() {
         )
     }
 
-    lateinit var logItem: LogItem
 
     private val navigationArgs: AddLogItemFragmentArgs by navArgs()
 
     private var _binding: AddLogItemLayoutBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var logItem: LogItem
+    private var date: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,6 +108,7 @@ class AddLogItemFragment : Fragment() {
                 logItem = selectedItem
                 bind(logItem)
             }
+
         } else {
             binding.saveAction.setOnClickListener {
                 addNewLogItem()
@@ -131,11 +134,12 @@ class AddLogItemFragment : Fragment() {
         val input = binding.logValue.text.toString()
         if (input.isNullOrBlank()) return //Return if null or blank
 
-        sharedViewModel.addNewLogItem(input)
+        sharedViewModel.addNewLogItem(input, date)
         binding.logValue.text?.clear()
 
         val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
         toast.show()
+        date=null
     }
 
 private fun updateLogItem() {
@@ -146,10 +150,11 @@ private fun updateLogItem() {
             this.navigationArgs.id,
             // this.binding.logCategorySpinner.selectedItem.toString(),
             input,
-            logItem.date
+            date?: logItem.date
         )
-    binding.logValue.text?.clear()
-        val action =
+        binding.logValue.text?.clear()
+        date=null
+    val action =
             AddLogItemFragmentDirections.actionAddLogItemFragmentToPreviousLogsFragment()
         findNavController().navigate(action)
 }
@@ -171,6 +176,7 @@ private fun onCategoryClicked(logCategory: LogCategory) {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
+
     fun pickDateTime() {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()
@@ -184,7 +190,9 @@ private fun onCategoryClicked(logCategory: LogCategory) {
             TimePickerDialog(requireContext(), { _, hour, minute ->
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
-                //TODO: doSomethingWith(pickedDateTime)
+                date = pickedDateTime.time
+                binding.textDate.text = date.toString()
+                Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
             }, startHour, startMinute, false).show()
         }, startYear, startMonth, startDay).show()
     }
