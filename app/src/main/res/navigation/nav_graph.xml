@@ -9,7 +9,7 @@
         android:id="@+id/add_log_item_fragment"
         android:name="com.example.openlog.ui.AddLogItemFragment"
         android:label="Skriv Log"
-        tools:layout="@layout/add_log_item_layout" >
+        tools:layout="@layout/add_log_item_layout">
         <argument
             android:name="title"
             android:defaultValue="OpenLog"
@@ -30,7 +30,7 @@
         android:id="@+id/edit_log_fragment"
         android:name="com.example.openlog.ui.EditLogFragment"
         android:label="Rediger Log"
-        tools:layout="@layout/edit_log_layout" >
+        tools:layout="@layout/edit_log_layout">
         <action
             android:id="@+id/action_edit_log_fragment_to_previous_logs_fragment"
             app:destination="@id/previous_logs_fragment" />
@@ -46,7 +46,7 @@
         android:id="@+id/previous_logs_fragment"
         android:name="com.example.openlog.ui.PreviousLogsFragment"
         android:label="Logge"
-        tools:layout="@layout/previous_log_layout" >
+        tools:layout="@layout/previous_log_layout">
         <action
             android:id="@+id/action_previous_logs_fragment_to_edit_log_fragment"
             app:destination="@id/edit_log_fragment" />

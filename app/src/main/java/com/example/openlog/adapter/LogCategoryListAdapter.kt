@@ -12,7 +12,8 @@ import com.example.openlog.databinding.LogCategoryLayoutBinding
 import com.example.openlog.databinding.LogItemLayoutBinding
 
 class LogCategoryListAdapter(
-    private val onLogItemClicked: (LogCategory) -> Unit) :
+    private val onLogItemClicked: (LogCategory) -> Unit
+) :
     ListAdapter<LogCategory, LogCategoryListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
@@ -39,8 +40,10 @@ class LogCategoryListAdapter(
         holder.bind(current)
     }
 
-    class ItemViewHolder(private var binding: LogCategoryLayoutBinding,
-                         private val onLogItemClicked: (LogCategory) -> Unit) :
+    class ItemViewHolder(
+        private var binding: LogCategoryLayoutBinding,
+        private val onLogItemClicked: (LogCategory) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(logCategory: LogCategory) {
@@ -57,11 +60,17 @@ class LogCategoryListAdapter(
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<LogCategory>() {
-            override fun areItemsTheSame(oldLogCategory: LogCategory, newLogCategory: LogCategory): Boolean {
+            override fun areItemsTheSame(
+                oldLogCategory: LogCategory,
+                newLogCategory: LogCategory
+            ): Boolean {
                 return oldLogCategory === newLogCategory
             }
 
-            override fun areContentsTheSame(oldLogCategory: LogCategory, newLogCategory: LogCategory): Boolean {
+            override fun areContentsTheSame(
+                oldLogCategory: LogCategory,
+                newLogCategory: LogCategory
+            ): Boolean {
                 return oldLogCategory.name == newLogCategory.name
             }
         }

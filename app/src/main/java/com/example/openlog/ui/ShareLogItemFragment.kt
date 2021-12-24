@@ -11,7 +11,7 @@ import com.example.openlog.databinding.ShareLogItemLayoutBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 
-class ShareLogItemFragment  : Fragment() {
+class ShareLogItemFragment : Fragment() {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 

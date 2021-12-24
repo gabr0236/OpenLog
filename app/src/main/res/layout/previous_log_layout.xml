@@ -5,12 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.openlog.viewmodel.LogItemViewModel" />
+
         <variable
             name="statisticsFragment"
-            type="com.example.openlog.ui.PreviousLogsFragment"/>
+            type="com.example.openlog.ui.PreviousLogsFragment" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -95,8 +97,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/cardview_graph">
 
-                    <org.eazegraph.lib.charts.ValueLineChart
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <org.eazegraph.lib.charts.ValueLineChart xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/logGraph"
                         android:layout_width="match_parent"
                         app:layout_constraintTop_toTopOf="@+id/cardview_graph"
@@ -106,7 +107,7 @@
                         app:egCurveSmoothness="0.4"
                         app:egIndicatorLineColor="#FE6DA8"
                         app:egLegendHeight="40dp"
-                        app:egShowStandardValue="true"/>
+                        app:egShowStandardValue="true" />
 
                     <TextView
                         android:id="@+id/average"
@@ -175,33 +176,33 @@
     </androidx.core.widget.NestedScrollView>
 </layout>
 
-<!--
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/margin"
-    tools:context=".ui.LogCategoryListFragment"
-    tools:listitem="@layout/log_category_layout">
-
-    <Button
-        android:id="@+id/list_action"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="See All Logs"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <!--
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/list_action" />
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_margin="@dimen/margin"
+        tools:context=".ui.LogCategoryListFragment"
+        tools:listitem="@layout/log_category_layout">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
--->
+        <Button
+            android:id="@+id/list_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="See All Logs"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/list_action" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->

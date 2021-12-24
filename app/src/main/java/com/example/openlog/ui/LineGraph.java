@@ -23,7 +23,7 @@ public class LineGraph {
         cubicValueLineChart.setShowIndicator(false);
         series.getSeries().clear();
 
-        if (newDataSet==null || newDataSet.isEmpty()) {
+        if (newDataSet == null || newDataSet.isEmpty()) {
             return;
         }
 

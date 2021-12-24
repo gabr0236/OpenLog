@@ -2,6 +2,7 @@
 
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
@@ -45,7 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageview_emoji"
-                    tools:text="Kalorier"/>
+                    tools:text="Kalorier" />
 
                 <TextView
                     android:id="@+id/log_category_unit"
@@ -57,34 +58,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/log_category_name"
-                    tools:text="3409 Kcal"/>
+                    tools:text="3409 Kcal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 </layout>
 
-<!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/log_category_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Something cool"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="@dimen/margin">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/log_category_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Something cool"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
--->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+    -->

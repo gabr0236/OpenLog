@@ -59,9 +59,10 @@ class EditLogFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val editLogLayoutBinding: EditLogLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.edit_log_layout,container, false)
+        val editLogLayoutBinding: EditLogLayoutBinding =
+            DataBindingUtil.inflate(inflater, R.layout.edit_log_layout, container, false)
         editLogLayoutBinding.editLogFragment = this
-        _binding=editLogLayoutBinding
+        _binding = editLogLayoutBinding
         return editLogLayoutBinding.root
     }
 
@@ -83,9 +84,9 @@ class EditLogFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
-        logItem=sharedViewModel.getSelectedLogItemToEdit()
+        logItem = sharedViewModel.getSelectedLogItemToEdit()
 
-        binding.recyclerView.layoutManager  = LinearLayoutManager(
+        binding.recyclerView.layoutManager = LinearLayoutManager(
             this.context,
             RecyclerView.HORIZONTAL,
             false
@@ -109,31 +110,31 @@ class EditLogFragment : Fragment() {
         _binding = null
     }
 
-private fun updateLogItem() {
-    val input = binding.logValue.text.toString()
-    if (input.isNullOrBlank()) return //Return if null or blank
+    private fun updateLogItem() {
+        val input = binding.logValue.text.toString()
+        if (input.isNullOrBlank()) return //Return if null or blank
         sharedViewModel.updateLogItem(
             logItem.id,
             input,
-            date?: logItem.date
+            date ?: logItem.date
         )
         binding.logValue.text?.clear()
-        date=null
+        date = null
         findNavController().navigate(R.id.previous_logs_fragment)
-}
+    }
 
-    fun deleteLog(){
+    fun deleteLog() {
         Log.d("TEST", "Delete log clicked")
         sharedViewModel.deleteLogItem(logItem)
         findNavController().navigate(R.id.previous_logs_fragment)
     }
 
-@SuppressLint("NotifyDataSetChanged")
-private fun onCategoryClicked(logCategory: LogCategory) {
-    if (sharedViewModel.setCategory(logCategory)) {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onCategoryClicked(logCategory: LogCategory) {
+        if (sharedViewModel.setCategory(logCategory)) {
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+        }
     }
-}
 
     //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
     fun pickDateTime() {

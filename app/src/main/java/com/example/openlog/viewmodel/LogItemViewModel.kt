@@ -21,7 +21,9 @@ class LogItemViewModel(
     private val logCategoryDao: LogCategoryDao
 ) : ViewModel() {
 
-    val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
+    val allLogCategories: LiveData<List<LogCategory>> =
+        logCategoryDao.getLogCategories().asLiveData()
+
     //val allLogCategoryNames: LiveData<List<String>> = logCategoryDao.getLogCategoryNames().asLiveData()  TODO slet?
     val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
     //val allFullLogItems: LiveData<List<LogItemAndLogCategory>> = logItemDao.getFullLogItems().asLiveData() TODO slet?
@@ -30,11 +32,16 @@ class LogItemViewModel(
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
 
     private lateinit var selectedLogItemToEdit: LogItem
-    fun getSelectedLogItemToEdit(): LogItem { return selectedLogItemToEdit }
-    fun setSelectedLogItemToEdit(logItem: LogItem) { selectedLogItemToEdit = logItem}
+    fun getSelectedLogItemToEdit(): LogItem {
+        return selectedLogItemToEdit
+    }
+
+    fun setSelectedLogItemToEdit(logItem: LogItem) {
+        selectedLogItemToEdit = logItem
+    }
 
     fun setCategory(logCategory: LogCategory): Boolean {
-        return if (selectedCategory.value!=logCategory) {
+        return if (selectedCategory.value != logCategory) {
             _selectedCategory.value?.isSelected = false
             _selectedCategory.value = logCategory
             logCategory.isSelected = true
@@ -89,7 +96,7 @@ class LogItemViewModel(
         category: String,
         value: String,
         date: Date?
-    ) : LogItem {
+    ): LogItem {
         return LogItem(
             categoryOwnerName = category,
             value = value.toInt(),
@@ -147,10 +154,12 @@ class LogItemViewModel(
         .apply {
             fun update() {
                 value = logValues()?.average()?.round(2)
+                Log.d("TEST", "Gennemsnit update(): ${value.toString()}")
             }
             //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
             addSource(selectedCategory) { update() }
             update()
+
         }
     val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
         .apply {

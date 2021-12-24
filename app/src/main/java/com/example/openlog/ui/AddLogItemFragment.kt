@@ -94,7 +94,7 @@ class AddLogItemFragment : Fragment() {
         }
 
         //Show current date on screen
-        date=Calendar.getInstance().time
+        date = Calendar.getInstance().time
         binding.textDate.text = date.toString()
     }
 

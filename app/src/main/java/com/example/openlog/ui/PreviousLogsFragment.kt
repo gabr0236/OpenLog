@@ -54,7 +54,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
 
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
-        recyclerViewCategory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        recyclerViewCategory.layoutManager =
+            LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         recyclerViewCategory.adapter = LogCategoryListAdapter { onCategoryClicked(it) }
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
@@ -64,13 +65,15 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
-        recyclerViewLogItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        recyclerViewLogItem.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         recyclerViewLogItem.adapter = LogItemListAdapter(this)
-        sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
-            items.logItems.let {
-                (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
+        sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
+            .observe(this.viewLifecycleOwner) { items ->
+                items.logItems.let {
+                    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
+                }
             }
-        }
         recyclerViewLogItem.scrollToPosition(0)
 
 
@@ -90,11 +93,12 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
 
             binding.logItemRecyclerView.adapter?.notifyDataSetChanged()
 
-            sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
-                items.logItems.let {
-                    (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
+            sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
+                .observe(this.viewLifecycleOwner) { items ->
+                    items.logItems.let {
+                        (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
+                    }
                 }
-            }
             lineGraph.setValues(sharedViewModel.logValues())
         }
     }

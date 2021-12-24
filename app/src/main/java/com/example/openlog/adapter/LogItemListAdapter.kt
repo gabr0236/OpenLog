@@ -19,9 +19,10 @@ class LogItemListAdapter(
 
 
     class ItemViewHolder(
-        private var binding: LogItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        private var binding: LogItemLayoutBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun  bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
+        fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
             binding.apply {
                 logItemValue.text = logItem.value.toString()
                 logItemDate.text = logItem.getFormattedDate()
