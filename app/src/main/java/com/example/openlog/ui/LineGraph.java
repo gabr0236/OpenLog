@@ -1,5 +1,6 @@
 package com.example.openlog.ui;
 
+import org.eazegraph.lib.charts.ValueLineChart;
 import org.eazegraph.lib.models.ValueLinePoint;
 import org.eazegraph.lib.models.ValueLineSeries;
 
@@ -11,7 +12,7 @@ public class LineGraph {
     org.eazegraph.lib.charts.ValueLineChart cubicValueLineChart;
     ValueLineSeries series = new ValueLineSeries();
 
-    public LineGraph(List<Integer> dataSet, org.eazegraph.lib.charts.ValueLineChart cubicValueLineChart) {
+    public LineGraph(List<Integer> dataSet, ValueLineChart cubicValueLineChart) {
         this.dataSet = dataSet;
         this.cubicValueLineChart = cubicValueLineChart;
         setValues(dataSet);

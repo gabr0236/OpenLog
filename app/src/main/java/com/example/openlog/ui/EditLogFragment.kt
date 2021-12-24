@@ -119,9 +119,7 @@ private fun updateLogItem() {
         )
         binding.logValue.text?.clear()
         date=null
-    val action =
-            AddLogItemFragmentDirections.actionAddLogItemFragmentToPreviousLogsFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.previous_logs_fragment)
 }
 
     fun deleteLog(){
