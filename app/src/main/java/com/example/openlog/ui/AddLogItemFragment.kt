@@ -92,6 +92,10 @@ class AddLogItemFragment : Fragment() {
         sharedViewModel.allLogCategories.value?.first()?.let {
             sharedViewModel.setCategory(it)
         }
+
+        //Show current date on screen
+        date=Calendar.getInstance().time
+        binding.textDate.text = date.toString()
     }
 
     override fun onDestroyView() {
@@ -123,6 +127,7 @@ class AddLogItemFragment : Fragment() {
         }
     }
 
+    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
     fun pickDateTime() {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()
@@ -139,7 +144,7 @@ class AddLogItemFragment : Fragment() {
                 date = pickedDateTime.time
                 binding.textDate.text = date.toString()
                 Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
-            }, startHour, startMinute, false).show()
+            }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
     }
 }

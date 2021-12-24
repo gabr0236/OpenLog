@@ -135,7 +135,7 @@ private fun onCategoryClicked(logCategory: LogCategory) {
     }
 }
 
-    //TODO gab: lav i anden klasse så denne metode ikke skrives i 2 fragments
+    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
     fun pickDateTime() {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()
@@ -152,7 +152,7 @@ private fun onCategoryClicked(logCategory: LogCategory) {
                 date = pickedDateTime.time
                 binding.textDate.text = date.toString()
                 Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
-            }, startHour, startMinute, false).show()
+            }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
     }
 }
