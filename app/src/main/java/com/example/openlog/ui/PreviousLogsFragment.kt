@@ -73,6 +73,11 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         }
         recyclerViewLogItem.scrollToPosition(0)
 
+
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
+            items.let { (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it) }
+        }
+
         //Graph
         lineGraph = LineGraph(sharedViewModel.logValues(), binding.logGraph)
     }
