@@ -29,6 +29,10 @@ class LogItemViewModel(
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
 
+    private lateinit var selectedLogItemToEdit: LogItem
+    fun getSelectedLogItemToEdit(): LogItem { return selectedLogItemToEdit }
+    fun setSelectedLogItemToEdit(logItem: LogItem) { selectedLogItemToEdit = logItem}
+
     fun setCategory(logCategory: LogCategory): Boolean {
         return if (selectedCategory.value!=logCategory) {
             _selectedCategory.value?.isSelected = false

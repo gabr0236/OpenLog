@@ -12,13 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogCategory
 import com.example.openlog.LogItemApplication
+import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.adapter.LogItemListAdapter
+import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.PreviousLogLayoutBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 
-class PreviousLogsFragment : Fragment() {
+class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -31,6 +33,8 @@ class PreviousLogsFragment : Fragment() {
     private var _binding: PreviousLogLayoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var lineGraph: LineGraph
+    private lateinit var recyclerViewCategory: RecyclerView
+    private lateinit var recyclerViewLogItem: RecyclerView
 
 
     override fun onCreateView(
@@ -39,8 +43,6 @@ class PreviousLogsFragment : Fragment() {
     ): View {
         _binding = PreviousLogLayoutBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,6 +52,7 @@ class PreviousLogsFragment : Fragment() {
             sharedViewModel.setCategory(it)
         }
 
+        //Log category recyclerview setup
         val logCategoryAdapter = LogCategoryListAdapter {
             onCategoryClicked(it)
         }
@@ -67,23 +70,17 @@ class PreviousLogsFragment : Fragment() {
             false
         )
 
-        val logItemAdapter = LogItemListAdapter {
-            val action = PreviousLogsFragmentDirections.actionPreviousLogsFragmentToEditLogFragment()
-            findNavController().navigate(action)
-        }
-        binding.logItemRecyclerView.adapter = logItemAdapter
+        //Log item recyclerview setup
+        recyclerViewLogItem = binding.logItemRecyclerView
+        recyclerViewLogItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        recyclerViewLogItem.adapter = LogItemListAdapter(this)
 
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
             items.logItems.let {
-                logItemAdapter.submitList(it)
+                (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
             }
         }
 
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                logItemAdapter.submitList(it)
-            }
-        }
 
         binding.logItemRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
@@ -105,5 +102,10 @@ class PreviousLogsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onItemClickedFullLog(logItem: LogItem) {
+        sharedViewModel.setSelectedLogItemToEdit(logItem)
+        findNavController().navigate(R.id.edit_log_fragment)
     }
 }

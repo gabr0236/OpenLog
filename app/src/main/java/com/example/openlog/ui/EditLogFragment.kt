@@ -83,7 +83,7 @@ class EditLogFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
-        logItem= sharedViewModel.allLogItems.value?.first()!! //TODO: GAB skal hente den log der er trykket på
+        logItem=sharedViewModel.getSelectedLogItemToEdit()
 
         binding.recyclerView.layoutManager  = LinearLayoutManager(
             this.context,
