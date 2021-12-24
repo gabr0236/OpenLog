@@ -53,44 +53,33 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         }
 
         //Log category recyclerview setup
-        val logCategoryAdapter = LogCategoryListAdapter {
-            onCategoryClicked(it)
-        }
-        binding.logCategoryRecyclerView.adapter = logCategoryAdapter
-
+        recyclerViewCategory = binding.logCategoryRecyclerView
+        recyclerViewCategory.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        recyclerViewCategory.adapter = LogCategoryListAdapter { onCategoryClicked(it) }
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                logCategoryAdapter.submitList(it)
+                (recyclerViewCategory.adapter as LogCategoryListAdapter).submitList(it)
             }
         }
-
-        binding.logCategoryRecyclerView.layoutManager = LinearLayoutManager(
-            this.context,
-            RecyclerView.HORIZONTAL,
-            false
-        )
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         recyclerViewLogItem.adapter = LogItemListAdapter(this)
-
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString()).observe(this.viewLifecycleOwner) { items ->
             items.logItems.let {
                 (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
             }
         }
+        recyclerViewLogItem.scrollToPosition(0)
 
-
-        binding.logItemRecyclerView.layoutManager = LinearLayoutManager(this.context)
-
+        //Graph
         lineGraph = LineGraph(sharedViewModel.logValues(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
-            lineGraph.setValues(sharedViewModel.logValues())
 
             binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
 
@@ -101,6 +90,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
                     (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
                 }
             }
+            lineGraph.setValues(sharedViewModel.logValues())
         }
     }
 
