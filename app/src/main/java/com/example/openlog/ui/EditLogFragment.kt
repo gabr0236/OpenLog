@@ -8,31 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.LogCategory
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.LogItemApplication
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
-import com.example.openlog.databinding.AddLogItemLayoutBinding
-import android.widget.TimePicker
 
 import android.app.TimePickerDialog
 
-import android.widget.DatePicker
-
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.TimePickerDialog.OnTimeSetListener
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
@@ -71,7 +62,8 @@ class EditLogFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            this@EditLogFragment
+            editLogFragment = this@EditLogFragment
+            viewModel = sharedViewModel
         }
 
         val adapter = LogCategoryListAdapter {

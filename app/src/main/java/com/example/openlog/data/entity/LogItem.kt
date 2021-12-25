@@ -1,7 +1,6 @@
 package com.example.openlog.data.entity
 
 import androidx.room.*
-import com.example.openlog.LogCategory
 import java.text.DateFormat
 import java.util.*
 

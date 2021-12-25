@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.LogCategory
-import com.example.openlog.data.entity.LogItem
-import com.example.openlog.data.entity.getFormattedDate
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.LogCategoryLayoutBinding
-import com.example.openlog.databinding.LogItemLayoutBinding
 
 class LogCategoryListAdapter(
     private val onLogItemClicked: (LogCategory) -> Unit

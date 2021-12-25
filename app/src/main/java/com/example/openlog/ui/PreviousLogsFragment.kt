@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.LogCategory
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
@@ -48,9 +48,16 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            previousLogFragment = this@PreviousLogsFragment
+            viewModel = sharedViewModel
+        }
+
         sharedViewModel.allLogCategories.value?.first()?.let {
             sharedViewModel.setCategory(it)
         }
+
 
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
@@ -89,9 +96,11 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
     private fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
 
+            //Notify adapters
             binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
-
             binding.logItemRecyclerView.adapter?.notifyDataSetChanged()
+
+            sharedViewModel.selectedCategory
 
             sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
                 .observe(this.viewLifecycleOwner) { items ->

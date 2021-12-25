@@ -11,7 +11,7 @@
             type="com.example.openlog.viewmodel.LogItemViewModel" />
 
         <variable
-            name="statisticsFragment"
+            name="previousLogFragment"
             type="com.example.openlog.ui.PreviousLogsFragment" />
     </data>
 

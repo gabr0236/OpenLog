@@ -2,8 +2,8 @@ package com.example.openlog.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.openlog.LogCategory
-import com.example.openlog.LogCategoryWithLogItems
+import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogItem
@@ -159,8 +159,8 @@ class LogItemViewModel(
             //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
             addSource(selectedCategory) { update() }
             update()
-
         }
+
     val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
         .apply {
             fun update() {

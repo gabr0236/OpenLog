@@ -3,8 +3,8 @@ package com.example.openlog.data.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.openlog.LogCategory
-import com.example.openlog.LogCategoryWithLogItems
+import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.data.entity.LogCategoryWithLogItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao

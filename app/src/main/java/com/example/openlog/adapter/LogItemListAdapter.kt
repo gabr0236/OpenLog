@@ -2,11 +2,9 @@ package com.example.openlog.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.getFormattedDate
 import com.example.openlog.databinding.LogItemLayoutBinding
