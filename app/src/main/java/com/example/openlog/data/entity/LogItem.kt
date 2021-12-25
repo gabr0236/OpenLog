@@ -27,6 +27,3 @@ data class LogItemAndLogCategory(
     )
     val logCategory: LogCategory
 )
-
-fun LogItem.getFormattedDate(): String =
-    DateFormat.getDateInstance().format(date)

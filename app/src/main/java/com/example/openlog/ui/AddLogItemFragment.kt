@@ -102,7 +102,7 @@ class AddLogItemFragment : Fragment() {
 
     fun addNewLogItem() {
         val input = binding.logValue.text.toString()
-        if (input.isNullOrBlank()) return //Return if null or blank
+        if (input.isBlank()) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input, date)
         binding.logValue.text?.clear()

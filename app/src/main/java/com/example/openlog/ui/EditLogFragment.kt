@@ -105,7 +105,7 @@ class EditLogFragment : Fragment() {
 
     private fun updateLogItem() {
         val input = binding.logValue.text.toString()
-        if (input.isNullOrBlank()) return //Return if null or blank
+        if (input.isBlank()) return //Return if null or blank
         sharedViewModel.updateLogItem(
             logItem.id,
             input,
@@ -145,7 +145,7 @@ class EditLogFragment : Fragment() {
                 pickedDateTime.set(year, month, day, hour, minute)
                 date = pickedDateTime.time
                 date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
-                Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
+                Log.d("TEST", "PickDateTime: ${pickedDateTime}")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
     }
