@@ -27,6 +27,7 @@ import android.app.DatePickerDialog
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
+import com.example.openlog.util.DateTimeFormatter
 import java.util.*
 
 
@@ -88,7 +89,7 @@ class EditLogFragment : Fragment() {
         binding.apply {
             logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
             saveAction.setOnClickListener { updateLogItem() }
-            binding.textDate.text = logItem.date.toString()
+            binding.textDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) }
         }
     }
 
@@ -143,7 +144,7 @@ class EditLogFragment : Fragment() {
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
                 date = pickedDateTime.time
-                binding.textDate.text = date.toString()
+                date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
                 Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()

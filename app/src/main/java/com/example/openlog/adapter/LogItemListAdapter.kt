@@ -9,6 +9,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.getFormattedDate
 import com.example.openlog.databinding.LogItemLayoutBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
+import com.example.openlog.util.DateTimeFormatter
 
 class LogItemListAdapter(
     private val onItemClickListenerLogItem: OnItemClickListenerLogItem
@@ -23,7 +24,7 @@ class LogItemListAdapter(
         fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
             binding.apply {
                 logItemValue.text = logItem.value.toString()
-                logItemDate.text = logItem.getFormattedDate()
+                logItemDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) }
                 editAction.setOnClickListener {
                     onItemClickListenerLogItem.onItemClickedFullLog(logItem)
                 }

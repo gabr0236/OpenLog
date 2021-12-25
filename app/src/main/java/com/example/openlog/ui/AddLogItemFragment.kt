@@ -25,6 +25,7 @@ import android.app.TimePickerDialog
 import android.app.DatePickerDialog
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
+import com.example.openlog.util.DateTimeFormatter
 import java.util.*
 
 
@@ -86,7 +87,7 @@ class AddLogItemFragment : Fragment() {
 
         //Show current date on screen
         date = Calendar.getInstance().time
-        binding.textDate.text = date.toString()
+        date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
     }
 
     override fun onDestroyView() {
@@ -133,8 +134,8 @@ class AddLogItemFragment : Fragment() {
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
                 date = pickedDateTime.time
-                binding.textDate.text = date.toString()
-                Log.d("TEST", "PickDateTime: ${pickedDateTime.toString()}")
+                date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
+                Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
     }
