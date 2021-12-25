@@ -19,7 +19,7 @@ class LogCategoryListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): LogCategoryListAdapter.ItemViewHolder {
+    ): ItemViewHolder {
         return ItemViewHolder(
             LogCategoryLayoutBinding.inflate(
                 LayoutInflater.from(
@@ -30,13 +30,8 @@ class LogCategoryListAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: LogCategoryListAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val current = getItem(position)
-        /*
-        holder.itemView.setOnClickListener {
-            onLogItemClicked(current)
-        }
-        */
         holder.bind(current)
     }
 
