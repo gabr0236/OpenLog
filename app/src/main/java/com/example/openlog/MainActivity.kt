@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -32,13 +33,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
-
-
         findViewById<BottomNavigationView>(R.id.bottom_nav)
             .setupWithNavController(navController)
     }
 
+    //Navigation using "Back button"
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
