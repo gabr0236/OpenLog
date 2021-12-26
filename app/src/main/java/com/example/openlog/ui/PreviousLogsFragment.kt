@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.data.entity.LogCategory
@@ -41,8 +43,10 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PreviousLogLayoutBinding.inflate(inflater, container, false)
-        return binding.root
+        val previousLogsLayoutBinding: PreviousLogLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.previous_log_layout, container, false)
+        previousLogsLayoutBinding.previousLogFragment = this
+        _binding = previousLogsLayoutBinding
+        return previousLogsLayoutBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
