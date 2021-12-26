@@ -31,13 +31,11 @@ class LogItemViewModel(
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
 
-    private lateinit var selectedLogItemToEdit: LogItem
-    fun getSelectedLogItemToEdit(): LogItem {
-        return selectedLogItemToEdit
-    }
+    private val _selectedLogItemToEdit = MutableLiveData<LogItem>()
+    val selectedLogItemToEdit: LiveData<LogItem> = _selectedLogItemToEdit
 
     fun setSelectedLogItemToEdit(logItem: LogItem) {
-        selectedLogItemToEdit = logItem
+        _selectedLogItemToEdit.value = logItem
     }
 
     fun setCategory(logCategory: LogCategory): Boolean {
@@ -156,7 +154,6 @@ class LogItemViewModel(
                 value = logValues()?.average()?.round(2)
                 Log.d("TEST", "Gennemsnit update(): ${value.toString()}")
             }
-            //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
             addSource(selectedCategory) { update() }
             update()
         }
@@ -166,7 +163,6 @@ class LogItemViewModel(
             fun update() {
                 value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
             }
-            //TODO: this updates whenever there is change in ANY log which is not a perfect solution but will suffice for now
             addSource(selectedCategory) { update() }
             update()
         }

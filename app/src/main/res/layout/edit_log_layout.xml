@@ -49,6 +49,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_value"
+                android:text="@{String.valueOf(viewModel.selectedLogItemToEdit.value)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="0123456789." />
@@ -93,6 +94,7 @@
             android:layout_margin="16dp"
             android:enabled="true"
             android:gravity="center"
+            android:onClick="@{() -> editLogFragment.updateLogItem() }"
             android:text="Gem"
             android:textAlignment="center"
             app:icon="@drawable/ic_baseline_save_alt_24"

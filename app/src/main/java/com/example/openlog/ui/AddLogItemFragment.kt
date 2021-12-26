@@ -57,17 +57,16 @@ class AddLogItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Databinding
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             addLogItemFragment = this@AddLogItemFragment
             viewModel = sharedViewModel
         }
 
-        val adapter = LogCategoryListAdapter {
-            onCategoryClicked(it)
-        }
-
+        val adapter = LogCategoryListAdapter { onCategoryClicked(it) }
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
 
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
@@ -75,18 +74,11 @@ class AddLogItemFragment : Fragment() {
             }
         }
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(
-            this.context,
-            RecyclerView.HORIZONTAL,
-            false
-        )
-
         sharedViewModel.allLogCategories.value?.first()?.let {
             sharedViewModel.setCategory(it)
         }
 
-        //Show current date on screen
-        date = Calendar.getInstance().time
+        date = Calendar.getInstance().time //Show current date on screen
         date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
     }
 
@@ -107,7 +99,7 @@ class AddLogItemFragment : Fragment() {
         sharedViewModel.addNewLogItem(input, date)
         binding.logValue.text?.clear()
 
-        val toast = Toast.makeText(requireContext(), "Log Item added", Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT)
         toast.show()
         date = null
     }

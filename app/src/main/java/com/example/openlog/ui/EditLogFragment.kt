@@ -24,6 +24,7 @@ import com.example.openlog.viewmodel.LogItemViewModelFactory
 import android.app.TimePickerDialog
 
 import android.app.DatePickerDialog
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
@@ -61,49 +62,40 @@ class EditLogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Databinding
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             editLogFragment = this@EditLogFragment
             viewModel = sharedViewModel
         }
 
-        val adapter = LogCategoryListAdapter {
-            onCategoryClicked(it)
-        }
+        //Recyclerview
+        val adapter = LogCategoryListAdapter { onCategoryClicked(it) }
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
 
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 adapter.submitList(it)
             }
         }
-        logItem = sharedViewModel.getSelectedLogItemToEdit()
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(
-            this.context,
-            RecyclerView.HORIZONTAL,
-            false
-        )
+        sharedViewModel.selectedLogItemToEdit.value?: return //return if selectedLogItemToEdit is null
+        logItem = sharedViewModel.selectedLogItemToEdit.value!!
 
-        //TODO: gab brug databinding istedet
-        binding.apply {
-            logValue.setText(logItem.value.toString(), TextView.BufferType.SPANNABLE)
-            saveAction.setOnClickListener { updateLogItem() }
-            binding.textDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) }
-        }
+        binding.textDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) } //Date of log
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
         val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
         _binding = null
     }
 
-    private fun updateLogItem() {
+    fun updateLogItem() {
         val input = binding.logValue.text.toString()
         if (input.isBlank()) return //Return if null or blank
         sharedViewModel.updateLogItem(
@@ -113,12 +105,20 @@ class EditLogFragment : Fragment() {
         )
         binding.logValue.text?.clear()
         date = null
+
+        val toast = Toast.makeText(requireContext(), "Log Opdateret", Toast.LENGTH_SHORT)
+        toast.show()
+
         findNavController().navigate(R.id.previous_logs_fragment)
     }
 
     fun deleteLog() {
         Log.d("TEST", "Delete log clicked")
         sharedViewModel.deleteLogItem(logItem)
+
+        val toast = Toast.makeText(requireContext(), "Log Slettet", Toast.LENGTH_SHORT)
+        toast.show()
+
         findNavController().navigate(R.id.previous_logs_fragment)
     }
 
