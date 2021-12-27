@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 
@@ -17,22 +18,20 @@ import com.google.android.material.card.MaterialCardView
 
 class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
     private val onLogItemClicked: (LogCategory) -> Unit
-) : ListAdapter<LogCategory, LogCategoryListAdapter.ItemViewHolder>(DiffCallback) {
+) : RecyclerView.Adapter<LogCategoryListAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ItemViewHolder {
-        //return if (viewType == CATEGORY) {
-        //    ItemViewHolder(LayoutInflater.from(viewGroup.context)
-        //        .inflate(R.layout.log_category_layout, viewGroup, false), onLogItemClicked)
-        //} else ItemViewHolder(LayoutInflater.from(viewGroup.context)
-          //  .inflate(R.layout.add_category_button, viewGroup, false), onLogItemClicked)
-
-        //TODO Slet nedenfor
-        return ItemViewHolder(LayoutInflater.from(viewGroup.context)
+        return if (viewType == CATEGORY) {
+            ItemViewHolder(LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.log_category_layout, viewGroup, false), onLogItemClicked)
+        } else ItemViewHolder(LayoutInflater.from(viewGroup.context)
+        .inflate(R.layout.add_category_button, viewGroup, false), onLogItemClicked)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(logCategories[position], position, itemCount)
+        if (position >= logCategories.size) {
+            holder.bind()
+        } else holder.bind(logCategories[position])
     }
 
     class ItemViewHolder(
@@ -43,18 +42,18 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
         private val logCategoryName: TextView = view.findViewById(R.id.log_category_name)
         private val logCategoryUnit: TextView = view.findViewById(R.id.log_category_unit)
         private val logCategoryContainer: MaterialCardView = view.findViewById(R.id.log_category_container)
-        //TODO private val addLogCategoryButton: Button = view.findViewById(R.id.add_category_button123)
-        fun bind(logCategory: LogCategory, position: Int, size: Int) {
-            if (position >= size) {
-                //TODO addLogCategoryButton.text = "OKI"
-            } else {
+        private val addLogCategoryButton: Button? = view.findViewById(R.id.create_category_button)
+
+        fun bind(logCategory: LogCategory) {
                 logCategoryName.text = logCategory.name
                 logCategoryUnit.text = logCategory.unit
                 logCategoryContainer.setOnClickListener {
                     onLogItemClicked(logCategory)
                 }
                 logCategoryContainer.isChecked = logCategory.isSelected
-            }
+        }
+        fun bind() {
+                addLogCategoryButton?.text = "OKI"
         }
     }
 
@@ -65,8 +64,8 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
 
     override fun getItemCount(): Int {
         return if (HAS_ADD_CATEGORY_BUTTON) {
-            currentList.size + 1
-        } else currentList.size
+            logCategories.size + 1
+        } else logCategories.size
     }
 
 
