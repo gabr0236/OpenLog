@@ -1,6 +1,7 @@
 package com.example.openlog.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +31,12 @@ import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
 import com.example.openlog.util.DateTimeFormatter
 import java.util.*
+import com.example.openlog.MainActivity
+
+import android.content.DialogInterface
+
+
+
 
 
 class EditLogFragment : Fragment() {
@@ -113,13 +120,24 @@ class EditLogFragment : Fragment() {
     }
 
     fun deleteLog() {
-        Log.d("TEST", "Delete log clicked")
-        sharedViewModel.deleteLogItem(logItem)
-
-        val toast = Toast.makeText(requireContext(), "Log Slettet", Toast.LENGTH_SHORT)
-        toast.show()
-
-        findNavController().navigate(R.id.previous_logs_fragment)
+        //Confirmation dialog
+        AlertDialog.Builder(context)
+            .setTitle("Slet Log")
+            .setMessage("Er du sikker på at du vil slette denne log? Slettet Data kan ikke genskabes.")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(android.R.string.yes
+            ) { _, _ ->
+                //If yes is selected
+                Toast.makeText(
+                    context,
+                    "Log Slettet",
+                    Toast.LENGTH_SHORT
+                ).show()
+                sharedViewModel.deleteLogItem(logItem)
+                findNavController().navigate(R.id.previous_logs_fragment)
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
     }
 
     @SuppressLint("NotifyDataSetChanged")
