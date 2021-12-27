@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.data.entity.LogCategory
@@ -67,10 +66,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        recyclerViewCategory.adapter = LogCategoryListAdapter { onCategoryClicked(it) }
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                (recyclerViewCategory.adapter as LogCategoryListAdapter).submitList(it)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
             }
         }
 

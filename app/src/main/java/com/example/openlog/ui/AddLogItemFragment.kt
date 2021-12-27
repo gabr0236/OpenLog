@@ -41,6 +41,7 @@ class AddLogItemFragment : Fragment() {
 
     private var _binding: AddLogItemLayoutBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
 
     override fun onCreateView(
@@ -64,13 +65,13 @@ class AddLogItemFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        val adapter = LogCategoryListAdapter { onCategoryClicked(it) }
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-
+        //Log category recyclerview setup
+        recyclerViewCategory = binding.recyclerView
+        recyclerViewCategory.layoutManager =
+            LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                adapter.submitList(it)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
             }
         }
 

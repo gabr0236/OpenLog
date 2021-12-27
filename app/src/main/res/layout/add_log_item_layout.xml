@@ -6,7 +6,6 @@
     tools:context="com.example.openlog.ui.AddLogItemFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.openlog.viewmodel.LogItemViewModel" />

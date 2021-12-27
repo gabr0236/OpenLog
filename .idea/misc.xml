@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/drawable/ic_log_item_list.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/add_category_button.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.2033898305084746" />
         <entry key="app/src/main/res/layout/edit_log_layout.xml" value="0.23551055744726737" />
         <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />

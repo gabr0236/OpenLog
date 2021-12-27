@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -21,9 +20,7 @@ import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
-
 import android.app.TimePickerDialog
-
 import android.app.DatePickerDialog
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -31,13 +28,6 @@ import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
 import com.example.openlog.util.DateTimeFormatter
 import java.util.*
-import com.example.openlog.MainActivity
-
-import android.content.DialogInterface
-
-
-
-
 
 class EditLogFragment : Fragment() {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
@@ -51,6 +41,7 @@ class EditLogFragment : Fragment() {
 
     private var _binding: EditLogLayoutBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerViewCategory: RecyclerView
 
     private lateinit var logItem: LogItem
     private var date: Date? = null
@@ -76,14 +67,13 @@ class EditLogFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        //Recyclerview
-        val adapter = LogCategoryListAdapter { onCategoryClicked(it) }
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-
+        //Log category recyclerview setup
+        recyclerViewCategory = binding.recyclerView
+        recyclerViewCategory.layoutManager =
+            LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                adapter.submitList(it)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
             }
         }
 
