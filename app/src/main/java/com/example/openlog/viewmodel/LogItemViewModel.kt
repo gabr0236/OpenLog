@@ -152,7 +152,6 @@ class LogItemViewModel(
         .apply {
             fun update() {
                 value = logValues()?.average()?.round(2)
-                Log.d("TEST", "Gennemsnit update(): ${value.toString()}")
             }
             addSource(selectedCategory) { update() }
             update()
