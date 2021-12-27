@@ -23,6 +23,7 @@ import com.example.openlog.databinding.AddLogItemLayoutBinding
 import android.app.TimePickerDialog
 
 import android.app.DatePickerDialog
+import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
 import com.example.openlog.util.DateTimeFormatter
@@ -95,10 +96,11 @@ class AddLogItemFragment : Fragment() {
 
     fun addNewLogItem() {
         val input = binding.logValue.text.toString()
-        if (input.isBlank()) return //Return if null or blank
+        binding.logValue.text?.clear()
+
+        if (input.isBlank() || !input.isDigitsOnly()) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input, date)
-        binding.logValue.text?.clear()
 
         val toast = Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT)
         toast.show()

@@ -23,6 +23,7 @@ import com.example.openlog.viewmodel.LogItemViewModelFactory
 import android.app.TimePickerDialog
 import android.app.DatePickerDialog
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
 import com.example.openlog.databinding.EditLogLayoutBinding
@@ -94,7 +95,10 @@ class EditLogFragment : Fragment() {
 
     fun updateLogItem() {
         val input = binding.logValue.text.toString()
-        if (input.isBlank()) return //Return if null or blank
+        if (input.isBlank() || !input.isDigitsOnly()) { //Return if null or blank
+            binding.logValue.setText(logItem.value.toString())
+            return
+        }
         sharedViewModel.updateLogItem(
             logItem.id,
             input,
