@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_add_log_item_fragment_to_share_log_item_fragment"
             app:destination="@id/share_log_item_fragment" />
+        <action
+            android:id="@+id/action_add_log_item_fragment_to_create_category_fragment"
+            app:destination="@id/create_category_fragment" />
     </fragment>
 
     <fragment
@@ -34,6 +37,9 @@
         <action
             android:id="@+id/action_edit_log_fragment_to_previous_logs_fragment"
             app:destination="@id/previous_logs_fragment" />
+        <action
+            android:id="@+id/action_edit_log_fragment_to_create_category_fragment"
+            app:destination="@id/create_category_fragment" />
     </fragment>
 
     <fragment
@@ -49,6 +55,25 @@
         tools:layout="@layout/previous_logs_fragment">
         <action
             android:id="@+id/action_previous_logs_fragment_to_edit_log_fragment"
+            app:destination="@id/edit_log_fragment" />
+        <action
+            android:id="@+id/action_previous_logs_fragment_to_create_category_fragment"
+            app:destination="@id/create_category_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/create_category_fragment"
+        android:name="com.example.openlog.ui.CreateCategoryFragment"
+        android:label="Opret Ny Kategori"
+        tools:layout="@layout/create_category_fragment">
+        <action
+            android:id="@+id/action_create_category_fragment_to_add_log_item_fragment"
+            app:destination="@id/add_log_item_fragment" />
+        <action
+            android:id="@+id/action_create_category_fragment_to_previous_logs_fragment"
+            app:destination="@id/previous_logs_fragment" />
+        <action
+            android:id="@+id/action_create_category_fragment_to_edit_log_fragment"
             app:destination="@id/edit_log_fragment" />
     </fragment>
 

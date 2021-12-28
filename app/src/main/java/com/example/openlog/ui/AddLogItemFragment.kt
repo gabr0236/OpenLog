@@ -25,6 +25,7 @@ import android.app.TimePickerDialog
 import android.app.DatePickerDialog
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.openlog.R
 import com.example.openlog.util.DateTimeFormatter
 import java.util.*
@@ -115,7 +116,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onCreateCategoryClicked() {
-        TODO("Not yet implemented")
+        findNavController().navigate(R.id.create_category_fragment)
     }
 
     override fun onDeleteCategoryClicked() {

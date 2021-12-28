@@ -38,7 +38,7 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
-            R.layout.add_category_button -> (holder as ButtonViewHolder).bind()
+            R.layout.add_category_button -> (holder as ButtonViewHolder).bind(categoryRecyclerviewHandler)
             R.layout.log_category_layout -> (holder as ItemViewHolder).bind(logCategories[position], categoryRecyclerviewHandler)
         }
     }
@@ -61,11 +61,10 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
     inner class ButtonViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val addLogCategoryButton: Button = view.findViewById(R.id.create_category_button)
 
-        fun bind(){
-            Log.d("TEST", "Correct path")
+        fun bind(categoryRecyclerviewHandler: CategoryRecyclerviewHandler){
             addLogCategoryButton.setOnClickListener {
                 Log.d("TEST", "Recyclerviewbutton clicket :D")
-                //TODO categoryRecyclerviewHandler.onCreateCategoryClicked()
+                categoryRecyclerviewHandler.onCreateCategoryClicked()
             }
         }
     }
