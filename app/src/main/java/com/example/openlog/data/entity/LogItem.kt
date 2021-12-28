@@ -1,8 +1,8 @@
 package com.example.openlog.data.entity
 
 import androidx.room.*
-import java.text.DateFormat
 import java.util.*
+
 
 @Entity(tableName = "log_item")
 data class LogItem(

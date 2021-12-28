@@ -1,5 +1,6 @@
 package com.example.openlog.data.dao
 
+
 import androidx.room.*
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory

@@ -9,15 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.ui.CategoryRecyclerviewHandler
 import com.google.android.material.card.MaterialCardView
 import java.lang.IllegalArgumentException
 
 
-// Setting button as last element: https://stackoverflow.com/questions/29106484/how-to-add-a-button-at-the-end-of-recyclerview/38691600
-// , https://newbedev.com/how-to-add-a-button-at-the-end-of-recyclerview
+// Setting button as last element: https://newbedev.com/how-to-add-a-button-at-the-end-of-recyclerview
 
 class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
-    private val onLogItemClicked: (LogCategory) -> Unit
+    private val categoryRecyclerviewHandler: CategoryRecyclerviewHandler
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -25,7 +25,7 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
             R.layout.log_category_layout -> {
                 val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.log_category_layout, parent, false)
-                ItemViewHolder(view) { onLogItemClicked }
+                ItemViewHolder(view)
             }
             R.layout.add_category_button -> {
                 val view = LayoutInflater.from(parent.context)
@@ -39,20 +39,20 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             R.layout.add_category_button -> (holder as ButtonViewHolder).bind()
-            R.layout.log_category_layout -> (holder as ItemViewHolder).bind(logCategories[position])
+            R.layout.log_category_layout -> (holder as ItemViewHolder).bind(logCategories[position], categoryRecyclerviewHandler)
         }
     }
 
-    inner class ItemViewHolder(view: View, private val onLogItemClicked: (LogCategory) -> Unit) : RecyclerView.ViewHolder(view) {
+    inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val logCategoryName: TextView = view.findViewById(R.id.log_category_name)
         private val logCategoryUnit: TextView = view.findViewById(R.id.log_category_unit)
         private val logCategoryContainer: MaterialCardView = view.findViewById(R.id.log_category_container)
 
-        fun bind(logCategory: LogCategory) {
+        fun bind(logCategory: LogCategory, categoryRecyclerviewHandler: CategoryRecyclerviewHandler) {
                 logCategoryName.text = logCategory.name
                 logCategoryUnit.text = logCategory.unit
                 logCategoryContainer.setOnClickListener {
-                    onLogItemClicked(logCategory)
+                    categoryRecyclerviewHandler.onCategoryClicked(logCategory)
                 }
                 logCategoryContainer.isChecked = logCategory.isSelected
         }
@@ -65,6 +65,7 @@ class LogCategoryListAdapter(private val logCategories: List<LogCategory>,
             Log.d("TEST", "Correct path")
             addLogCategoryButton.setOnClickListener {
                 Log.d("TEST", "Recyclerviewbutton clicket :D")
+                //TODO categoryRecyclerviewHandler.onCreateCategoryClicked()
             }
         }
     }

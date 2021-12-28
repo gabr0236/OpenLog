@@ -26,11 +26,11 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
-import com.example.openlog.databinding.EditLogLayoutBinding
+import com.example.openlog.databinding.EditLogFragmentBinding
 import com.example.openlog.util.DateTimeFormatter
 import java.util.*
 
-class EditLogFragment : Fragment() {
+class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -40,7 +40,7 @@ class EditLogFragment : Fragment() {
         )
     }
 
-    private var _binding: EditLogLayoutBinding? = null
+    private var _binding: EditLogFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
 
@@ -51,8 +51,8 @@ class EditLogFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val editLogLayoutBinding: EditLogLayoutBinding =
-            DataBindingUtil.inflate(inflater, R.layout.edit_log_layout, container, false)
+        val editLogLayoutBinding: EditLogFragmentBinding =
+            DataBindingUtil.inflate(inflater, R.layout.edit_log_fragment, container, false)
         editLogLayoutBinding.editLogFragment = this
         _binding = editLogLayoutBinding
         return editLogLayoutBinding.root
@@ -74,7 +74,7 @@ class EditLogFragment : Fragment() {
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
             }
         }
 
@@ -135,10 +135,18 @@ class EditLogFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun onCategoryClicked(logCategory: LogCategory) {
+    override fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
+    }
+
+    override fun onCreateCategoryClicked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDeleteCategoryClicked() {
+        TODO("Not yet implemented")
     }
 
     //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments

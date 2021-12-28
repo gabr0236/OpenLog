@@ -16,6 +16,6 @@
             android:id="@+id/create_category_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="HEya" />
+            android:text="Ny\n Categori" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

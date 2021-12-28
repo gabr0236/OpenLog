@@ -17,11 +17,11 @@ import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.PreviousLogLayoutBinding
+import com.example.openlog.databinding.PreviousLogsFragmentBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 
-class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
+class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -31,7 +31,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         )
     }
 
-    private var _binding: PreviousLogLayoutBinding? = null
+    private var _binding: PreviousLogsFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var lineGraph: LineGraph
     private lateinit var recyclerViewCategory: RecyclerView
@@ -42,7 +42,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val previousLogsLayoutBinding: PreviousLogLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.previous_log_layout, container, false)
+        val previousLogsLayoutBinding: PreviousLogsFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.previous_logs_fragment, container, false)
         previousLogsLayoutBinding.previousLogFragment = this
         _binding = previousLogsLayoutBinding
         return previousLogsLayoutBinding.root
@@ -68,7 +68,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it,this)
             }
         }
 
@@ -95,7 +95,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun onCategoryClicked(logCategory: LogCategory) {
+    override fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
 
             //Notify adapters
@@ -112,6 +112,14 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem {
                 }
             lineGraph.setValues(sharedViewModel.logValues())
         }
+    }
+
+    override fun onCreateCategoryClicked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDeleteCategoryClicked() {
+        TODO("Not yet implemented")
     }
 
     override fun onItemClickedFullLog(logItem: LogItem) {

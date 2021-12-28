@@ -10,11 +10,11 @@ import com.example.openlog.databinding.LogItemLayoutBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 
+//TODO gab: lav til normalt recyclerview uden b.la. diffcallback
 class LogItemListAdapter(
     private val onItemClickListenerLogItem: OnItemClickListenerLogItem
 ) :
     ListAdapter<LogItem, LogItemListAdapter.ItemViewHolder>(DiffCallback) {
-
 
     class ItemViewHolder(
         private var binding: LogItemLayoutBinding
@@ -30,7 +30,6 @@ class LogItemListAdapter(
             }
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(LogItemLayoutBinding.inflate(LayoutInflater.from(parent.context)))

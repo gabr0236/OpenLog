@@ -2,6 +2,7 @@ package com.example.openlog.data.entity
 
 import androidx.room.*
 
+
 @Entity(tableName = "log_category")
 data class LogCategory(
     @PrimaryKey

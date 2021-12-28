@@ -18,7 +18,7 @@ import com.example.openlog.LogItemApplication
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
-import com.example.openlog.databinding.AddLogItemLayoutBinding
+import com.example.openlog.databinding.AddLogFragmentBinding
 
 import android.app.TimePickerDialog
 
@@ -30,7 +30,7 @@ import com.example.openlog.util.DateTimeFormatter
 import java.util.*
 
 
-class AddLogItemFragment : Fragment() {
+class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private val sharedViewModel: LogItemViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -40,7 +40,7 @@ class AddLogItemFragment : Fragment() {
         )
     }
 
-    private var _binding: AddLogItemLayoutBinding? = null
+    private var _binding: AddLogFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
@@ -49,8 +49,8 @@ class AddLogItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val addLogItemLayoutBinding: AddLogItemLayoutBinding =
-            DataBindingUtil.inflate(inflater, R.layout.add_log_item_layout, container, false)
+        val addLogItemLayoutBinding: AddLogFragmentBinding =
+            DataBindingUtil.inflate(inflater, R.layout.add_log_fragment, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
         _binding = addLogItemLayoutBinding
         return addLogItemLayoutBinding.root
@@ -72,7 +72,7 @@ class AddLogItemFragment : Fragment() {
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it) { onCategoryClicked(it) }
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
             }
         }
 
@@ -108,10 +108,18 @@ class AddLogItemFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun onCategoryClicked(logCategory: LogCategory) {
+    override fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
+    }
+
+    override fun onCreateCategoryClicked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDeleteCategoryClicked() {
+        TODO("Not yet implemented")
     }
 
     //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
