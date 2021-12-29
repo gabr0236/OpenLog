@@ -5,15 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
-import com.google.android.material.button.MaterialButton
 
 //TODO gab: lav til normalt recyclerview uden b.la. diffcallback
 class LogItemAdapter(

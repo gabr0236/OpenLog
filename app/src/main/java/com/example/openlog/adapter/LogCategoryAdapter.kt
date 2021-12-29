@@ -68,10 +68,10 @@ class LogCategoryAdapter(
     }
 
     inner class ButtonViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val addLogCategoryButton: Button = view.findViewById(R.id.create_category_button)
+        private val addCategoryCardView: MaterialCardView = view.findViewById(R.id.cardview_create_category)
 
         fun bind(categoryRecyclerviewHandler: CategoryRecyclerviewHandler) {
-            addLogCategoryButton.setOnClickListener {
+            addCategoryCardView.setOnClickListener {
                 Log.d("TEST", "Recyclerviewbutton clicket :D")
                 categoryRecyclerviewHandler.onCreateCategoryClicked()
             }
