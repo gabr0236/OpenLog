@@ -13,7 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
-import com.example.openlog.databinding.CreateCategoryFragmentBinding
+import com.example.openlog.databinding.FragmentCreateCategoryBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 import java.util.*
@@ -28,15 +28,15 @@ class CreateCategoryFragment : Fragment() {
         )
     }
 
-    private var _binding: CreateCategoryFragmentBinding? = null
+    private var _binding: FragmentCreateCategoryBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val createCategoryFragmentBinding: CreateCategoryFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.create_category_fragment, container, false)
+        val createCategoryFragmentBinding: FragmentCreateCategoryBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_create_category, container, false)
         createCategoryFragmentBinding.createCategoryFragment = this
         _binding = createCategoryFragmentBinding
         return createCategoryFragmentBinding.root

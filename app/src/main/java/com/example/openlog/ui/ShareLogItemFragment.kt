@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.openlog.LogItemApplication
-import com.example.openlog.databinding.ShareLogsFragmentBinding
+import com.example.openlog.databinding.FragmentShareLogsBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 
@@ -21,14 +21,14 @@ class ShareLogItemFragment : Fragment() {
         )
     }
 
-    private var _binding: ShareLogsFragmentBinding? = null
+    private var _binding: FragmentShareLogsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ShareLogsFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentShareLogsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

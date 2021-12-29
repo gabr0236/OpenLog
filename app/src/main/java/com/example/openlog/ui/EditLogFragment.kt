@@ -24,7 +24,7 @@ import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.EditLogFragmentBinding
+import com.example.openlog.databinding.FragmentEditLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
@@ -40,7 +40,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         )
     }
 
-    private var _binding: EditLogFragmentBinding? = null
+    private var _binding: FragmentEditLogBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
 
@@ -51,8 +51,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val editLogLayoutBinding: EditLogFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.edit_log_fragment, container, false)
+        val editLogLayoutBinding: FragmentEditLogBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_log, container, false)
         editLogLayoutBinding.editLogFragment = this
         _binding = editLogLayoutBinding
         return editLogLayoutBinding.root

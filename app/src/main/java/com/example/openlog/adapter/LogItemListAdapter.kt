@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.LogItemLayoutBinding
+import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 
@@ -17,7 +17,7 @@ class LogItemListAdapter(
     ListAdapter<LogItem, LogItemListAdapter.ItemViewHolder>(DiffCallback) {
 
     class ItemViewHolder(
-        private var binding: LogItemLayoutBinding
+        private var binding: LayoutLogItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
@@ -32,7 +32,7 @@ class LogItemListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(LogItemLayoutBinding.inflate(LayoutInflater.from(parent.context)))
+        return ItemViewHolder(LayoutLogItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

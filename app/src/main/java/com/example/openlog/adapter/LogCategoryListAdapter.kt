@@ -22,14 +22,14 @@ class LogCategoryListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.log_category_layout -> {
+            R.layout.layout_log_category -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.log_category_layout, parent, false)
+                    .inflate(R.layout.layout_log_category, parent, false)
                 ItemViewHolder(view)
             }
-            R.layout.add_category_button -> {
+            R.layout.button_add_category -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.add_category_button, parent, false)
+                    .inflate(R.layout.button_add_category, parent, false)
                 ButtonViewHolder(view)
             }
             else -> throw IllegalArgumentException("Unknown view type $viewType")
@@ -38,10 +38,10 @@ class LogCategoryListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.add_category_button -> (holder as ButtonViewHolder).bind(
+            R.layout.button_add_category -> (holder as ButtonViewHolder).bind(
                 categoryRecyclerviewHandler
             )
-            R.layout.log_category_layout -> (holder as ItemViewHolder).bind(
+            R.layout.layout_log_category -> (holder as ItemViewHolder).bind(
                 logCategories[position],
                 categoryRecyclerviewHandler
             )
@@ -80,7 +80,7 @@ class LogCategoryListAdapter(
 
     //Returns true if this is the last element
     override fun getItemViewType(position: Int): Int {
-        return if (position == logCategories.size) R.layout.add_category_button else R.layout.log_category_layout
+        return if (position == logCategories.size) R.layout.button_add_category else R.layout.layout_log_category
     }
 
     override fun getItemCount(): Int {

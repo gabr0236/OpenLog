@@ -17,7 +17,7 @@ import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.PreviousLogsFragmentBinding
+import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
 
@@ -31,7 +31,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         )
     }
 
-    private var _binding: PreviousLogsFragmentBinding? = null
+    private var _binding: FragmentPreviousLogsBinding? = null
     private val binding get() = _binding!!
     private lateinit var lineGraph: LineGraph
     private lateinit var recyclerViewCategory: RecyclerView
@@ -42,8 +42,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val previousLogsLayoutBinding: PreviousLogsFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.previous_logs_fragment, container, false)
+        val previousLogsLayoutBinding: FragmentPreviousLogsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_previous_logs, container, false)
         previousLogsLayoutBinding.previousLogFragment = this
         _binding = previousLogsLayoutBinding
         return previousLogsLayoutBinding.root

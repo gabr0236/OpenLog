@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="6"
-                tools:listitem="@layout/log_category_layout" />
+                tools:listitem="@layout/layout_log_category" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/statisticsCard"
@@ -129,7 +129,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logs"
                 tools:itemCount="6"
-                tools:listitem="@layout/log_item_layout" />
+                tools:listitem="@layout/layout_log_item" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

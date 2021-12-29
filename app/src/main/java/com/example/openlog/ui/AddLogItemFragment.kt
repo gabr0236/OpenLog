@@ -22,7 +22,7 @@ import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogCategory
-import com.example.openlog.databinding.AddLogFragmentBinding
+import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.LogItemViewModel
 import com.example.openlog.viewmodel.LogItemViewModelFactory
@@ -39,7 +39,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         )
     }
 
-    private var _binding: AddLogFragmentBinding? = null
+    private var _binding: FragmentAddLogBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
@@ -48,8 +48,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val addLogItemLayoutBinding: AddLogFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.add_log_fragment, container, false)
+        val addLogItemLayoutBinding: FragmentAddLogBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_log, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
         _binding = addLogItemLayoutBinding
         return addLogItemLayoutBinding.root

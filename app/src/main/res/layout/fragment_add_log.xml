@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="6"
-            tools:listitem="@layout/log_category_layout" />
+            tools:listitem="@layout/layout_log_category" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textfield_container_edit_text"
