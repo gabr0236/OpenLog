@@ -11,11 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.adapter.LogItemListAdapter
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.PreviousLogsFragmentBinding
 import com.example.openlog.viewmodel.LogItemViewModel
@@ -42,7 +42,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val previousLogsLayoutBinding: PreviousLogsFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.previous_logs_fragment, container, false)
+        val previousLogsLayoutBinding: PreviousLogsFragmentBinding =
+            DataBindingUtil.inflate(inflater, R.layout.previous_logs_fragment, container, false)
         previousLogsLayoutBinding.previousLogFragment = this
         _binding = previousLogsLayoutBinding
         return previousLogsLayoutBinding.root
@@ -68,7 +69,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it,this)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
             }
         }
 

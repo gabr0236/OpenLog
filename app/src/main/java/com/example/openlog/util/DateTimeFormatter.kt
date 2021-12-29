@@ -6,6 +6,8 @@ import java.util.*
 class DateTimeFormatter {
     companion object {
         private val sdf = SimpleDateFormat("yyyy EEEE dd/M hh:mm")
-        fun formatDateTime(date: Date): String { return sdf.format(date) }
+        fun formatDateTime(date: Date): String {
+            return sdf.format(date)
+        }
     }
 }

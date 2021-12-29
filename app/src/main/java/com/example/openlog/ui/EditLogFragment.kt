@@ -2,6 +2,8 @@ package com.example.openlog.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
@@ -9,25 +11,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.core.text.isDigitsOnly
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.LogItemApplication
-import com.example.openlog.adapter.LogCategoryListAdapter
-import com.example.openlog.data.entity.LogItem
-import com.example.openlog.viewmodel.LogItemViewModel
-import com.example.openlog.viewmodel.LogItemViewModelFactory
-import android.app.TimePickerDialog
-import android.app.DatePickerDialog
-import android.widget.Toast
-import androidx.core.text.isDigitsOnly
-import androidx.databinding.DataBindingUtil
 import com.example.openlog.R
+import com.example.openlog.adapter.LogCategoryListAdapter
+import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.EditLogFragmentBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.viewmodel.LogItemViewModel
+import com.example.openlog.viewmodel.LogItemViewModelFactory
 import java.util.*
 
 class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
@@ -78,10 +78,12 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             }
         }
 
-        sharedViewModel.selectedLogItemToEdit.value?: return //return if selectedLogItemToEdit is null
+        sharedViewModel.selectedLogItemToEdit.value
+            ?: return //return if selectedLogItemToEdit is null
         logItem = sharedViewModel.selectedLogItemToEdit.value!!
 
-        binding.textDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) } //Date of log
+        binding.textDate.text =
+            logItem.date?.let { DateTimeFormatter.formatDateTime(it) } //Date of log
     }
 
     override fun onDestroyView() {
@@ -107,8 +109,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.logValue.text?.clear()
         date = null
 
-        val toast = Toast.makeText(requireContext(), "Log Opdateret", Toast.LENGTH_SHORT)
-        toast.show()
+        Toast.makeText(requireContext(), "Log Opdateret", Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.previous_logs_fragment)
     }
@@ -119,7 +120,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             .setTitle("Slet Log")
             .setMessage("Er du sikker på at du vil slette denne log? Slettet Data kan ikke genskabes.")
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(android.R.string.yes
+            .setPositiveButton(
+                android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
                 Toast.makeText(

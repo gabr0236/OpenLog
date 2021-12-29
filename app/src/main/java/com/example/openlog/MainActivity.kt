@@ -1,8 +1,8 @@
 package com.example.openlog
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .Builder(
                 R.id.share_log_item_fragment,
                 R.id.add_log_item_fragment,
-                R.id.previous_logs_fragment)
+                R.id.previous_logs_fragment
+            )
             .build()
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)

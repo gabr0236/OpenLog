@@ -1,11 +1,10 @@
 package com.example.openlog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.openlog.data.entity.LogCategory
-import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
+import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
@@ -177,7 +176,7 @@ class LogItemViewModel(
     }
 
     fun createCategory(name: String, unit: String) {
-        val newCategory = LogCategory(name,unit)
+        val newCategory = LogCategory(name, unit)
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }

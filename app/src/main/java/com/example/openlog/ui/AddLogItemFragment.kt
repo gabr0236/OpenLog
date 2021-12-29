@@ -1,6 +1,8 @@
 package com.example.openlog.ui
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
@@ -9,25 +11,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.openlog.data.entity.LogCategory
-import com.example.openlog.LogItemApplication
-import com.example.openlog.adapter.LogCategoryListAdapter
-import com.example.openlog.viewmodel.LogItemViewModel
-import com.example.openlog.viewmodel.LogItemViewModelFactory
-import com.example.openlog.databinding.AddLogFragmentBinding
-
-import android.app.TimePickerDialog
-
-import android.app.DatePickerDialog
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.LogItemApplication
 import com.example.openlog.R
+import com.example.openlog.adapter.LogCategoryListAdapter
+import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.databinding.AddLogFragmentBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.viewmodel.LogItemViewModel
+import com.example.openlog.viewmodel.LogItemViewModelFactory
 import java.util.*
 
 
@@ -103,8 +101,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         sharedViewModel.addNewLogItem(input, date)
 
-        val toast = Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT)
-        toast.show()
+        Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT).show()
         date = null
     }
 

@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.converter.DateConverter
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 
 @Database(entities = [LogItem::class, LogCategory::class], version = 1, exportSchema = false)

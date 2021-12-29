@@ -67,12 +67,18 @@ class CreateCategoryFragment : Fragment() {
         val name = binding.textInputCategoryName.text
         val unit = binding.textInputCategoryUnit.text
         if (unit.isNullOrBlank() || name.isNullOrBlank()) return //return if no input
+
+        //disallow duplicate names
         if (sharedViewModel.allLogCategories.value?.any { lc -> lc.name == name.toString() } == true) {
             name.clear()
             unit.clear()
-            Toast.makeText(requireContext(), "En kategori med dette navn eksitere allerede", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "En kategori med dette navn eksitere allerede",
+                Toast.LENGTH_SHORT
+            ).show()
             return
-        } //disallow duplicate names
+        }
         sharedViewModel.createCategory(name.toString(), unit.toString())
         findNavController().popBackStack()
     }
