@@ -1,14 +1,19 @@
 package com.example.openlog.data.dao
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogCategoryWithLogItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LogCategoryDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(logCategory: LogCategory)
+
+    @Update
+    suspend fun update(logCategory: LogCategory)
+
     @Query("SELECT * FROM log_category WHERE log_category_name = :name")
     fun getLogCategory(name: String): Flow<LogCategory>
 

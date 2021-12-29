@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.databinding.CreateCategoryFragmentBinding
@@ -64,7 +63,17 @@ class CreateCategoryFragment : Fragment() {
         _binding = null
     }
 
-    fun createCategory(){
-        //TODO: gab
+    fun createCategory() {
+        val name = binding.textInputCategoryName.text
+        val unit = binding.textInputCategoryUnit.text
+        if (unit.isNullOrBlank() || name.isNullOrBlank()) return //return if no input
+        if (sharedViewModel.allLogCategories.value?.any { lc -> lc.name == name.toString() } == true) {
+            name.clear()
+            unit.clear()
+            Toast.makeText(requireContext(), "En kategori med dette navn eksitere allerede", Toast.LENGTH_SHORT).show()
+            return
+        } //disallow duplicate names
+        sharedViewModel.createCategory(name.toString(), unit.toString())
+        findNavController().popBackStack()
     }
 }

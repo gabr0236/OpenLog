@@ -175,4 +175,11 @@ class LogItemViewModel(
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { it.value }?.toList()
     }
+
+    fun createCategory(name: String, unit: String) {
+        val newCategory = LogCategory(name,unit)
+        viewModelScope.launch {
+            logCategoryDao.insert(newCategory)
+        }
+    }
 }
