@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.openlog.viewmodel.LogItemViewModel" />
+            type="com.example.openlog.viewmodel.SharedViewModel" />
 
         <variable
             name="addLogItemFragment"

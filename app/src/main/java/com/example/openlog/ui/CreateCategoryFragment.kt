@@ -14,15 +14,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.databinding.FragmentCreateCategoryBinding
-import com.example.openlog.viewmodel.LogItemViewModel
-import com.example.openlog.viewmodel.LogItemViewModelFactory
+import com.example.openlog.viewmodel.SharedViewModel
+import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
 
 class CreateCategoryFragment : Fragment() {
-    private val sharedViewModel: LogItemViewModel by activityViewModels {
+    private val sharedViewModel: SharedViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
-        LogItemViewModelFactory(
+        SharedViewModelFactory(
             db.logItemDao(),
             db.logCategoryDao()
         )

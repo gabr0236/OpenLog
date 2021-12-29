@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.openlog.LogItemApplication
 import com.example.openlog.databinding.FragmentShareLogsBinding
-import com.example.openlog.viewmodel.LogItemViewModel
-import com.example.openlog.viewmodel.LogItemViewModelFactory
+import com.example.openlog.viewmodel.SharedViewModel
+import com.example.openlog.viewmodel.SharedViewModelFactory
 
 class ShareLogItemFragment : Fragment() {
-    private val sharedViewModel: LogItemViewModel by activityViewModels {
+    private val sharedViewModel: SharedViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
-        LogItemViewModelFactory(
+        SharedViewModelFactory(
             db.logItemDao(),
             db.logCategoryDao()
         )

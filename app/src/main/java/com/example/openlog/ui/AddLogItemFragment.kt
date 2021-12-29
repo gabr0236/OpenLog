@@ -24,16 +24,16 @@ import com.example.openlog.adapter.LogCategoryAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
-import com.example.openlog.viewmodel.LogItemViewModel
-import com.example.openlog.viewmodel.LogItemViewModelFactory
+import com.example.openlog.viewmodel.SharedViewModel
+import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
 
 
 class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
-    private val sharedViewModel: LogItemViewModel by activityViewModels {
+    private val sharedViewModel: SharedViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
-        LogItemViewModelFactory(
+        SharedViewModelFactory(
             db.logItemDao(),
             db.logCategoryDao()
         )

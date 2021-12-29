@@ -15,17 +15,13 @@ import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.util.*
 
-class LogItemViewModel(
+class SharedViewModel(
     private val logItemDao: LogItemDao,
     private val logCategoryDao: LogCategoryDao
 ) : ViewModel() {
 
-    val allLogCategories: LiveData<List<LogCategory>> =
-        logCategoryDao.getLogCategories().asLiveData()
-
-    //val allLogCategoryNames: LiveData<List<String>> = logCategoryDao.getLogCategoryNames().asLiveData()  TODO slet?
+    val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
-    //val allFullLogItems: LiveData<List<LogItemAndLogCategory>> = logItemDao.getFullLogItems().asLiveData() TODO slet?
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
@@ -41,7 +37,7 @@ class LogItemViewModel(
         return if (selectedCategory.value != logCategory) {
             _selectedCategory.value?.isSelected = false
             _selectedCategory.value = logCategory
-            logCategory.isSelected = true
+            _selectedCategory.value?.isSelected = true
             true
         } else false
     }
@@ -105,6 +101,7 @@ class LogItemViewModel(
         return logItemDao.getLogItem(id).asLiveData()
     }
 
+    //TODO: nok smartere bare at selecte fra de categorier vi allerede har hentet
     fun retrieveItemsByCategory(name: String): LiveData<LogCategoryWithLogItems> {
         return logCategoryDao.getLogCategoryWithLogItems(name).asLiveData()
     }
