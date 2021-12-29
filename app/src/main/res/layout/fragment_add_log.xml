@@ -59,7 +59,6 @@
             android:id="@+id/constraintLayout"
             android:layout_width="380dp"
             android:layout_height="60dp"
-            android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textfield_container_edit_text">
@@ -68,7 +67,6 @@
                 android:id="@+id/text_date"
                 android:layout_width="237dp"
                 android:layout_height="50dp"
-                android:layout_margin="0dp"
                 android:gravity="center_vertical"
                 android:text="I dag"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -78,8 +76,8 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_edit_date"
-                android:layout_width="127dp"
-                android:layout_height="43dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:onClick="@{() -> addLogItemFragment.pickDateTime()}"
                 android:text="Skift dato"
                 app:layout_constraintBottom_toBottomOf="parent"

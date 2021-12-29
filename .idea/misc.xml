@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/create_category_fragment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/edit_log_fragment.xml" value="0.24818840579710144" />
         <entry key="app/src/main/res/layout/edit_log_layout.xml" value="0.23551055744726737" />
+        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_previous_logs.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/layout_log_category.xml" value="0.16875" />
