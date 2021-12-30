@@ -5,9 +5,15 @@ import java.util.*
 
 class DateTimeFormatter {
     companion object {
-        private val sdf = SimpleDateFormat("yyyy EEEE dd/M hh:mm")
-        fun formatDateTime(date: Date): String {
-            return sdf.format(date)
+        private val patternYearDayDateTime = SimpleDateFormat("yyyy EEEE dd/M hh:mm")
+        private val patternDate = SimpleDateFormat("dd/M")
+
+        fun formatAsYearDayDateTime(date: Date): String {
+            return patternYearDayDateTime.format(date)
+        }
+
+        fun formatAsDate(date: Date): String {
+            return patternDate.format(date)
         }
     }
 }

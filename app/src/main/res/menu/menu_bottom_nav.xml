@@ -9,7 +9,7 @@
     <item
         android:id="@+id/add_log_item_fragment"
         android:icon="@drawable/ic_log_item_create"
-        android:title="Skriv Log" />
+        android:title="Tilføj Log" />
 
 
     <item

@@ -172,6 +172,16 @@ class SharedViewModel(
             ?.map { it.value }?.toList()
     }
 
+    /**
+     * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
+     */
+    fun logValuesAndDates(): List<Pair<Int, Date?>>? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
+            ?.take(quantityOfLogsForDerivingStatistics)
+            ?.map { Pair(it.value, it.date) }?.toMutableList()
+    }
+
     fun createCategory(name: String, unit: String) {
         val newCategory = LogCategory(name, unit)
         viewModelScope.launch {

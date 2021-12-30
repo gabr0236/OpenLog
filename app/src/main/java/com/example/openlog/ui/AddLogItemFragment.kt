@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
-import com.example.openlog.adapter.LogCategoryListAdapter
+import com.example.openlog.adapter.LogCategoryAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
@@ -71,7 +71,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
+                recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
         }
 
@@ -80,7 +80,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
 
         date = Calendar.getInstance().time //Show current date on screen
-        date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
+        date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
     }
 
     override fun onDestroyView() {
@@ -135,7 +135,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
                 date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatDateTime(it) }
+                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()

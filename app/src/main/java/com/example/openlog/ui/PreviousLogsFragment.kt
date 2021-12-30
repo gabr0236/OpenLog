@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
-import com.example.openlog.adapter.LogCategoryListAdapter
+import com.example.openlog.adapter.LogCategoryAdapter
 import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
@@ -69,7 +69,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
+                recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
         }
 
@@ -92,7 +92,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
 
         //Graph
-        lineGraph = LineGraph(sharedViewModel.logValues(), binding.logGraph)
+        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -111,7 +111,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
                         (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
                     }
                 }
-            lineGraph.setValues(sharedViewModel.logValues())
+            lineGraph.setValues(sharedViewModel.logValuesAndDates())
         }
     }
 

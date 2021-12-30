@@ -23,7 +23,7 @@ class LogItemListAdapter(
         fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
             binding.apply {
                 logItemValue.text = logItem.value.toString()
-                logItemDate.text = logItem.date?.let { DateTimeFormatter.formatDateTime(it) }
+                logItemDate.text = logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
                 editAction.setOnClickListener {
                     onItemClickListenerLogItem.onItemClickedFullLog(logItem)
                 }
