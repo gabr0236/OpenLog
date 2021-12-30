@@ -4,12 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.ui.CategoryRecyclerviewHandler
+import com.example.openlog.util.GetDrawable
 import com.google.android.material.card.MaterialCardView
 
 
@@ -53,6 +54,7 @@ class LogCategoryAdapter(
         private val logCategoryUnit: TextView = view.findViewById(R.id.log_category_unit)
         private val logCategoryContainer: MaterialCardView =
             view.findViewById(R.id.log_category_container)
+        private val logEmoji: ImageView = view.findViewById(R.id.imageview_emoji)
 
         fun bind(
             logCategory: LogCategory,
@@ -64,6 +66,7 @@ class LogCategoryAdapter(
                 categoryRecyclerviewHandler.onCategoryClicked(logCategory)
             }
             logCategoryContainer.isChecked = logCategory.isSelected
+            logEmoji.setImageDrawable(itemView.context.getDrawable(GetDrawable.getEmojiIDOf(logCategory.name)))
         }
     }
 
