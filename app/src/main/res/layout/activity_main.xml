@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemRippleColor="@color/pink_200"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
