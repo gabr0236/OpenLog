@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
-import com.example.openlog.adapter.LogCategoryAdapter
-import com.example.openlog.adapter.LogItemAdapter
+import com.example.openlog.adapter.LogCategoryListAdapter
+import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
@@ -69,7 +69,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
             }
         }
 
@@ -77,14 +77,19 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-
+        recyclerViewLogItem.adapter = LogItemListAdapter(this)
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
             .observe(this.viewLifecycleOwner) { items ->
                 items.logItems.let {
-                    recyclerViewLogItem.adapter = LogItemAdapter(it, this)
+                    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
                 }
             }
         recyclerViewLogItem.scrollToPosition(0)
+
+
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
+            items.let { (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it) }
+        }
 
         //Graph
         lineGraph = LineGraph(sharedViewModel.logValues(), binding.logGraph)
@@ -103,7 +108,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
                 .observe(this.viewLifecycleOwner) { items ->
                     items.logItems.let {
-                        (recyclerViewLogItem.adapter as LogItemAdapter).replaceListWith(it)
+                        (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
                     }
                 }
             lineGraph.setValues(sharedViewModel.logValues())

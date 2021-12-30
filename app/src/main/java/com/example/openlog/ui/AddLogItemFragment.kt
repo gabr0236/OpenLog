@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
-import com.example.openlog.adapter.LogCategoryAdapter
+import com.example.openlog.adapter.LogCategoryListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
@@ -71,7 +71,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
+                recyclerViewCategory.adapter = LogCategoryListAdapter(it, this)
             }
         }
 

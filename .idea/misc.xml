@@ -21,12 +21,9 @@
         <entry key="app/src/main/res/layout/add_category_button.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/add_log_fragment.xml" value="0.16742654508611957" />
         <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.2033898305084746" />
-        <entry key="app/src/main/res/layout/button_add_category.xml" value="1.0" />
         <entry key="app/src/main/res/layout/create_category_fragment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/edit_log_fragment.xml" value="0.24818840579710144" />
         <entry key="app/src/main/res/layout/edit_log_layout.xml" value="0.23551055744726737" />
-        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_previous_logs.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/layout_log_category.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />

@@ -15,7 +15,7 @@ import com.google.android.material.card.MaterialCardView
 
 // Setting button as last element: https://newbedev.com/how-to-add-a-button-at-the-end-of-recyclerview
 
-class LogCategoryAdapter(
+class LogCategoryListAdapter(
     private val logCategories: List<LogCategory>,
     private val categoryRecyclerviewHandler: CategoryRecyclerviewHandler
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
