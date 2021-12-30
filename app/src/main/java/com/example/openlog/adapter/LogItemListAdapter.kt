@@ -10,7 +10,6 @@ import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 
-//TODO gab: lav til normalt recyclerview uden b.la. diffcallback
 class LogItemListAdapter(
     private val onItemClickListenerLogItem: OnItemClickListenerLogItem
 ) :

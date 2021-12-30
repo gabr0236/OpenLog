@@ -6,6 +6,7 @@ import java.lang.IllegalArgumentException
 
 class GetDrawable {
     companion object {
+        //TODO: should eventually switch through category emoji ID
         fun getEmojiIDOf(categoryName: String): Int{
             return when(categoryName){
                 "Kulhydrater" -> R.drawable.emoji_calories
