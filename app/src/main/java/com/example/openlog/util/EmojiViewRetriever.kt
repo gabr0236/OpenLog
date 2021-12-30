@@ -4,7 +4,7 @@ import com.example.openlog.R
 import java.lang.IllegalArgumentException
 
 
-class GetDrawable {
+class EmojiViewRetriever {
     companion object {
         //TODO: should eventually switch through category emoji ID
         fun getEmojiIDOf(categoryName: String): Int{

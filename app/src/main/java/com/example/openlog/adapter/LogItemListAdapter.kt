@@ -9,6 +9,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.util.EmojiViewRetriever
 
 class LogItemListAdapter(
     private val onItemClickListenerLogItem: OnItemClickListenerLogItem
@@ -26,6 +27,8 @@ class LogItemListAdapter(
                 editAction.setOnClickListener {
                     onItemClickListenerLogItem.onItemClickedFullLog(logItem)
                 }
+                imageviewEmoji.setImageDrawable(itemView.context.getDrawable(EmojiViewRetriever.getEmojiIDOf(logItem.categoryOwnerName)))
+
             }
         }
     }
