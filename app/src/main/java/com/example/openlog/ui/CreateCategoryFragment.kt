@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
+import com.example.openlog.adapter.EmojiArrayAdapter
 import com.example.openlog.databinding.FragmentCreateCategoryBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
@@ -51,6 +53,9 @@ class CreateCategoryFragment : Fragment() {
             createCategoryFragment = this@CreateCategoryFragment
             viewModel = sharedViewModel
         }
+
+        val emojiAdapter = context?.let { EmojiArrayAdapter(it, emojiArray) }
+        (binding.textfieldEdittextEmoji as? AutoCompleteTextView)?.setAdapter(emojiAdapter)
     }
 
     override fun onDestroyView() {
@@ -81,5 +86,8 @@ class CreateCategoryFragment : Fragment() {
         }
         sharedViewModel.createCategory(name.toString(), unit.toString())
         findNavController().popBackStack()
+    }
+    companion object {
+        val emojiArray: Array<Int> = arrayOf(R.drawable.emoji_calories, R.drawable.emoji_sugar_blood_level, R.drawable.emoji_sleep, R.drawable.emoji_insulin)
     }
 }
