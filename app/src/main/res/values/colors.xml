@@ -12,4 +12,6 @@
     <color name="pink_200">#F48FB1</color>
     <color name="pink_700">#C2185B</color>
     <color name="light_gray">#E1E1E1</color>
+    <color name="border_gray">#9E9E9E</color>
+
 </resources>

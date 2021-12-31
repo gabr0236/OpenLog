@@ -59,7 +59,6 @@ class CreateCategoryFragment : Fragment() {
         val emojiAdapter = context?.let { EmojiArrayAdapter(it, emojiArray) }
         binding.spinnerEmojis.adapter=emojiAdapter
 
-
     }
 
     override fun onDestroyView() {

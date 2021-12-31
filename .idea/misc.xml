@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25462962962962965" />
         <entry key="app/src/main/res/drawable/ic_log_item_create.xml" value="0.1925925925925926" />
         <entry key="app/src/main/res/drawable/ic_log_item_list.xml" value="0.2657407407407407" />
+        <entry key="app/src/main/res/drawable/spinner_outline.xml" value="0.2972222222222222" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/add_category_button.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/add_log_fragment.xml" value="0.16742654508611957" />
@@ -38,6 +39,7 @@
         <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/log_category_list_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/log_item_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/outline_spinner.xml" value="0.3489583333333333" />
         <entry key="app/src/main/res/layout/previous_log_layout.xml" value="0.2617283950617284" />
         <entry key="app/src/main/res/layout/share_log_item_layout.xml" value="0.19701086956521738" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
