@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.example.openlog.databinding.FragmentCreateCategoryBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CreateCategoryFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -55,7 +57,9 @@ class CreateCategoryFragment : Fragment() {
         }
 
         val emojiAdapter = context?.let { EmojiArrayAdapter(it, emojiArray) }
-        (binding.textfieldEdittextEmoji as? AutoCompleteTextView)?.setAdapter(emojiAdapter)
+        binding.spinnerEmojis.adapter=emojiAdapter
+
+
     }
 
     override fun onDestroyView() {
