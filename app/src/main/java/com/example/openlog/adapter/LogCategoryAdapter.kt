@@ -12,6 +12,7 @@ import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.ui.CategoryRecyclerviewHandler
 import com.example.openlog.util.EmojiRetriever
 import com.google.android.material.card.MaterialCardView
+import kotlin.math.log
 
 
 // Setting button as last element: https://newbedev.com/how-to-add-a-button-at-the-end-of-recyclerview
@@ -64,6 +65,11 @@ class LogCategoryAdapter(
             logCategoryUnit.text = logCategory.unit
             logCategoryContainer.setOnClickListener {
                 categoryRecyclerviewHandler.onCategoryClicked(logCategory)
+            }
+            logCategoryContainer.setOnLongClickListener {
+                //TODO delete category
+                categoryRecyclerviewHandler.onDeleteCategoryClicked(logCategory)
+                true
             }
             logCategoryContainer.isChecked = logCategory.isSelected
             categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logCategory.name)))

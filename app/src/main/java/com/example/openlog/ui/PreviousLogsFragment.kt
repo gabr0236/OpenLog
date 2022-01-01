@@ -119,7 +119,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         findNavController().navigate(R.id.create_category_fragment)
     }
 
-    override fun onDeleteCategoryClicked() {
+    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
         TODO("Not yet implemented")
     }
 

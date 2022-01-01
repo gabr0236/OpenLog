@@ -116,8 +116,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         findNavController().navigate(R.id.create_category_fragment)
     }
 
-    override fun onDeleteCategoryClicked() {
-        TODO("Not yet implemented")
+    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
+        Log.d("TEST", "Long click")
     }
 
     //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
