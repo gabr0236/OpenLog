@@ -2,12 +2,11 @@ package com.example.openlog.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.AutoCompleteTextView
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,10 +16,10 @@ import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.EmojiArrayAdapter
 import com.example.openlog.databinding.FragmentCreateCategoryBinding
+import com.example.openlog.util.EmojiRetriever
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CreateCategoryFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -34,6 +33,7 @@ class CreateCategoryFragment : Fragment() {
 
     private var _binding: FragmentCreateCategoryBinding? = null
     private val binding get() = _binding!!
+    private var emojiArrayAdapter: EmojiArrayAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,9 +56,8 @@ class CreateCategoryFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        val emojiAdapter = context?.let { EmojiArrayAdapter(it, emojiArray) }
-        binding.spinnerEmojis.adapter=emojiAdapter
-
+        emojiArrayAdapter = context?.let { EmojiArrayAdapter(it, EmojiRetriever.emojiArray) }
+        binding.spinnerEmojis.adapter=emojiArrayAdapter
     }
 
     override fun onDestroyView() {
@@ -88,9 +87,7 @@ class CreateCategoryFragment : Fragment() {
             return
         }
         sharedViewModel.createCategory(name.toString(), unit.toString())
+        //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
         findNavController().popBackStack()
-    }
-    companion object {
-        val emojiArray: Array<Int> = arrayOf(R.drawable.emoji_calories, R.drawable.emoji_sugar_blood_level, R.drawable.emoji_sleep, R.drawable.emoji_insulin)
     }
 }

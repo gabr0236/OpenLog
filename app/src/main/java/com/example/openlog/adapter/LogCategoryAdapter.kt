@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.ui.CategoryRecyclerviewHandler
-import com.example.openlog.util.EmojiViewRetriever
+import com.example.openlog.util.EmojiRetriever
 import com.google.android.material.card.MaterialCardView
 
 
@@ -66,7 +66,7 @@ class LogCategoryAdapter(
                 categoryRecyclerviewHandler.onCategoryClicked(logCategory)
             }
             logCategoryContainer.isChecked = logCategory.isSelected
-            categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiViewRetriever.getEmojiIDOf(logCategory.name)))
+            categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logCategory.name)))
         }
     }
 
