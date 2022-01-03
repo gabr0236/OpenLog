@@ -46,7 +46,7 @@ class SharedViewModel(
         val updatedLogItem = getUpdatedLogItem(
             id,
             selectedCategory.value?.name.toString(),
-            value,
+            value.toFloat(),
             date
         )
         viewModelScope.launch {
@@ -55,7 +55,7 @@ class SharedViewModel(
     }
 
     fun addNewLogItem(value: String, date: Date?) {
-        val newLog = getNewLogItem(selectedCategory.value?.name.toString(), value, date)
+        val newLog = getNewLogItem(selectedCategory.value?.name.toString(), value.toFloat(), date)
         viewModelScope.launch {
             logItemDao.insert(newLog)
         }
@@ -74,25 +74,25 @@ class SharedViewModel(
     private fun getUpdatedLogItem(
         id: Int,
         category: String,
-        value: String,
+        value: Float,
         date: Date?
     ): LogItem {
         return LogItem(
             id = id,
             categoryOwnerName = category,
-            value = value.toInt(),
+            value = value,
             date = date ?: getCurrentDateTime()
         )
     }
 
     private fun getNewLogItem(
         category: String,
-        value: String,
+        value: Float,
         date: Date?
     ): LogItem {
         return LogItem(
             categoryOwnerName = category,
-            value = value.toInt(),
+            value = value,
             date = date ?: getCurrentDateTime()
         )
     }
@@ -165,7 +165,7 @@ class SharedViewModel(
     /**
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValues(): List<Int>? {
+    fun logValues(): List<Float>? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
@@ -175,7 +175,7 @@ class SharedViewModel(
     /**
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValuesAndDates(): List<Pair<Int, Date?>>? {
+    fun logValuesAndDates(): List<Pair<Float, Date?>>? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
@@ -183,7 +183,7 @@ class SharedViewModel(
     }
 
     fun createCategory(name: String, unit: String, emojiId: Int) {
-        val newCategory = LogCategory(name, unit, emojiId) //TODO add select emoji id from spinner
+        val newCategory = LogCategory(name, unit, emojiId)
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }

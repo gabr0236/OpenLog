@@ -11,7 +11,7 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 
-@Database(entities = [LogItem::class, LogCategory::class], version = 2, exportSchema = false)
+@Database(entities = [LogItem::class, LogCategory::class], version = 3, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class LogItemDatabase : RoomDatabase() {
     abstract fun logItemDao(): LogItemDao

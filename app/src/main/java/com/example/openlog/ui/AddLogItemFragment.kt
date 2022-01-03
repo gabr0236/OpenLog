@@ -94,7 +94,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
-        if (input.isBlank() || !input.isDigitsOnly()) return //Return if null or blank
+        if (input.isBlank() || !isValidNumber(input)) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input, date)
 
@@ -136,5 +136,16 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
+    }
+
+
+    //TODO: duplicate method
+    /**
+     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
+     */
+    private fun isValidNumber(s: String?) : Boolean {
+        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
+        return if (s.isNullOrEmpty()) false
+        else regex.matches(s)
     }
 }

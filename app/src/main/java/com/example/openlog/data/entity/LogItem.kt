@@ -12,7 +12,7 @@ data class LogItem(
     @ColumnInfo(name = "log_category_owner_name")
     val categoryOwnerName: String,
     @ColumnInfo(name = "log_item_value")
-    val value: Int,
+    val value: Float,
     @ColumnInfo(name = "log_item_date")
     val date: Date?
 )
