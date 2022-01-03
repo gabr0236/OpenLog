@@ -62,7 +62,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             sharedViewModel.setCategory(it)
         }
 
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -77,7 +76,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        recyclerViewLogItem.adapter = LogItemListAdapter(this)
+        recyclerViewLogItem.adapter = LogItemListAdapter(this, sharedViewModel.selectedCategory.value?.emojiId?: 0)
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
             .observe(this.viewLifecycleOwner) { items ->
                 items.logItems.let {

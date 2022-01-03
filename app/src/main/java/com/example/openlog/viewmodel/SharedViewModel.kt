@@ -183,7 +183,7 @@ class SharedViewModel(
     }
 
     fun createCategory(name: String, unit: String) {
-        val newCategory = LogCategory(name, unit)
+        val newCategory = LogCategory(name, unit, emojiId = 10) //TODO add select emoji id from spinner
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }

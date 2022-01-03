@@ -11,7 +11,7 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 
-@Database(entities = [LogItem::class, LogCategory::class], version = 1, exportSchema = false)
+@Database(entities = [LogItem::class, LogCategory::class], version = 2, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class LogItemDatabase : RoomDatabase() {
     abstract fun logItemDao(): LogItemDao
@@ -28,7 +28,7 @@ abstract class LogItemDatabase : RoomDatabase() {
                     LogItemDatabase::class.java,
                     "log_item_database"
                 )
-                    .createFromAsset("database/log_categories.db")
+                    .createFromAsset("database/log_categories_2.db")
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

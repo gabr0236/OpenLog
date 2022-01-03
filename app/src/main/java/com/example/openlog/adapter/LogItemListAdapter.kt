@@ -12,11 +12,11 @@ import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
 
 class LogItemListAdapter(
-    private val onItemClickListenerLogItem: OnItemClickListenerLogItem
+    private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
+    private val emojiId: Int
 ) :
     ListAdapter<LogItem, LogItemListAdapter.ItemViewHolder>(DiffCallback) {
-
-    class ItemViewHolder(
+    inner class ItemViewHolder(
         private var binding: LayoutLogItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -27,7 +27,8 @@ class LogItemListAdapter(
                 editAction.setOnClickListener {
                     onItemClickListenerLogItem.onItemClickedFullLog(logItem)
                 }
-                imageviewEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logItem.categoryOwnerName)))
+                val emojiResId = EmojiRetriever.getEmojiIDOf(emojiId)
+                imageviewEmoji.setImageDrawable(itemView.context.getDrawable(emojiResId))
 
             }
         }
