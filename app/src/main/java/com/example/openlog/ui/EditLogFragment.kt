@@ -138,7 +138,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }

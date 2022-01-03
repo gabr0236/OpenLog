@@ -26,7 +26,6 @@ import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import kotlinx.coroutines.awaitAll
 import java.util.*
 
 
@@ -74,7 +73,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-            sharedViewModel.setCategory(items.first())
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         date = Calendar.getInstance().time //Show current date on screen
@@ -105,7 +104,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }

@@ -58,10 +58,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
-        sharedViewModel.allLogCategories.value?.first()?.let {
-            sharedViewModel.setCategory(it)
-        }
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -70,6 +66,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         //Log item recyclerview setup
@@ -96,7 +93,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
 
             //Notify adapters
             binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()

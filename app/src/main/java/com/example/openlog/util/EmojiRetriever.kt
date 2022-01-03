@@ -67,5 +67,11 @@ class EmojiRetriever {
             R.drawable.emoji_yoga_pose2,
             R.drawable.emoji_yoga_pose3,
         )
+
+        fun getEmojiIdIndexes(): Array<Int?> {
+            val arr = arrayOfNulls<Int>(emojiArray.size)
+            for(i in 1..arr.size) arr[i-1]=i
+            return arr
+        }
     }
 }

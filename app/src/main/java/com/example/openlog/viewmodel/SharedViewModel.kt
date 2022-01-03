@@ -33,7 +33,7 @@ class SharedViewModel(
         _selectedLogItemToEdit.value = logItem
     }
 
-    fun setCategory(logCategory: LogCategory): Boolean {
+    fun setSelectedCategory(logCategory: LogCategory): Boolean {
         return if (selectedCategory.value != logCategory) {
             _selectedCategory.value?.isSelected = false
             _selectedCategory.value = logCategory
@@ -182,8 +182,8 @@ class SharedViewModel(
             ?.map { Pair(it.value, it.date) }?.toMutableList()
     }
 
-    fun createCategory(name: String, unit: String) {
-        val newCategory = LogCategory(name, unit, emojiId = 10) //TODO add select emoji id from spinner
+    fun createCategory(name: String, unit: String, emojiId: Int) {
+        val newCategory = LogCategory(name, unit, emojiId) //TODO add select emoji id from spinner
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }
