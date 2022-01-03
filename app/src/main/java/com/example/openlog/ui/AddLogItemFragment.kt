@@ -74,7 +74,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-
             sharedViewModel.setCategory(items.first())
         }
 
