@@ -1,5 +1,6 @@
 package com.example.openlog.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
@@ -101,7 +102,6 @@ class SharedViewModel(
         return logItemDao.getLogItem(id).asLiveData()
     }
 
-    //TODO: nok smartere bare at selecte fra de categorier vi allerede har hentet
     fun retrieveItemsByCategory(name: String): LiveData<LogCategoryWithLogItems> {
         return logCategoryDao.getLogCategoryWithLogItems(name).asLiveData()
     }
@@ -143,6 +143,7 @@ class SharedViewModel(
 
     private val quantityOfLogsForDerivingStatistics =
         20 //Only derive average and standard deviation from n LogItems
+    // TODO this number should be equal to the amount of loaded logs when load is implemented
 
     val mean: LiveData<Double> = MediatorLiveData<Double>()
         .apply {
@@ -156,6 +157,7 @@ class SharedViewModel(
     val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
         .apply {
             fun update() {
+                Log.d("TEST", "logValues(): ${logValues().isNullOrEmpty()}")
                 value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
             }
             addSource(selectedCategory) { update() }
@@ -176,6 +178,7 @@ class SharedViewModel(
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValuesAndDates(): List<Pair<Float, Date?>>? {
+        Log.d("TEST", "allLogItems: ${allLogItems.value?.first()?.categoryOwnerName}")
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
