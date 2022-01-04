@@ -12,9 +12,7 @@ import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
-import java.io.BufferedWriter
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
+import java.io.*
 import java.util.*
 
 class SharedViewModel(
@@ -71,10 +69,7 @@ class SharedViewModel(
 
     fun shareLogItems() {
         TODO()
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(exportToCSV(retrieveItemsByCategory())))
-        sendIntent.type = "text/csv"
-        startActivity(Intent.createChooser(sendIntent, "SHARE"))
+
     }
 
     private fun getUpdatedLogItem(
@@ -116,37 +111,50 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-    // TODO: Update to https://developer.android.com/training/data-storage/app-specific
-    private fun exportToCSV(logItemsAndLogCategory: List<LogItemAndLogCategory>) : BufferedWriter {
-        val SEPERATOR = ","
+    suspend fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+        return logCategoryDao.getLogCategoriesWithLogItems()
+    }
 
-        val bufferedWriter = BufferedWriter(
+    // TODO: Update to https://developer.android.com/training/data-storage/app-specific
+    fun exportToCSV(logItemsAndLogCategory: List<LogCategoryWithLogItems>) : File {
+        val SEPERATOR = ","
+        val logFile = File.createTempFile("log_items", "csv")
+
+        var fileWriter = FileWriter("log_items.csv")
+
+
+       /* val bufferedWriter = BufferedWriter(
             OutputStreamWriter(
                 FileOutputStream("log_items.csv"),
                 "UTF-8"
             )
-        )
+        )*/
+
 
         logItemsAndLogCategory.forEach {
             val line = StringBuffer()
-            line.append(it.logItem.id)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.name)
-            line.append(SEPERATOR)
-            line.append(it.logItem.value)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.unit)
-            line.append(SEPERATOR)
-            line.append(it.logItem.date)
+            fileWriter.append(it.logCategory.name.toString())
+            fileWriter.append(SEPERATOR)
+            fileWriter.append(it.logCategory.unit.toString())
+            fileWriter.append(SEPERATOR)
 
-            bufferedWriter.write(line.toString())
-            bufferedWriter.newLine()
+            it.logItems.forEach{
+            fileWriter.append(it.id.toString())
+            fileWriter.append(SEPERATOR)
+            fileWriter.append(it.value.toString())
+            fileWriter.append(SEPERATOR)
+            fileWriter.append(it.date.toString())
+         }
+            fileWriter.write(line.toString())
+            fileWriter.write(System.getProperty("line seperator"))
         }
 
-        bufferedWriter.flush()
-        bufferedWriter.close()
 
-        return bufferedWriter
+        fileWriter.flush()
+        fileWriter.close()
+
+
+        return logFile
     }
 
     private val quantityOfLogsForDerivingStatistics =

@@ -26,7 +26,7 @@ interface LogCategoryDao {
 
     @Transaction
     @Query("SELECT * FROM log_category")
-    fun getLogCategoriesWithLogItems(): Flow<List<LogCategoryWithLogItems>>
+    fun getLogCategoriesWithLogItems(): List<LogCategoryWithLogItems>
 
     // Only names
     @Query("SELECT log_category_name FROM log_category")
