@@ -33,6 +33,8 @@ class EmojiRetriever {
                 24 -> emojiArray[23]
                 25 -> emojiArray[24]
                 26 -> emojiArray[25]
+                27 -> emojiArray[26]
+                28 -> emojiArray[27]
                 else -> R.drawable.ic_baseline_image_not_supported_24
             }
         }
