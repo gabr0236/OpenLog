@@ -6,6 +6,7 @@
     <ImageView
         android:id="@+id/imageview_emoji"
         android:layout_marginLeft="8dp"
+        android:layout_marginVertical="4dp"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:padding="4dp"/>

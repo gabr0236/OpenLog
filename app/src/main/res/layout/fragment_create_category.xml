@@ -59,7 +59,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
             android:background="@drawable/spinner_outline"
-            android:popupBackground="@drawable/spinner_outline"/>
+            android:popupBackground="@drawable/spinner_outline" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/save_action"
@@ -69,7 +69,7 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> createCategoryFragment.createCategory()}"
-            android:text="Opret Categori"
+            android:text="Opret Kategori"
             android:textAlignment="center"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"
