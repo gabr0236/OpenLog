@@ -36,21 +36,26 @@
 
                 <TextView
                     android:id="@+id/log_category_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="0dp"
                     android:hint="*Kalorier*"
+                    android:lines="1"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageview_emoji"
-                    tools:text="Kalorier" />
+                    tools:text="Kalorier"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="7sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeStepGranularity="2sp"/>
 
                 <TextView
                     android:id="@+id/log_category_unit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="*XX Kcal*"
@@ -58,7 +63,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/log_category_name"
-                    tools:text="3409 Kcal" />
+                    tools:text="3409 Kcal"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="6sp"
+                    app:autoSizeMaxTextSize="19sp"
+                    app:autoSizeStepGranularity="2sp"
+                    android:lines="1"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
