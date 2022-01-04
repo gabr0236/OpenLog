@@ -119,7 +119,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         AlertDialog.Builder(context)
             .setTitle("Slet Log")
             .setMessage("Er du sikker på at du vil slette denne log? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
