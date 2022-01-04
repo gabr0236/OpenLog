@@ -188,4 +188,12 @@ class SharedViewModel(
             logCategoryDao.insert(newCategory)
         }
     }
+
+    fun deleteCategory(logCategory: LogCategory){
+        viewModelScope.launch {
+            logCategoryDao.delete(logCategory)
+        }
+    }
+
+
 }

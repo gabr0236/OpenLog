@@ -1,6 +1,7 @@
 package com.example.openlog.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -116,7 +117,25 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        Log.d("TEST", "Long click")
+        //Confirmation dialog
+        AlertDialog.Builder(context)
+            .setTitle("Slet Kategori")
+            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(
+                android.R.string.yes
+            ) { _, _ ->
+                //If yes is selected
+                Toast.makeText(
+                    context,
+                    "Kategori Slettet",
+                    Toast.LENGTH_SHORT
+                ).show()
+                sharedViewModel.deleteCategory(logCategory)
+                findNavController().navigate(R.id.previous_logs_fragment)
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
     }
 
     //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments

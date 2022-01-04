@@ -14,6 +14,9 @@ interface LogCategoryDao {
     @Update
     suspend fun update(logCategory: LogCategory)
 
+    @Delete
+    suspend fun delete(logCategory: LogCategory)
+
     @Query("SELECT * FROM log_category WHERE log_category_name = :name")
     fun getLogCategory(name: String): Flow<LogCategory>
 
