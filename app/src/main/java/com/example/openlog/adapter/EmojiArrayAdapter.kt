@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.example.openlog.R
+import com.example.openlog.util.EmojiRetriever
 
 
-class EmojiArrayAdapter(private val mContext: Context, private val emojiList: Array<Int>) :
+class EmojiArrayAdapter(private val mContext: Context, private val emojiList: Array<Int?>) :
     ArrayAdapter<Int>(mContext, 0, emojiList) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -28,7 +29,8 @@ class EmojiArrayAdapter(private val mContext: Context, private val emojiList: Ar
 
         val currentEmojiId = emojiList[position]
         val emojiImage: ImageView? = listItem?.findViewById(R.id.imageview_emoji)
-        emojiImage?.setImageResource(currentEmojiId)
+        currentEmojiId?.let { EmojiRetriever.getEmojiIDOf(it) }
+            ?.let { emojiImage?.setImageResource(it) }
 
         return listItem!! //TODO: fjern "!!"
     }

@@ -4,7 +4,7 @@ import kotlin.math.pow
 
 class Statistics {
     companion object {
-        fun standardDeviation(integerList: List<Int>): Double {
+        fun standardDeviation(integerList: List<Float>): Double {
             val mean = integerList.average()
             return integerList
                 .fold(0.0, { accumulator, next -> accumulator + (next - mean).pow(2.0) })

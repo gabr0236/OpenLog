@@ -58,11 +58,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
-        sharedViewModel.allLogCategories.value?.first()?.let {
-            sharedViewModel.setCategory(it)
-        }
-
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -71,13 +66,14 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        recyclerViewLogItem.adapter = LogItemListAdapter(this)
+        recyclerViewLogItem.adapter = LogItemListAdapter(this, sharedViewModel.selectedCategory.value?.emojiId?: 0)
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
             .observe(this.viewLifecycleOwner) { items ->
                 items.logItems.let {
@@ -97,7 +93,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
 
             //Notify adapters
             binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()

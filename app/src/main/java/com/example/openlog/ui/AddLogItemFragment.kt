@@ -73,10 +73,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-        }
-
-        sharedViewModel.allLogCategories.value?.first()?.let {
-            sharedViewModel.setCategory(it)
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         date = Calendar.getInstance().time //Show current date on screen
@@ -97,7 +94,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
-        if (input.isBlank() || !input.isDigitsOnly()) return //Return if null or blank
+        if (input.isBlank() || !isValidNumber(input)) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input, date)
 
@@ -107,7 +104,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
@@ -139,5 +136,16 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
+    }
+
+
+    //TODO: duplicate method
+    /**
+     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
+     */
+    private fun isValidNumber(s: String?) : Boolean {
+        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
+        return if (s.isNullOrEmpty()) false
+        else regex.matches(s)
     }
 }

@@ -9,7 +9,9 @@ data class LogCategory(
     @ColumnInfo(name = "log_category_name")
     val name: String,
     @ColumnInfo(name = "log_category_unit")
-    val unit: String
+    val unit: String,
+    @ColumnInfo(name = "log_category_emojiId")
+    val emojiId: Int
 ) {
     @Ignore
     var isSelected = false
@@ -25,3 +27,4 @@ data class LogCategoryWithLogItems(
     )
     val logItems: List<LogItem>
 )
+

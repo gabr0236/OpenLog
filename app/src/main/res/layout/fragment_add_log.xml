@@ -53,7 +53,7 @@
                 android:id="@+id/log_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="0123456789."
+                android:digits="-0123456789."
                 android:imeOptions="actionDone"
                 />
         </com.google.android.material.textfield.TextInputLayout>
