@@ -82,13 +82,11 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             }
         recyclerViewLogItem.scrollToPosition(0)
 
-
         sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
             items.let { (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it) }
+            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
         }
 
-        //Graph
-        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
