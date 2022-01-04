@@ -1,5 +1,7 @@
 package com.example.openlog.viewmodel
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
@@ -69,6 +71,10 @@ class SharedViewModel(
 
     fun shareLogItems() {
         TODO()
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(exportToCSV(retrieveItemsByCategory())))
+        sendIntent.type = "text/csv"
+        startActivity(Intent.createChooser(sendIntent, "SHARE"))
     }
 
     private fun getUpdatedLogItem(
@@ -111,7 +117,7 @@ class SharedViewModel(
     }
 
     // TODO: Update to https://developer.android.com/training/data-storage/app-specific
-    private fun exportToCSV(logItemsAndLogCategory: List<LogItemAndLogCategory>) {
+    private fun exportToCSV(logItemsAndLogCategory: List<LogItemAndLogCategory>) : BufferedWriter {
         val SEPERATOR = ","
 
         val bufferedWriter = BufferedWriter(
@@ -139,6 +145,8 @@ class SharedViewModel(
 
         bufferedWriter.flush()
         bufferedWriter.close()
+
+        return bufferedWriter
     }
 
     private val quantityOfLogsForDerivingStatistics =

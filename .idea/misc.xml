@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.11388888888888889" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_fragment.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_layout.xml" value="0.20572916666666666" />
@@ -15,36 +14,9 @@
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_item_list_layout.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/share_log_item_layout.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1890625" />
-        <entry key="app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.20185185185185187" />
-        <entry key="app/src/main/res/drawable/emoji_list.xml" value="0.25462962962962965" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25462962962962965" />
-        <entry key="app/src/main/res/drawable/ic_log_item_create.xml" value="0.1925925925925926" />
-        <entry key="app/src/main/res/drawable/ic_log_item_list.xml" value="0.2657407407407407" />
-        <entry key="app/src/main/res/drawable/spinner_outline.xml" value="0.2972222222222222" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/add_category_button.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/add_log_fragment.xml" value="0.16742654508611957" />
-        <entry key="app/src/main/res/layout/add_log_item_layout.xml" value="0.2033898305084746" />
-        <entry key="app/src/main/res/layout/button_add_category.xml" value="0.12031408308004053" />
-        <entry key="app/src/main/res/layout/create_category_fragment.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/edit_log_fragment.xml" value="0.24818840579710144" />
-        <entry key="app/src/main/res/layout/edit_log_layout.xml" value="0.23551055744726737" />
-        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.10638297872340426" />
-        <entry key="app/src/main/res/layout/fragment_create_category.xml" value="0.2866779089376054" />
-        <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.12031408308004053" />
-        <entry key="app/src/main/res/layout/fragment_previous_logs.xml" value="0.1890625" />
-        <entry key="app/src/main/res/layout/fragment_share_logs.xml" value="0.24739583333333334" />
-        <entry key="app/src/main/res/layout/layout_log_category.xml" value="1.5" />
-        <entry key="app/src/main/res/layout/layout_log_item.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/list_item_emoji.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/log_category_layout.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/log_category_list_layout.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/log_item_layout.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/outline_spinner.xml" value="0.3489583333333333" />
-        <entry key="app/src/main/res/layout/previous_log_layout.xml" value="0.2617283950617284" />
-        <entry key="app/src/main/res/layout/share_log_item_layout.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3651041666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.13858695652173914" />
+        <entry key="app/src/main/res/layout/fragment_create_category.xml" value="0.335" />
+        <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.2520833333333333" />
       </map>
     </option>
   </component>
