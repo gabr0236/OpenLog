@@ -28,7 +28,7 @@ abstract class LogItemDatabase : RoomDatabase() {
                     LogItemDatabase::class.java,
                     "log_item_database"
                 )
-                    .createFromAsset("database/log_categories_2.db")
+                    .createFromAsset("database/log_item_database_3.db")
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
