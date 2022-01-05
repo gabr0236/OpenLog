@@ -98,14 +98,6 @@ class SharedViewModel(
         )
     }
 
-    fun retrieveItem(id: Int): LiveData<LogItem> {
-        return logItemDao.getLogItem(id).asLiveData()
-    }
-
-    fun retrieveItemsByCategory(name: String): LiveData<LogCategoryWithLogItems> {
-        return logCategoryDao.getLogCategoryWithLogItems(name).asLiveData()
-    }
-
     private fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
@@ -157,7 +149,7 @@ class SharedViewModel(
     val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
         .apply {
             fun update() {
-                Log.d("TEST", "logValues(): ${logValues().isNullOrEmpty()}")
+                //Log.d("TEST", "logValues() null or empty?: ${logValues().isNullOrEmpty()}")
                 value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
             }
             addSource(selectedCategory) { update() }
@@ -178,7 +170,7 @@ class SharedViewModel(
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValuesAndDates(): List<Pair<Float, Date?>>? {
-        Log.d("TEST", "allLogItems: ${allLogItems.value?.first()?.categoryOwnerName}")
+        //Log.d("TEST", "allLogItems: ${allLogItems.value?.first()?.categoryOwnerName}")
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
@@ -190,5 +182,11 @@ class SharedViewModel(
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }
+    }
+
+    fun logsOfSelectedCategory(): List<LogItem>? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
+            ?.toList()
     }
 }
