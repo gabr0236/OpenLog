@@ -54,6 +54,7 @@
                 android:id="@+id/log_value"
                 android:text="@{String.valueOf(viewModel.selectedLogItemToEdit.value)}"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"
                 android:digits="-0123456789." />
         </com.google.android.material.textfield.TextInputLayout>

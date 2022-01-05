@@ -52,6 +52,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_value"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="-0123456789."
