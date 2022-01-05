@@ -34,6 +34,9 @@ class SharedViewModel(
         _selectedLogItemToEdit.value = logItem
     }
 
+    /**
+     * Sets the selected category
+     */
     fun setSelectedCategory(logCategory: LogCategory): Boolean {
         return if (selectedCategory.value != logCategory) {
             _selectedCategory.value?.isSelected = false
@@ -72,6 +75,9 @@ class SharedViewModel(
         TODO()
     }
 
+    /**
+     * creates and returns a log which is to be updated
+     */
     private fun getUpdatedLogItem(
         id: Int,
         category: String,
@@ -86,6 +92,9 @@ class SharedViewModel(
         )
     }
 
+    /**
+     * Creates and returns new log
+     */
     private fun getNewLogItem(
         category: String,
         value: Float,
@@ -161,6 +170,9 @@ class SharedViewModel(
             ?.map { Pair(it.value, it.date) }?.toMutableList()
     }
 
+    /**
+     * creates a new category using params
+     */
     fun createCategory(name: String, unit: String, emojiId: Int) {
         val newCategory = LogCategory(name, unit, emojiId)
         viewModelScope.launch {
@@ -168,13 +180,19 @@ class SharedViewModel(
         }
     }
 
+    /**
+     * @return all the logs of the selected category
+     */
     fun logsOfSelectedCategory(): List<LogItem>? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.toList()
     }
 
-    fun isLogsOfSelectedCategory(): Boolean? {
+    /**
+     * @return whether any logs for the selected category exists
+     */
+    fun anyLogsOfSelectedCategory(): Boolean? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.any()
