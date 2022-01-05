@@ -90,7 +90,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
         recyclerViewLogItem.scrollToPosition(0)
 
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { } //TODO ?? nothing here
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
+            //TODO ?? nothing here, evt. bare lav en livedata i viewmodel der indeholder query for currentcategory
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
