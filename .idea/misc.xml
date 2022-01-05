@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_category.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_previous_logs.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_share_logs.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/layout_log_category.xml" value="0.1" />
       </map>

@@ -86,7 +86,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
             lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
             Log.d("TEST", "allLogItems size: ${sharedViewModel.allLogItems.value?.size}")
-
+            setRecyclerViewLogItemVisible()
         }
         recyclerViewLogItem.scrollToPosition(0)
 
@@ -95,9 +95,22 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
     }
 
+    private fun setRecyclerViewLogItemVisible(){
+        val recyclerviewIsPopulated = sharedViewModel.isLogsOfSelectedCategory()
+        if (recyclerviewIsPopulated == true){
+            binding.logItemRecyclerView.visibility=View.VISIBLE
+            binding.textviewNoLogsFound.visibility=View.INVISIBLE
+        } else {
+            binding.logItemRecyclerView.visibility=View.INVISIBLE
+            binding.textviewNoLogsFound.visibility=View.VISIBLE
+        }
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setSelectedCategory(logCategory)) { }
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
+            recyclerViewCategory.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateCategoryClicked() {

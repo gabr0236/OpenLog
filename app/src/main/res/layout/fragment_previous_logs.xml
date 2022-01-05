@@ -106,7 +106,7 @@
                 app:layout_constraintTop_toBottomOf="@id/statisticsCard" />
 
             <TextView
-                android:id="@+id/logs"
+                android:id="@+id/textview_previous_logs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -118,18 +118,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/log_item_recycler_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="16dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logs"
-                tools:itemCount="6"
-                tools:listitem="@layout/layout_log_item" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_previous_logs"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/log_item_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/layout_log_item" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textview_no_logs_found"
+                    android:layout_height="wrap_content"
+                    android:text="Ingen Logge Fundet"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible"
+                    android:layout_marginTop="100dp"
+                    />
+            </RelativeLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
