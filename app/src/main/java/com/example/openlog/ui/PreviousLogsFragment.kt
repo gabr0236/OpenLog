@@ -20,6 +20,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlin.math.log
 
 class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -73,7 +74,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        recyclerViewLogItem.adapter = LogItemListAdapter(this, sharedViewModel.selectedCategory.value?.emojiId?: 0)
+        recyclerViewLogItem.adapter = LogItemListAdapter(this, sharedViewModel.selectedCategory)
+
         sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
             .observe(this.viewLifecycleOwner) { items ->
                 items.logItems.let {
@@ -100,7 +102,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
                 .observe(this.viewLifecycleOwner) { items ->
                     items.logItems.let {
-                        (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
+                        val logItemListAdapter = (binding.logItemRecyclerView.adapter as LogItemListAdapter)
+                        logItemListAdapter.submitList(it)
                     }
                 }
             lineGraph.setValues(sharedViewModel.logValuesAndDates())
