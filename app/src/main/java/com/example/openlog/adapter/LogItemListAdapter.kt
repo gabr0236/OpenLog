@@ -2,9 +2,11 @@ package com.example.openlog.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
@@ -13,7 +15,7 @@ import com.example.openlog.util.EmojiRetriever
 
 class LogItemListAdapter(
     private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
-    private val emojiId: Int
+    private val selectedCategory: LiveData<LogCategory>
 ) :
     ListAdapter<LogItem, LogItemListAdapter.ItemViewHolder>(DiffCallback) {
     inner class ItemViewHolder(
@@ -27,8 +29,11 @@ class LogItemListAdapter(
                 editAction.setOnClickListener {
                     onItemClickListenerLogItem.onItemClickedFullLog(logItem)
                 }
-                val emojiResId = EmojiRetriever.getEmojiIDOf(emojiId)
-                imageviewEmoji.setImageDrawable(itemView.context.getDrawable(emojiResId))
+
+                val emojiResId = selectedCategory.value?.emojiId?.let {
+                    EmojiRetriever.getEmojiIDOf(it)
+                }
+                imageviewEmoji.setImageDrawable(emojiResId?.let { itemView.context.getDrawable(it) })
 
             }
         }

@@ -2,12 +2,14 @@ package com.example.openlog.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asFlow
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlin.math.log
 
 class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -58,6 +61,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
+
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -73,38 +77,25 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        recyclerViewLogItem.adapter = LogItemListAdapter(this, sharedViewModel.selectedCategory.value?.emojiId?: 0)
-        sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
-            .observe(this.viewLifecycleOwner) { items ->
-                items.logItems.let {
-                    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
-                }
-            }
+        val logItemListAdapter = LogItemListAdapter(this, sharedViewModel.selectedCategory)
+        logItemListAdapter.submitList(sharedViewModel.logsOfSelectedCategory())
+        recyclerViewLogItem.adapter=logItemListAdapter
+
+        sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
+            val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
+            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
+            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
+            Log.d("TEST", "allLogItems size: ${sharedViewModel.allLogItems.value?.size}")
+
+        }
         recyclerViewLogItem.scrollToPosition(0)
 
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
-            items.let { (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it) }
-            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
-        }
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { } //TODO ?? nothing here
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setSelectedCategory(logCategory)) {
-
-            //Notify adapters
-            binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
-            binding.logItemRecyclerView.adapter?.notifyDataSetChanged()
-
-
-            sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
-                .observe(this.viewLifecycleOwner) { items ->
-                    items.logItems.let {
-                        (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
-                    }
-                }
-            lineGraph.setValues(sharedViewModel.logValuesAndDates())
-        }
+        if (sharedViewModel.setSelectedCategory(logCategory)) { }
     }
 
     override fun onCreateCategoryClicked() {
