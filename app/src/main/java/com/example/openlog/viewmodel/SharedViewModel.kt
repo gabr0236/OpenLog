@@ -137,24 +137,9 @@ class SharedViewModel(
         20 //Only derive average and standard deviation from n LogItems
     // TODO this number should be equal to the amount of loaded logs when load is implemented
 
-    val mean: LiveData<Double> = MediatorLiveData<Double>()
-        .apply {
-            fun update() {
-                value = logValues()?.average()?.round(2)
-            }
-            addSource(selectedCategory) { update() }
-            update()
-        }
+    fun mean(): Double? = logValues()?.average()?.round(2)
+    fun standdarddeviation(): Double? = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
 
-    val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
-        .apply {
-            fun update() {
-                //Log.d("TEST", "logValues() null or empty?: ${logValues().isNullOrEmpty()}")
-                value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
-            }
-            addSource(selectedCategory) { update() }
-            update()
-        }
 
     /**
      * @return the values of the LogItems where category equals selectedCategoryStatistics
@@ -170,7 +155,6 @@ class SharedViewModel(
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValuesAndDates(): List<Pair<Float, Date?>>? {
-        //Log.d("TEST", "allLogItems: ${allLogItems.value?.first()?.categoryOwnerName}")
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
