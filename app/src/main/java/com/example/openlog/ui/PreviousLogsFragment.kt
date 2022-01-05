@@ -22,6 +22,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.delay
 import kotlin.math.log
 
 class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
@@ -61,7 +62,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -85,13 +85,18 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
             lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
-            Log.d("TEST", "allLogItems size: ${sharedViewModel.allLogItems.value?.size}")
             setRecyclerViewLogItemVisible()
         }
         recyclerViewLogItem.scrollToPosition(0)
 
+        //Observe logitems
         sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
-            //TODO ?? nothing here, evt. bare lav en livedata i viewmodel der indeholder query for currentcategory
+            items ->
+            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
+                ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
+                ?.toList())
+            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
+            setRecyclerViewLogItemVisible()
         }
     }
 
