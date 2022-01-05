@@ -84,8 +84,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
-            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
-            setRecyclerViewLogItemVisible()
+            updateFragmentView()
         }
         recyclerViewLogItem.scrollToPosition(0)
 
@@ -95,8 +94,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
                 ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
                 ?.toList())
-            lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
-            setRecyclerViewLogItemVisible()
+            updateFragmentView()
         }
     }
 
@@ -109,6 +107,17 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             binding.logItemRecyclerView.visibility=View.INVISIBLE
             binding.textviewNoLogsFound.visibility=View.VISIBLE
         }
+    }
+
+    fun setSDAndAvg(){
+        binding.textviewAverage.text="Gennemsnit: ${sharedViewModel.mean()}"
+        binding.textviewStandardDeviation.text="Standardafvigelse: ${sharedViewModel.standdarddeviation()}"
+    }
+
+    fun updateFragmentView(){
+        setSDAndAvg()
+        setRecyclerViewLogItemVisible()
+        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")

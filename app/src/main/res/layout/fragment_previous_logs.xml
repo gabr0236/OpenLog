@@ -67,28 +67,26 @@
                         app:egShowStandardValue="true" />
 
                     <TextView
-                        android:id="@+id/average"
+                        android:id="@+id/textview_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:padding="8dp"
-                        android:text="@{@string/gennemsnit(viewModel.mean.toString())}"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                        app:layout_constraintEnd_toStartOf="@+id/standardDeviation"
+                        app:layout_constraintEnd_toStartOf="@+id/textview_standardDeviation"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/logGraph"
                         tools:text="Gennemsnit: 2216 Kcal" />
 
                     <TextView
-                        android:id="@+id/standardDeviation"
+                        android:id="@+id/textview_standardDeviation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:padding="8dp"
-                        android:text="@{@string/standardafvigelse(viewModel.standdarddeviation.toString())}"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/average"
+                        app:layout_constraintStart_toEndOf="@+id/textview_average"
                         app:layout_constraintTop_toBottomOf="@+id/logGraph"
                         tools:text="Standard afvigelse: 147 Kcal" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
