@@ -48,7 +48,6 @@ class LogItemListAdapter(
         holder.bind(current, onItemClickListenerLogItem)
     }
 
-
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<LogItem>() {
             override fun areItemsTheSame(oldLogItem: LogItem, newLogItem: LogItem): Boolean {

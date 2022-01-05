@@ -189,4 +189,10 @@ class SharedViewModel(
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.toList()
     }
+
+    fun isLogsOfSelectedCategory(): Boolean? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
+            ?.any()
+    }
 }

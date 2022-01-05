@@ -86,11 +86,24 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
             lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
             Log.d("TEST", "allLogItems size: ${sharedViewModel.allLogItems.value?.size}")
-
+            setRecyclerViewLogItemVisible()
         }
         recyclerViewLogItem.scrollToPosition(0)
 
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { } //TODO ?? nothing here
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
+            //TODO ?? nothing here, evt. bare lav en livedata i viewmodel der indeholder query for currentcategory
+        }
+    }
+
+    private fun setRecyclerViewLogItemVisible(){
+        val recyclerviewIsPopulated = sharedViewModel.isLogsOfSelectedCategory()
+        if (recyclerviewIsPopulated == true){
+            binding.logItemRecyclerView.visibility=View.VISIBLE
+            binding.textviewNoLogsFound.visibility=View.INVISIBLE
+        } else {
+            binding.logItemRecyclerView.visibility=View.INVISIBLE
+            binding.textviewNoLogsFound.visibility=View.VISIBLE
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
