@@ -95,7 +95,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setSelectedCategory(logCategory)) { }
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
+            recyclerViewCategory.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateCategoryClicked() {
