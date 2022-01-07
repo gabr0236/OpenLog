@@ -1,9 +1,12 @@
 package com.example.openlog.ui
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,6 +49,7 @@ class ShareLogItemFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +57,15 @@ class ShareLogItemFragment : Fragment() {
             lifecycleScope.launch {
                 val fileURI = FileProvider.getUriForFile(context!!,"com.example.openlog.provider", File(context?.getExternalFilesDir(null), "item_logs.txt"))
                 val sendIntent = Intent(Intent.ACTION_SEND)
-                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+// ikke nødvendigt
+                val resInfoList : List<ResolveInfo> = context!!.packageManager!!.queryIntentActivities(sendIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName
+                    context!!.grantUriPermission(packageName, fileURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                context!!.grantUriPermission("src/main/java/com/example/openlog", fileURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
                 sendIntent.type = "*/*"
                 startActivity(Intent.createChooser(sendIntent, "SHARE"))

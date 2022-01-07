@@ -20,15 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
+            <grant-uri-permission android:path="src/main/java/com/example/openlog/ui/item_logs.txt"
+                android:pathPattern="src/main/java/com/example/openlog"
+                android:pathPrefix=".*" />
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+            <grant-uri-permission android:path="*"
+                android:pathPattern="*"
+                android:pathPrefix="*" />
         </provider>
 
     </application>
