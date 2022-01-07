@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.openlog">
 
-
     <application
         android:name=".LogItemApplication"
         android:allowBackup="true"
@@ -33,9 +32,10 @@
                 android:resource="@xml/provider_paths" />
             <grant-uri-permission android:path="*"
                 android:pathPattern="*"
-                android:pathPrefix="*" />
+                android:pathPrefix="*"
+                />
         </provider>
-
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

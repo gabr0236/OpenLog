@@ -15,5 +15,9 @@
     <files-path
         name="files"
         path="." />
+    <files-path
+        name="my_test"
+        path="."/>
+
 </paths>
 
