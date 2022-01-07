@@ -148,7 +148,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO Skal laves på en anden måde da dette står to steder (AddLogItemFragment)
+        //TODO duplicate method
 
         //Confirmation dialog
         AlertDialog.Builder(context)
