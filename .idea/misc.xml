@@ -8,7 +8,7 @@
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_fragment.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_layout.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_category_detail_layout.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_category_layout.xml" value="0.5" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_category_layout.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_category_list_layout.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_item_detail_layout.xml" value="0.20625" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/log_item_layout.xml" value="0.33" />
@@ -47,6 +47,15 @@
         <entry key="app/src/main/res/layout/share_log_item_layout.xml" value="0.19701086956521738" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3651041666666667" />
+        <entry key="app/src/main/res/layout-v26/layout_log_category.xml" value="0.16458333333333333" />
+        <entry key="app/src/main/res/layout/button_add_category.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_create_category.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_previous_logs.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_share_logs.xml" value="0.14402173913043478" />
+        <entry key="app/src/main/res/layout/layout_log_category.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_log_item.xml" value="0.11347517730496454" />
       </map>
     </option>
   </component>

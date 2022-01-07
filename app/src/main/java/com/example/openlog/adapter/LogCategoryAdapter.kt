@@ -1,5 +1,6 @@
 package com.example.openlog.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +58,7 @@ class LogCategoryAdapter(
             view.findViewById(R.id.log_category_container)
         private val categoryEmoji: ImageView = view.findViewById(R.id.imageview_emoji)
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(
             logCategory: LogCategory,
             categoryRecyclerviewHandler: CategoryRecyclerviewHandler
@@ -72,7 +74,7 @@ class LogCategoryAdapter(
                 true
             }
             logCategoryContainer.isChecked = logCategory.isSelected
-            categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logCategory.name)))
+            categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logCategory.emojiId)))
         }
     }
 

@@ -56,7 +56,7 @@ class CreateCategoryFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        emojiArrayAdapter = context?.let { EmojiArrayAdapter(it, EmojiRetriever.emojiArray) }
+        emojiArrayAdapter = context?.let { EmojiArrayAdapter(it, EmojiRetriever.getEmojiIdIndexes()) }
         binding.spinnerEmojis.adapter=emojiArrayAdapter
     }
 
@@ -86,7 +86,7 @@ class CreateCategoryFragment : Fragment() {
             ).show()
             return
         }
-        sharedViewModel.createCategory(name.toString(), unit.toString())
+        sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
         //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
         findNavController().popBackStack()
     }

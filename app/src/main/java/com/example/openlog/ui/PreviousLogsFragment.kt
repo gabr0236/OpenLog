@@ -58,11 +58,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
-        sharedViewModel.allLogCategories.value?.first()?.let {
-            sharedViewModel.setCategory(it)
-        }
-
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -71,47 +66,60 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        recyclerViewLogItem.adapter = LogItemListAdapter(this)
-        sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
-            .observe(this.viewLifecycleOwner) { items ->
-                items.logItems.let {
-                    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it)
-                }
-            }
+        val logItemListAdapter = LogItemListAdapter(this, sharedViewModel.selectedCategory)
+        logItemListAdapter.submitList(sharedViewModel.logsOfSelectedCategory())
+        recyclerViewLogItem.adapter=logItemListAdapter
+
+        sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
+            val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
+            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
+            updateFragmentView()
+        }
         recyclerViewLogItem.scrollToPosition(0)
 
-
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) { items ->
-            items.let { (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(it) }
+        //Observe logitems
+        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
+            items ->
+            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
+                ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
+                ?.toList())
+            updateFragmentView()
         }
+    }
 
-        //Graph
+    private fun setRecyclerViewLogItemVisible(){
+        val recyclerviewIsPopulated = sharedViewModel.anyLogsOfSelectedCategory()
+        if (recyclerviewIsPopulated == true){
+            binding.logItemRecyclerView.visibility=View.VISIBLE
+            binding.textviewNoLogsFound.visibility=View.INVISIBLE
+        } else {
+            binding.logItemRecyclerView.visibility=View.INVISIBLE
+            binding.textviewNoLogsFound.visibility=View.VISIBLE
+        }
+    }
+
+    fun setSDAndAvg(){
+        binding.textviewAverage.text="Gennemsnit: ${sharedViewModel.mean()}"
+        binding.textviewStandardDeviation.text="Standardafvigelse: ${sharedViewModel.standdarddeviation()}"
+    }
+
+    fun updateFragmentView(){
+        setSDAndAvg()
+        setRecyclerViewLogItemVisible()
         lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
-
-            //Notify adapters
-            binding.logCategoryRecyclerView.adapter?.notifyDataSetChanged()
-            binding.logItemRecyclerView.adapter?.notifyDataSetChanged()
-
-            sharedViewModel.selectedCategory
-
-            sharedViewModel.retrieveItemsByCategory(sharedViewModel.selectedCategory.value?.name.toString())
-                .observe(this.viewLifecycleOwner) { items ->
-                    items.logItems.let {
-                        (binding.logItemRecyclerView.adapter as LogItemListAdapter).submitList(it)
-                    }
-                }
-            lineGraph.setValues(sharedViewModel.logValuesAndDates())
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
+            recyclerViewCategory.adapter?.notifyDataSetChanged()
         }
     }
 

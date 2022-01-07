@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -27,7 +26,6 @@ import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import kotlinx.coroutines.awaitAll
 import java.util.*
 
 
@@ -75,8 +73,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-
-            sharedViewModel.setCategory(items.first())
+            sharedViewModel.setSelectedCategory(items.first())
         }
 
         date = Calendar.getInstance().time //Show current date on screen
@@ -97,7 +94,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
-        if (input.isBlank() || !input.isDigitsOnly()) return //Return if null or blank
+        if (input.isBlank() || !isValidNumber(input)) return //Return if null or blank
 
         sharedViewModel.addNewLogItem(input, date)
 
@@ -107,7 +104,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
@@ -157,5 +154,19 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
+    }
+
+
+    //TODO: duplicate method
+    /**
+     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
+     */
+    private fun isValidNumber(s: String?) : Boolean {
+        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
+        return if (s.isNullOrEmpty()) false
+        else if (s.contains(",")){
+            Toast.makeText(requireContext(), "Brug punktum '.' i stedet for komma ','", Toast.LENGTH_LONG).show()
+            false
+        } else regex.matches(s)
     }
 }

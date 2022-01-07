@@ -97,7 +97,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
 
     fun updateLogItem() {
         val input = binding.logValue.text.toString()
-        if (input.isBlank() || !input.isDigitsOnly()) { //Return if null or blank
+        if (input.isBlank() || !isValidNumber(input)) { //Return if null or blank
             binding.logValue.setText(logItem.value.toString())
             return
         }
@@ -119,7 +119,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         AlertDialog.Builder(context)
             .setTitle("Slet Log")
             .setMessage("Er du sikker på at du vil slette denne log? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
@@ -138,7 +138,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
-        if (sharedViewModel.setCategory(logCategory)) {
+        if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
@@ -170,5 +170,15 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: ${pickedDateTime}")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
+    }
+
+    //TODO: duplicate method
+    /**
+     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
+     */
+    private fun isValidNumber(s: String?) : Boolean {
+        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
+        return if (s.isNullOrEmpty()) false
+        else regex.matches(s)
     }
 }

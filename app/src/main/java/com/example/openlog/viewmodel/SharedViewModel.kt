@@ -1,5 +1,6 @@
 package com.example.openlog.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
@@ -33,7 +34,10 @@ class SharedViewModel(
         _selectedLogItemToEdit.value = logItem
     }
 
-    fun setCategory(logCategory: LogCategory): Boolean {
+    /**
+     * Sets the selected category
+     */
+    fun setSelectedCategory(logCategory: LogCategory): Boolean {
         return if (selectedCategory.value != logCategory) {
             _selectedCategory.value?.isSelected = false
             _selectedCategory.value = logCategory
@@ -46,7 +50,7 @@ class SharedViewModel(
         val updatedLogItem = getUpdatedLogItem(
             id,
             selectedCategory.value?.name.toString(),
-            value,
+            value.toFloat(),
             date
         )
         viewModelScope.launch {
@@ -55,7 +59,7 @@ class SharedViewModel(
     }
 
     fun addNewLogItem(value: String, date: Date?) {
-        val newLog = getNewLogItem(selectedCategory.value?.name.toString(), value, date)
+        val newLog = getNewLogItem(selectedCategory.value?.name.toString(), value.toFloat(), date)
         viewModelScope.launch {
             logItemDao.insert(newLog)
         }
@@ -71,39 +75,36 @@ class SharedViewModel(
         TODO()
     }
 
+    /**
+     * creates and returns a log which is to be updated
+     */
     private fun getUpdatedLogItem(
         id: Int,
         category: String,
-        value: String,
+        value: Float,
         date: Date?
     ): LogItem {
         return LogItem(
             id = id,
             categoryOwnerName = category,
-            value = value.toInt(),
+            value = value,
             date = date ?: getCurrentDateTime()
         )
     }
 
+    /**
+     * Creates and returns new log
+     */
     private fun getNewLogItem(
         category: String,
-        value: String,
+        value: Float,
         date: Date?
     ): LogItem {
         return LogItem(
             categoryOwnerName = category,
-            value = value.toInt(),
+            value = value,
             date = date ?: getCurrentDateTime()
         )
-    }
-
-    fun retrieveItem(id: Int): LiveData<LogItem> {
-        return logItemDao.getLogItem(id).asLiveData()
-    }
-
-    //TODO: nok smartere bare at selecte fra de categorier vi allerede har hentet
-    fun retrieveItemsByCategory(name: String): LiveData<LogCategoryWithLogItems> {
-        return logCategoryDao.getLogCategoryWithLogItems(name).asLiveData()
     }
 
     private fun getCurrentDateTime(): Date {
@@ -143,29 +144,16 @@ class SharedViewModel(
 
     private val quantityOfLogsForDerivingStatistics =
         20 //Only derive average and standard deviation from n LogItems
+    // TODO this number should be equal to the amount of loaded logs when load is implemented
 
-    val mean: LiveData<Double> = MediatorLiveData<Double>()
-        .apply {
-            fun update() {
-                value = logValues()?.average()?.round(2)
-            }
-            addSource(selectedCategory) { update() }
-            update()
-        }
+    fun mean(): Double? = logValues()?.average()?.round(2)
+    fun standdarddeviation(): Double? = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
 
-    val standdarddeviation: LiveData<Double> = MediatorLiveData<Double>()
-        .apply {
-            fun update() {
-                value = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
-            }
-            addSource(selectedCategory) { update() }
-            update()
-        }
 
     /**
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValues(): List<Int>? {
+    fun logValues(): List<Float>? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
@@ -175,18 +163,39 @@ class SharedViewModel(
     /**
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValuesAndDates(): List<Pair<Int, Date?>>? {
+    fun logValuesAndDates(): List<Pair<Float, Date?>>? {
         return allLogItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { Pair(it.value, it.date) }?.toMutableList()
     }
 
-    fun createCategory(name: String, unit: String) {
-        val newCategory = LogCategory(name, unit)
+    /**
+     * creates a new category using params
+     */
+    fun createCategory(name: String, unit: String, emojiId: Int) {
+        val newCategory = LogCategory(name, unit, emojiId)
         viewModelScope.launch {
             logCategoryDao.insert(newCategory)
         }
+    }
+
+    /**
+     * @return all the logs of the selected category
+     */
+    fun logsOfSelectedCategory(): List<LogItem>? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
+            ?.toList()
+    }
+
+    /**
+     * @return whether any logs for the selected category exists
+     */
+    fun anyLogsOfSelectedCategory(): Boolean? {
+        return allLogItems.value?.asSequence()
+            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
+            ?.any()
     }
 
     fun deleteCategory(logCategory: LogCategory){
