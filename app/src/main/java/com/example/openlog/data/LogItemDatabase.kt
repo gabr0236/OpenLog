@@ -30,6 +30,7 @@ abstract class LogItemDatabase : RoomDatabase() {
                 )
                     .createFromAsset("database/log_item_database_3.db")
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 return instance

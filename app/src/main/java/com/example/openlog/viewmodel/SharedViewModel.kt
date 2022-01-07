@@ -1,7 +1,6 @@
 package com.example.openlog.viewmodel
 
-import android.content.Intent
-import android.net.Uri
+
 import androidx.lifecycle.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
@@ -118,17 +117,11 @@ class SharedViewModel(
     // TODO: Update to https://developer.android.com/training/data-storage/app-specific
     fun exportToCSV(logItemsAndLogCategory: List<LogCategoryWithLogItems>) : File {
         val SEPERATOR = ","
-        val logFile = File.createTempFile("log_items", "csv")
+        val file = File.createTempFile("log_items", "csv")
+
 
         var fileWriter = FileWriter("log_items.csv")
 
-
-       /* val bufferedWriter = BufferedWriter(
-            OutputStreamWriter(
-                FileOutputStream("log_items.csv"),
-                "UTF-8"
-            )
-        )*/
 
 
         logItemsAndLogCategory.forEach {
@@ -148,13 +141,10 @@ class SharedViewModel(
             fileWriter.write(line.toString())
             fileWriter.write(System.getProperty("line seperator"))
         }
-
-
         fileWriter.flush()
         fileWriter.close()
 
-
-        return logFile
+        return file
     }
 
     private val quantityOfLogsForDerivingStatistics =

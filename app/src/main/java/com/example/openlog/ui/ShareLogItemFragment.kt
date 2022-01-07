@@ -1,5 +1,8 @@
 package com.example.openlog.ui
 
+
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +17,13 @@ import com.example.openlog.databinding.FragmentShareLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import kotlinx.coroutines.launch
+import java.io.File
+import com.example.openlog.MainActivity
+
+import androidx.core.content.FileProvider
+
+
+
 
 class ShareLogItemFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -41,10 +51,12 @@ class ShareLogItemFragment : Fragment() {
 
         binding.shareAction.setOnClickListener {
             lifecycleScope.launch {
-            val sendIntent = Intent(Intent.ACTION_SEND)
-            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(sharedViewModel.exportToCSV(sharedViewModel.retrieveAllItemsAndCategories())))
-            sendIntent.type = "text/csv"
-            startActivity(Intent.createChooser(sendIntent, "SHARE"))
+                val fileURI = FileProvider.getUriForFile(context!!,"com.codepath.fileprovider", File("src/main/java/com/example/openlog/item_logs.txt"))
+                val sendIntent = Intent(Intent.ACTION_SEND)
+                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
+                sendIntent.type = "*/*"
+                startActivity(Intent.createChooser(sendIntent, "SHARE"))
             }
         }
     }
