@@ -123,7 +123,6 @@ class SharedViewModel(
         var fileWriter = FileWriter("log_items.csv")
 
 
-
         logItemsAndLogCategory.forEach {
             val line = StringBuffer()
             fileWriter.append(it.logCategory.name.toString())
