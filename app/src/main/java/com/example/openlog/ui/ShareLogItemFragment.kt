@@ -54,7 +54,7 @@ class ShareLogItemFragment : Fragment() {
                 val fileURI = FileProvider.getUriForFile(context!!,"com.codepath.fileprovider", File("src/main/java/com/example/openlog/item_logs.txt"))
                 val sendIntent = Intent(Intent.ACTION_SEND)
                 sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
+                sendIntent.putExtra(Intent.EXTRA_STREAM, File("src/main/java/com/example/openlog/item_logs.txt"))
                 sendIntent.type = "*/*"
                 startActivity(Intent.createChooser(sendIntent, "SHARE"))
             }
