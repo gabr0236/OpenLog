@@ -105,16 +105,15 @@ class ShareLogItemFragment : Fragment() {
 
             val sendIntent = Intent(Intent.ACTION_SEND)
 
-            sendIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            sendIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
             sendIntent.setType("*/*")
             sendIntent.putExtra(Intent.EXTRA_EMAIL, "email@example.com")
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
             sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
 
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
+            sendIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             val chooser = Intent.createChooser(sendIntent, "Chooser Title")
             chooser.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
