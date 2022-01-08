@@ -114,13 +114,28 @@ class ShareLogItemFragment : Fragment() {
             if (Uri.EMPTY.equals(fileURI)) throw IllegalArgumentException("Uri not found")
 
             val sendIntent = Intent(Intent.ACTION_SEND)
-            sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_EMAIL, "email@example.com");
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "body text");
+            sendIntent.setType("text/plain")
+            sendIntent.putExtra(Intent.EXTRA_EMAIL, "email@example.com")
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
 
-            startActivity(Intent.createChooser(sendIntent, "Pick an Email provider"));
+
+            val chooser = Intent.createChooser(sendIntent, "Share File")
+
+            val resInfoList: List<ResolveInfo> = context!!.getPackageManager()
+                .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+
+            for (resolveInfo in resInfoList) {
+                val packageName = resolveInfo.activityInfo.packageName
+                context!!.grantUriPermission(
+                    packageName,
+                    fileURI,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+
+            startActivity(chooser)
           //  }
         }
     }
