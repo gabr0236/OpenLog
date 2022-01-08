@@ -149,7 +149,6 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
         //TODO duplicate method
-
         //Confirmation dialog
         AlertDialog.Builder(context)
             .setTitle("Slet Kategori")
