@@ -24,18 +24,9 @@
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <grant-uri-permission android:path="src/main/java/com/example/openlog/ui/item_logs.txt"
-                android:pathPattern="src/main/java/com/example/openlog"
-                android:pathPrefix=".*" />
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-            <grant-uri-permission android:path="*"
-                android:pathPattern="*"
-                android:pathPrefix="*"
-                />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

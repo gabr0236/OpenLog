@@ -57,41 +57,54 @@ class ShareLogItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("TEST", context!!.getFilesDir().toString())
-        Log.d("TEST", context!!.getCacheDir().toString())
-        Log.d("TEST", Environment.getExternalStorageDirectory().toString())
-        Log.d("TEST", context!!.getExternalFilesDir(null).toString())
-        Log.d("TEST", context!!.getExternalCacheDir().toString())
-        Log.d("TEST", context!!.getExternalMediaDirs().toString())
-
+        //Log.d("TEST", context!!.getFilesDir().toString())
+        //Log.d("TEST", context!!.getCacheDir().toString())
+        //Log.d("TEST", Environment.getExternalStorageDirectory().toString())
+        //Log.d("TEST", context!!.getExternalFilesDir(null).toString())
+        //Log.d("TEST", context!!.getExternalCacheDir().toString())
+        //Log.d("TEST", context!!.getExternalMediaDirs().toString())
 
 
         binding.shareAction.setOnClickListener {
             //lifecycleScope.launch {
 
+            Log.d("FILE", "Path of filesDir: ${context!!.getFilesDir().toString()}")
+
             //Lav nyt subdirectory i **internal storage**
-            val dir: File = File(context!!.filesDir, "mydir") //TODO: check om mydir her laver directory rigtigt
+            val dir: File = File(context!!.filesDir, "mydir")
             if (!dir.exists()) {
                 dir.mkdir()
             }
+            Log.d("FILE", "Path of mydir: ${dir.absolutePath}")
+
 
             //Skriv fil til internal storage
             try {
-                val gpxfile = File(dir, "testfile.txt") //TODO: check at denne fil ligger det rigtige sted
+
+                val gpxfile = File(dir, "testfile.txt")
                 val writer = FileWriter(gpxfile)
                 writer.append("This is a testfile")
                 writer.flush()
                 writer.close()
+                Log.d("FILE", "Path of testfile.txt: ${gpxfile.absolutePath}")
+
+                Log.d("FILE", "Try catch finish no exceptions")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
+            //TODO ALL ABOVE WORKING PROPERLY
 
             val filePath= File(context!!.filesDir, "mydir")
-            val newFile = File(filePath, "testfile.txt")
-            //TODO: check om filen indeholder "This is a testfile"
+            Log.d("FILE", "Path of filePath (should be same as mydir): ${dir.absolutePath}")
 
-            if (!newFile.exists()) throw IllegalArgumentException("newFile not exists")
+            val newFile = File(filePath, "testfile.txt")
+            Log.d("FILE", "Path of newFile (should be same as testfile.txt): ${newFile.absolutePath}")
+
+
+            if (!newFile.exists() || !newFile.canRead()) throw IllegalArgumentException("newFile not exists")
+
+
 
             val fileURI = FileProvider.getUriForFile(
                 context!!,
@@ -105,23 +118,6 @@ class ShareLogItemFragment : Fragment() {
             sendIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             sendIntent.data=fileURI
             sendIntent.type = "*/*"
-
-
-
-            //val chooser = Intent.createChooser(sendIntent, "Share File")
-
-            //val resInfoList: List<ResolveInfo> = context!!.getPackageManager()
-            //    .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
-//
-            //for (resolveInfo in resInfoList) {
-            //    val packageName = resolveInfo.activityInfo.packageName
-            //    //TODO: evt prøve fragment nedenfor istedet for activity
-            //    context!!.grantUriPermission(
-            //        packageName,
-            //        fileURI,
-            //        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-            //    )
-            //}
 
             startActivity(sendIntent)
           //  }

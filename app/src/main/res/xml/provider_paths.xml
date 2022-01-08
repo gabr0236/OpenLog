@@ -15,9 +15,9 @@
     <files-path
         name="files"
         path="." />
+    <!--TODO: vvv test vvv-->
     <files-path
         name="my_test"
-        path="."/>
-
+        path="mydir/"/>
 </paths>
 
