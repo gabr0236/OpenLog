@@ -1,35 +1,27 @@
 package com.example.openlog.ui
 
 
+import android.R.attr.mimeType
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.openlog.LogItemApplication
 import com.example.openlog.databinding.FragmentShareLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import kotlinx.coroutines.launch
 import java.io.File
-import com.example.openlog.MainActivity
-
-import androidx.core.content.FileProvider
-import android.content.ClipData
-import java.lang.IllegalArgumentException
-import android.os.Environment
-import android.util.Log
 import java.io.FileWriter
-import java.lang.Exception
 
 
 class ShareLogItemFragment : Fragment() {
@@ -80,7 +72,6 @@ class ShareLogItemFragment : Fragment() {
 
             //Skriv fil til internal storage
             try {
-
                 val gpxfile = File(dir, "testfile.txt")
                 val writer = FileWriter(gpxfile)
                 writer.append("This is a testfile")
@@ -93,8 +84,6 @@ class ShareLogItemFragment : Fragment() {
                 e.printStackTrace()
             }
 
-            //TODO ALL ABOVE WORKING PROPERLY
-
             val filePath= File(context!!.filesDir, "mydir")
             Log.d("FILE", "Path of filePath (should be same as mydir): ${dir.absolutePath}")
 
@@ -104,7 +93,8 @@ class ShareLogItemFragment : Fragment() {
 
             if (!newFile.exists() || !newFile.canRead()) throw IllegalArgumentException("newFile not exists")
 
-
+            //TODO ALL ABOVE WORKING PROPERLY
+            //Somehow the mail is not being sent
 
             val fileURI = FileProvider.getUriForFile(
                 context!!,
@@ -114,28 +104,22 @@ class ShareLogItemFragment : Fragment() {
             if (Uri.EMPTY.equals(fileURI)) throw IllegalArgumentException("Uri not found")
 
             val sendIntent = Intent(Intent.ACTION_SEND)
-            sendIntent.setType("text/plain")
+
+            sendIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            sendIntent.setType("*/*")
             sendIntent.putExtra(Intent.EXTRA_EMAIL, "email@example.com")
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
             sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
+
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
 
+            val chooser = Intent.createChooser(sendIntent, "Chooser Title")
+            chooser.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            context!!.startActivity(chooser)
 
-            val chooser = Intent.createChooser(sendIntent, "Share File")
-
-            val resInfoList: List<ResolveInfo> = context!!.getPackageManager()
-                .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
-
-            for (resolveInfo in resInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                context!!.grantUriPermission(
-                    packageName,
-                    fileURI,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
-            }
-
-            startActivity(chooser)
           //  }
         }
     }
