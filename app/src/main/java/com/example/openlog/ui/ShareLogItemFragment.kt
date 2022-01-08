@@ -49,16 +49,7 @@ class ShareLogItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Log.d("TEST", context!!.getFilesDir().toString())
-        //Log.d("TEST", context!!.getCacheDir().toString())
-        //Log.d("TEST", Environment.getExternalStorageDirectory().toString())
-        //Log.d("TEST", context!!.getExternalFilesDir(null).toString())
-        //Log.d("TEST", context!!.getExternalCacheDir().toString())
-        //Log.d("TEST", context!!.getExternalMediaDirs().toString())
-
-
         binding.shareAction.setOnClickListener {
-            //lifecycleScope.launch {
 
             Log.d("FILE", "Path of filesDir: ${context!!.getFilesDir().toString()}")
 
@@ -93,9 +84,6 @@ class ShareLogItemFragment : Fragment() {
 
             if (!newFile.exists() || !newFile.canRead()) throw IllegalArgumentException("newFile not exists")
 
-            //TODO ALL ABOVE WORKING PROPERLY
-            //Somehow the mail is not being sent
-
             val fileURI = FileProvider.getUriForFile(
                 context!!,
                 context!!.packageName + ".provider",
@@ -105,21 +93,26 @@ class ShareLogItemFragment : Fragment() {
 
             val sendIntent = Intent(Intent.ACTION_SEND)
 
-            sendIntent.setType("*/*")
-            sendIntent.putExtra(Intent.EXTRA_EMAIL, "email@example.com")
+            sendIntent.setType("text/plain")
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
             sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
-
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
-            sendIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            sendIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-            val chooser = Intent.createChooser(sendIntent, "Chooser Title")
-            chooser.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-            context!!.startActivity(chooser)
 
-          //  }
+            val chooser = Intent.createChooser(sendIntent, "Share File")
+
+            val resInfoList: List<ResolveInfo> = context!!.getPackageManager()
+                .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+            for (resolveInfo in resInfoList) {
+                val packageName = resolveInfo.activityInfo.packageName
+                context!!.grantUriPermission(
+                    packageName,
+                    fileURI,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+            startActivity(chooser)
+
         }
     }
 }
