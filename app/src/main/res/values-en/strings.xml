@@ -34,5 +34,5 @@
     <string name="log_has_been_updated">Log Updated</string>
     <string name="delete_category">Delete Category</string>
     <string name="logs">Logs</string>
-    <string name="type">Type %s</string>
+    <string name="type">Type in %s</string>
 </resources>
