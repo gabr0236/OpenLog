@@ -109,7 +109,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.logValue.text?.clear()
         date = null
 
-        Toast.makeText(requireContext(), "Log Opdateret", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.log_has_been_updated), Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.previous_logs_fragment)
     }
@@ -117,8 +117,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     fun deleteLog() {
         //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Log")
-            .setMessage("Er du sikker på at du vil slette denne log? Slettet Data kan ikke genskabes.")
+            .setTitle(getString(R.string.delete_log))
+            .setMessage(getString(R.string.delete_question))
             .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
@@ -148,24 +148,33 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO duplicate method
-
-        //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Kategori Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                    //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.category_deleted))
+                    .setMessage(getString(R.string.delete_question_2))
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            getString(R.string.category_deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                        findNavController().navigate(R.id.add_log_item_fragment)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
@@ -199,6 +208,9 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     private fun isValidNumber(s: String?) : Boolean {
         val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
         return if (s.isNullOrEmpty()) false
-        else regex.matches(s)
+        else if (s.contains(",")){
+            Toast.makeText(requireContext(), getString(R.string.dot_not_comma), Toast.LENGTH_LONG).show()
+            false
+        } else regex.matches(s)
     }
 }

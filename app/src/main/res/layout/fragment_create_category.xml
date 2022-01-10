@@ -24,9 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_margin="16dp"
-            android:hint="Kategori Navn"
+            android:hint="@string/category_name"
+            android:capitalize="words"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
+            tools:layout_editor_absoluteX="16dp"
+            app:shapeAppearance="@style/Rounded"
+            tools:ignore="Deprecated">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_category_name"
@@ -44,8 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginBottom="0dp"
-            android:hint="Kategori Enhed"
-            app:layout_constraintTop_toBottomOf="@id/textfield_container_category_name">
+            android:hint="@string/category_unit"
+            app:layout_constraintTop_toBottomOf="@id/textfield_container_category_name"
+            app:shapeAppearance="@style/Rounded"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_category_unit"
@@ -64,7 +69,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
             android:background="@drawable/spinner_outline"
-            android:popupBackground="@drawable/spinner_outline" />
+            android:popupBackground="@drawable/spinner_outline"
+            app:shapeAppearance="@style/Rounded"
+            />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/save_action"
@@ -74,7 +81,7 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> createCategoryFragment.createCategory()}"
-            android:text="Opret Kategori"
+            android:text="@string/create_category"
             android:textAlignment="center"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"

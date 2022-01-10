@@ -81,12 +81,19 @@ class CreateCategoryFragment : Fragment() {
             unit.clear()
             Toast.makeText(
                 requireContext(),
-                "En kategori med dette navn eksitere allerede",
+                getString(R.string.category_exists),
                 Toast.LENGTH_SHORT
             ).show()
             return
         }
         sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
+
+        Toast.makeText(
+            this.context,
+            getString(R.string.category_has_been_created),
+            Toast.LENGTH_SHORT
+        ).show()
+
         //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
         findNavController().popBackStack()
     }

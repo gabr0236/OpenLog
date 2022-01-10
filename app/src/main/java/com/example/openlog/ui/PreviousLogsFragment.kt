@@ -1,10 +1,12 @@
 package com.example.openlog.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -106,8 +108,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     fun setSDAndAvg(){
-        binding.textviewAverage.text="Gennemsnit: ${sharedViewModel.mean()}"
-        binding.textviewStandardDeviation.text="Standardafvigelse: ${sharedViewModel.standdarddeviation()}"
+        binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
+        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
     }
 
     fun updateFragmentView(){
@@ -128,7 +130,35 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        TODO("Not yet implemented")
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
+            .setIcon(R.drawable.emoji_warning)
+            .setPositiveButton(
+                android.R.string.yes
+            ) { _, _ ->
+                //If yes is selected
+                //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.delete_category))
+                    .setMessage(getString(R.string.delete_question_2))
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            getString(R.string.category_deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
     }
 
     override fun onItemClickedFullLog(logItem: LogItem) {
