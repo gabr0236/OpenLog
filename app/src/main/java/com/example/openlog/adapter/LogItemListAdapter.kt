@@ -18,10 +18,10 @@ class LogItemListAdapter(
     private val selectedCategory: LiveData<LogCategory>
 ) :
     ListAdapter<LogItem, LogItemListAdapter.ItemViewHolder>(DiffCallback) {
+
     inner class ItemViewHolder(
         private var binding: LayoutLogItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
             binding.apply {
                 logItemValue.text = logItem.value.toString()
@@ -34,7 +34,6 @@ class LogItemListAdapter(
                     EmojiRetriever.getEmojiIDOf(it)
                 }
                 imageviewEmoji.setImageDrawable(emojiResId?.let { itemView.context.getDrawable(it) })
-
             }
         }
     }
