@@ -131,8 +131,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Vil slette denne kategori? Denne handling vil medføre sletning af alle logge tilhørende denne kategori")
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
             .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
@@ -140,8 +140,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
                 //If yes is selected
                 //Ask for confirmation
                 AlertDialog.Builder(context)
-                    .setTitle("Slet Kategori")
-                    .setMessage("Er du sikker? Slettet Data kan ikke genskabes.")
+                    .setTitle(getString(R.string.delete_category))
+                    .setMessage(getString(R.string.delete_question_2))
                     .setIcon(R.drawable.emoji_warning)
                     .setPositiveButton(
                         android.R.string.yes
@@ -149,7 +149,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
                         //If yes is selected
                         Toast.makeText(
                             context,
-                            "Kategori Slettet",
+                            getString(R.string.category_deleted),
                             Toast.LENGTH_SHORT
                         ).show()
                         sharedViewModel.deleteCategory(logCategory)

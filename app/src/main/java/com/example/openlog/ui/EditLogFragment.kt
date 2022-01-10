@@ -159,7 +159,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                     //Ask for confirmation
                 AlertDialog.Builder(context)
                     .setTitle(getString(R.string.category_deleted))
-                    .setMessage("Er du sikker? Slettet Data kan ikke genskabes.")
+                    .setMessage(getString(R.string.delete_question_2))
                     .setIcon(R.drawable.emoji_warning)
                     .setPositiveButton(
                         android.R.string.yes
