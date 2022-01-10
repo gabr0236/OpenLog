@@ -87,6 +87,13 @@ class CreateCategoryFragment : Fragment() {
             return
         }
         sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
+
+        Toast.makeText(
+            this.context,
+            "Kategori er oprettet",
+            Toast.LENGTH_SHORT
+        ).show()
+
         //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
         findNavController().popBackStack()
     }
