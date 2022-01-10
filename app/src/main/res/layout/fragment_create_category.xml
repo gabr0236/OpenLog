@@ -24,9 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_margin="16dp"
-            android:hint="Kategori Navn"
+            android:hint="@string/category_name"
+            android:capitalize="words"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
+            tools:layout_editor_absoluteX="16dp"
+            tools:ignore="Deprecated">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_category_name"
@@ -44,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginBottom="0dp"
-            android:hint="Kategori Enhed"
+            android:hint="@string/category_unit"
             app:layout_constraintTop_toBottomOf="@id/textfield_container_category_name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +76,7 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> createCategoryFragment.createCategory()}"
-            android:text="Opret Kategori"
+            android:text="@string/open_category"
             android:textAlignment="center"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"

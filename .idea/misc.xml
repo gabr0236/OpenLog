@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/activity_main.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/button_add_category.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/fragment_add_log.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/fragment_create_category.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/fragment_edit_log.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/fragment_previous_logs.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/fragment_share_logs.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/layout_log_category.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/layout_log_item.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog-3/app/src/main/res/layout/list_item_emoji.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_fragment.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/layout/add_log_item_layout.xml" value="0.20572916666666666" />

@@ -6,8 +6,22 @@
     <string name="no">Cancel</string>
 
     <string name="rediger_log">Rediger log</string>
-    <string name="slet_log">Slet log</string>
-    <string name="tidligere_logge">Tidligere logge</string>
+    <string name="delete_log">Slet log</string>
+    <string name="previous_logs">Tidligere logge</string>
     <string name="gennemsnit">Gennemsnit: %s</string>
     <string name="standardafvigelse">Standardafvigelse: %s</string>
+    <string name="add_category">Tilføj\nKategori</string>
+    <string name="today">I dag</string>
+    <string name="change_date">Skift dato</string>
+    <string name="log">LOG</string>
+    <string name="category_name">Kategori Navn</string>
+    <string name="category_unit">Kategori Enhed</string>
+    <string name="open_category">Opret Kategori</string>
+    <string name="save">Gem</string>
+    <string name="no_logs_found">Ingen Logge Fundet</string>
+    <string name="share_logs">Del Logs</string>
+    <string name="calories">*Kalorier*</string>
+    <string name="placeholder_calories_unit">*XX Kcal*</string>
+    <string name="placeholder_time">*Time of Log*</string>
+    <string name="edit">EDIT</string>
 </resources>
