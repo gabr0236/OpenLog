@@ -148,24 +148,33 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO duplicate method
-
-        //Confirmation dialog
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.delete_category))
             .setMessage(getString(R.string.delete_question))
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    getString(R.string.category_deleted),
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                    //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.category_deleted))
+                    .setMessage("Er du sikker? Slettet Data kan ikke genskabes.")
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            getString(R.string.category_deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                        findNavController().navigate(R.id.add_log_item_fragment)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
