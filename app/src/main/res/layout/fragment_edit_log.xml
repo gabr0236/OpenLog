@@ -56,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:inputType="number"
                 android:layout_height="wrap_content"
-                android:digits="-0123456789." />
+                android:digits="-0123456789."
+                android:imeOptions="actionGo"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

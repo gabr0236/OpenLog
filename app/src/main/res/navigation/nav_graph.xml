@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/add_log_item_fragment"
         android:name="com.example.openlog.ui.AddLogItemFragment"
-        android:label="Skriv Log"
+        android:label="OpenLog"
         tools:layout="@layout/fragment_add_log">
         <argument
             android:name="title"
