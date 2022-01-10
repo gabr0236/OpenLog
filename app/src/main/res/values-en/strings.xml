@@ -25,4 +25,13 @@
     <string name="placeholder_calories_unit">*N Kcal*</string>
     <string name="placeholder_time">* Time of Log *</string>
     <string name="edit">Edit</string>
+    <string name="add_log">Add Log</string>
+    <string name="log_added">Log Added</string>
+    <string name="category_deleted">Category Deleted</string>
+    <string name="dot_not_comma">Use dot \'.\' instead of comma \',\'</string>
+    <string name="category_exists">A category with this name have already been created</string>
+    <string name="category_has_been_created">Category Created</string>
+    <string name="log_has_been_updated">Log Updated</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="logs">Logs</string>
 </resources>

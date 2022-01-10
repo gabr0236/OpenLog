@@ -106,8 +106,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     fun setSDAndAvg(){
-        binding.textviewAverage.text="Gennemsnit: ${sharedViewModel.mean()}"
-        binding.textviewStandardDeviation.text="Standardafvigelse: ${sharedViewModel.standdarddeviation()}"
+        binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
+        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
     }
 
     fun updateFragmentView(){

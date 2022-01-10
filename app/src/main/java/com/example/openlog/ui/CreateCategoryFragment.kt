@@ -81,7 +81,7 @@ class CreateCategoryFragment : Fragment() {
             unit.clear()
             Toast.makeText(
                 requireContext(),
-                "En kategori med dette navn eksitere allerede",
+                getString(R.string.category_exists),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -90,7 +90,7 @@ class CreateCategoryFragment : Fragment() {
 
         Toast.makeText(
             this.context,
-            "Kategori er oprettet",
+            getString(R.string.category_has_been_created),
             Toast.LENGTH_SHORT
         ).show()
 

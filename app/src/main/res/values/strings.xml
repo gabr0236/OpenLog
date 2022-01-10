@@ -24,4 +24,13 @@
     <string name="placeholder_calories_unit">*N Kcal*</string>
     <string name="placeholder_time">* Tidspunkt for Log *</string>
     <string name="edit">Rediger</string>
+    <string name="add_log">Tilføj Log</string>
+    <string name="log_added">Log Tilføjet</string>
+    <string name="category_deleted">Kategori Slettet</string>
+    <string name="dot_not_comma">Brug punktum \'.\' i stedet for komma \',\'</string>
+    <string name="category_exists">En kategori med dette navn eksiterer allerede</string>
+    <string name="category_has_been_created">Kategori Oprettet</string>
+    <string name="log_has_been_updated">Log Opdateret</string>
+    <string name="delete_category">Slet Kategori</string>
+    <string name="logs">Logs</string>
 </resources>
