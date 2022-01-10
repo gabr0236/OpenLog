@@ -197,4 +197,12 @@ class SharedViewModel(
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.any()
     }
+
+    fun deleteCategory(logCategory: LogCategory){
+        viewModelScope.launch {
+            logCategoryDao.delete(logCategory)
+        }
+    }
+
+
 }
