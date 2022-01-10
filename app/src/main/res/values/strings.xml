@@ -33,4 +33,5 @@
     <string name="log_has_been_updated">Log Opdateret</string>
     <string name="delete_category">Slet Kategori</string>
     <string name="logs">Logs</string>
+    <string name="type">Indtast %s</string>
 </resources>
