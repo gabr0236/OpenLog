@@ -114,22 +114,32 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //Confirmation dialog
         AlertDialog.Builder(context)
             .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setMessage("Vil slette denne kategori? Denne handling vil medføre sletning af alle logge tilhørende denne kategori")
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Kategori Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle("Slet Kategori")
+                    .setMessage("Er du sikker? Slettet Data kan ikke genskabes.")
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            "Kategori Slettet",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
