@@ -76,7 +76,7 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> createCategoryFragment.createCategory()}"
-            android:text="@string/open_category"
+            android:text="@string/create_category"
             android:textAlignment="center"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"

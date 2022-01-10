@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="0dp"
-                    android:hint="@string/calories"
+                    android:hint="@string/placeholder_calories"
                     android:lines="1"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
