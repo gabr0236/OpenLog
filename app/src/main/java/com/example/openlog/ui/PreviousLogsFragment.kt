@@ -1,10 +1,12 @@
 package com.example.openlog.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -128,7 +130,23 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        TODO("Not yet implemented")
+        AlertDialog.Builder(context)
+            .setTitle("Slet Kategori")
+            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
+            .setIcon(R.drawable.emoji_warning)
+            .setPositiveButton(
+                android.R.string.yes
+            ) { _, _ ->
+                //If yes is selected
+                Toast.makeText(
+                    context,
+                    "Kategori Slettet",
+                    Toast.LENGTH_SHORT
+                ).show()
+                sharedViewModel.deleteCategory(logCategory)
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
     }
 
     override fun onItemClickedFullLog(logItem: LogItem) {

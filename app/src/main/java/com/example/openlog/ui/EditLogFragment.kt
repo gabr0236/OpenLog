@@ -148,13 +148,10 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO duplicate method
-
-        //Confirmation dialog
         AlertDialog.Builder(context)
             .setTitle("Slet Kategori")
             .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
@@ -165,7 +162,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                     Toast.LENGTH_SHORT
                 ).show()
                 sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                findNavController().navigate(R.id.add_log_item_fragment)
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
