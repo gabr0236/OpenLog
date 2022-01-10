@@ -98,7 +98,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         sharedViewModel.addNewLogItem(input, date)
 
-        Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
         date = null
     }
 

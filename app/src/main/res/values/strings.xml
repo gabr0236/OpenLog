@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">OpenLog</string>
     <string name="edit_title">Rediger Log</string>
-    <string name="delete_question">Er du sikker at du gerne vil slettte denne? Dette kan ikke gøres om.</string>
+    <string name="delete_question">Vil slette denne kategori? Denne handling vil medføre sletning af alle logge tilhørende denne kategori</string>
+    <string name="delete_question_2">Er du sikker? Denne handling kan ikke gøres om.</string>
+
     <string name="yes">Slet</string>
     <string name="no">Anuller</string>
 
