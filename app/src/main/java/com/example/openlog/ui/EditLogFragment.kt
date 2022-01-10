@@ -208,6 +208,9 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     private fun isValidNumber(s: String?) : Boolean {
         val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
         return if (s.isNullOrEmpty()) false
-        else regex.matches(s)
+        else if (s.contains(",")){
+            Toast.makeText(requireContext(), "Brug punktum '.' i stedet for komma ','", Toast.LENGTH_LONG).show()
+            false
+        } else regex.matches(s)
     }
 }
