@@ -110,21 +110,29 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-    suspend fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+     fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
         return logCategoryDao.getLogCategoriesWithLogItems()
     }
 
-    // TODO: Update to https://developer.android.com/training/data-storage/app-specific
-    fun exportToCSV(logItemsAndLogCategory: List<LogCategoryWithLogItems>) : File {
+
+    fun exportToCSV(file : File) {
         val SEPERATOR = ","
-        val file = File.createTempFile("log_items", "csv")
+
+        var fileWriter = FileWriter(file)
 
 
-        var fileWriter = FileWriter("log_items.csv")
+        fileWriter.append("Category")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Unit")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("ValueID")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Value")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Date")
+        fileWriter.append(SEPERATOR)
 
-
-        logItemsAndLogCategory.forEach {
-            val line = StringBuffer()
+        retrieveAllItemsAndCategories().forEach {
             fileWriter.append(it.logCategory.name.toString())
             fileWriter.append(SEPERATOR)
             fileWriter.append(it.logCategory.unit.toString())
@@ -137,13 +145,11 @@ class SharedViewModel(
             fileWriter.append(SEPERATOR)
             fileWriter.append(it.date.toString())
          }
-            fileWriter.write(line.toString())
-            fileWriter.write(System.getProperty("line seperator"))
+            fileWriter.append("/n")
         }
         fileWriter.flush()
         fileWriter.close()
 
-        return file
     }
 
     private val quantityOfLogsForDerivingStatistics =

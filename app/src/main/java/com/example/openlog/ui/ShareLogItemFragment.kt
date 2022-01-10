@@ -64,10 +64,9 @@ class ShareLogItemFragment : Fragment() {
             //Skriv fil til internal storage
             try {
                 val gpxfile = File(dir, "testfile.txt")
-                val writer = FileWriter(gpxfile)
-                writer.append("This is a testfile")
-                writer.flush()
-                writer.close()
+
+                sharedViewModel.exportToCSV(gpxfile)
+
                 Log.d("FILE", "Path of testfile.txt: ${gpxfile.absolutePath}")
 
                 Log.d("FILE", "Try catch finish no exceptions")
@@ -94,7 +93,7 @@ class ShareLogItemFragment : Fragment() {
             val sendIntent = Intent(Intent.ACTION_SEND)
 
             sendIntent.setType("text/plain")
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenLog")
             sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
 
