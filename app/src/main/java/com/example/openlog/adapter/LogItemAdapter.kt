@@ -1,18 +1,9 @@
 package com.example.openlog.adapter
-
-
-
-import androidx.annotation.NonNull
-
 import android.widget.ProgressBar
-
 import androidx.recyclerview.widget.RecyclerView
-
 import android.widget.TextView
-
 import android.view.LayoutInflater
 import android.view.View
-
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -20,16 +11,14 @@ import androidx.lifecycle.LiveData
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
-import com.google.android.material.button.MaterialButton
 
 
-class RecyclerViewAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
+class LogItemAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
                           private val selectedCategory: LiveData<LogCategory>,
-                          private val logItems: List<LogItem>) :
+                          var logItems: List<LogItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -56,7 +45,7 @@ class RecyclerViewAdapter(private val onItemClickListenerLogItem: OnItemClickLis
     }
 
     override fun getItemCount(): Int {
-        return if (mItemList == null) 0 else mItemList!!.size
+        return if (logItems == null) 0 else logItems.size
     }
 
     /**
@@ -66,12 +55,12 @@ class RecyclerViewAdapter(private val onItemClickListenerLogItem: OnItemClickLis
      * @return
      */
     override fun getItemViewType(position: Int): Int {
-        return if (mItemList!![position] == null) VIEW_TYPE_LOADING else VIEW_TYPE_ITEM
+        return if (logItems[position] == null) VIEW_TYPE_LOADING else VIEW_TYPE_ITEM
     }
 
     //LOG ITEM
     inner class ItemViewHolder(
-        private var itemView: View
+        var itemView: View
     ) : RecyclerView.ViewHolder(itemView){
         private val logItemValue: TextView = itemView.findViewById(R.id.log_item_value)
         private val logItemDate: TextView = itemView.findViewById(R.id.log_item_date)
@@ -96,14 +85,21 @@ class RecyclerViewAdapter(private val onItemClickListenerLogItem: OnItemClickLis
     //LOADING
     private inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
+        //TODO FIX
+        fun bind(){
+
+        }
     }
 
     private fun showLoadingView(viewHolder: LoadingViewHolder, position: Int) {
         //ProgressBar would be displayed
+        val item = logItems[position]
+        //TODO FIX
+        viewHolder.bind()
     }
 
     private fun populateItemRows(viewHolder: ItemViewHolder, position: Int) {
-        val item = mItemList!![position]
-        viewHolder.tvItem.text = item
+        val item = logItems[position]
+        viewHolder.bind(item,onItemClickListenerLogItem)
     }
 }
