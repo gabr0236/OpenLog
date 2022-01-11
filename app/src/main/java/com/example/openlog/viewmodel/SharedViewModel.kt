@@ -131,6 +131,7 @@ class SharedViewModel(
         fileWriter.append(SEPERATOR)
         fileWriter.append("Date")
         fileWriter.append(SEPERATOR)
+        fileWriter.appendLine()
 
         retrieveAllItemsAndCategories().forEach {
             fileWriter.append(it.logCategory.name.toString())
@@ -145,7 +146,7 @@ class SharedViewModel(
             fileWriter.append(SEPERATOR)
             fileWriter.append(it.date.toString())
          }
-            fileWriter.append("/n")
+            fileWriter.appendLine()
         }
         fileWriter.flush()
         fileWriter.close()
