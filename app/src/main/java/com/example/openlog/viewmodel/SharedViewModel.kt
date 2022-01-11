@@ -204,5 +204,14 @@ class SharedViewModel(
         }
     }
 
+    private val pageSize = 20
+    private var pageIndex = 1
+    private var isLoading = false
+    private var logItems: LiveData<List<LogItem>> = logItemDao.loadMoreLogItems(pageSize,pageIndex).asLiveData()
 
+    fun populateLogList(){
+        val newlogItems = logItemDao.loadMoreLogItems(pageSize,pageIndex++).asLiveData() //get items of current page and increment pageIndex
+        Log.d("TEST", "Items loaded: ${logItems.value?.size}")
+        if (logItems.value!=null) {logItems.value?.plus(newlogItems)}
+    }
 }

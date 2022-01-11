@@ -1,6 +1,7 @@
 package com.example.openlog.data.dao
 
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
@@ -28,4 +29,7 @@ interface LogItemDao {
 
     @Query("SELECT * FROM log_item ORDER BY log_item_date ASC")
     fun getFullLogItems(): Flow<List<LogItemAndLogCategory>>
+
+    @Query("SELECT * FROM log_item ORDER BY log_item_date LIMIT :pageSize OFFSET :pageSize * :pageIndex")
+    fun loadMoreLogItems(pageSize: Int, pageIndex: Int): Flow<List<LogItem>>
 }
