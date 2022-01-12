@@ -31,6 +31,6 @@ interface LogItemDao {
     //@Query("SELECT * FROM log_item ORDER BY log_item_date ASC")
     //fun getFullLogItems(): Flow<List<LogItemAndLogCategory>>
 
-    @Query("SELECT * FROM log_item ORDER BY log_item_id ASC")
-    fun getAllPaged(): PagingSource<Int,LogItem>
+    @Query("SELECT * FROM log_item WHERE log_category_owner_name = :categoryName ORDER BY log_item_date ASC")
+    fun getLogsByCategoryPaged(categoryName: String?): PagingSource<Int,LogItem>
 }

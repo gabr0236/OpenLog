@@ -1,6 +1,5 @@
 package com.example.openlog.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
-import kotlin.math.log
 
 class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
                            private val selectedCategory: LiveData<LogCategory>
@@ -30,8 +28,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
         }
     }
 
-    inner class ItemViewHolder(
-        var itemView: View
+    inner class ItemViewHolder(itemView: View
     ) : RecyclerView.ViewHolder(itemView){
         private val logItemValue: TextView = itemView.findViewById(R.id.log_item_value)
         private val logItemDate: TextView = itemView.findViewById(R.id.log_item_date)
@@ -54,7 +51,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
         val current: LogItem? = getItem(position)
-        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
+        //Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
         holder.bind(current, onItemClickListenerLogItem)
     }
 

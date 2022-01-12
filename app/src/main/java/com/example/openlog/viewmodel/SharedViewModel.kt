@@ -25,10 +25,12 @@ class SharedViewModel(
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
         pageSize = 10,
-        enablePlaceholders = true,
-        maxSize = 40
+        enablePlaceholders = false,
+        maxSize = 30,
+        prefetchDistance = 10,
+        initialLoadSize = 10
     )){
-        logItemDao.getAllPaged()
+        logItemDao.getLogsByCategoryPaged("Kalorier") //TODO FIX
     }.flow
 
     private val _selectedCategory = MutableLiveData<LogCategory>()

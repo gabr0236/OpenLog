@@ -88,22 +88,19 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             @OptIn(ExperimentalCoroutinesApi::class)
             sharedViewModel.logItems.collectLatest {
                 logItemPagingAdapter.submitData(it)
-                Log.d("TEST", "COLLECT LATEST CALL, DATA CHANGED")
-                    //todo it.filter { log -> log.categoryOwnerName==sharedViewModel.selectedCategory.value?.name })
             }
             updateFragmentView()
         }
         recyclerViewLogItem.adapter=logItemPagingAdapter
 
-        //sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
-        //    lifecycleScope.launch {
-        //        sharedViewModel.logItems.collectLatest {
-        //            (recyclerViewLogItem.adapter as LogItemPagingAdapter?)?.submitData(
-        //                it.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name })
-        //        }
-        //    }
-        //    updateFragmentView()
-        //}
+        sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
+            lifecycleScope.launch {
+                sharedViewModel.logItems.collectLatest {
+                    (recyclerViewLogItem.adapter as LogItemPagingAdapter?)?.submitData(it)
+                }
+            }
+            updateFragmentView()
+        }
         recyclerViewLogItem.scrollToPosition(0)
     }
 
