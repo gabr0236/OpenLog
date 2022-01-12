@@ -2,6 +2,7 @@ package com.example.openlog.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.paging.PagedList
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
@@ -207,7 +208,7 @@ class SharedViewModel(
     private val pageSize = 20
     private var pageIndex = 1
     private var isLoading = false
-    private var logItems: LiveData<List<LogItem>> = logItemDao.loadMoreLogItems(pageSize,pageIndex).asLiveData()
+    private var logItems: LiveData<PagedList<LogItem>> = logItemDao.getLogItems().asLiveData()
 
     fun populateLogList(){
         val newlogItems = logItemDao.loadMoreLogItems(pageSize,pageIndex++).asLiveData() //get items of current page and increment pageIndex

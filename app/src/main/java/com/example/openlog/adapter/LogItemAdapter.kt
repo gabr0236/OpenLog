@@ -16,6 +16,7 @@ import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
 
 
+//TODO: DELETE THIS
 class LogItemAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
                           private val selectedCategory: LiveData<LogCategory>,
                           var logItems: List<LogItem>) :
