@@ -25,12 +25,12 @@ interface LogItemDao {
     @Query("SELECT * FROM log_item WHERE log_item_id = :logItemId")
     fun getFullLogItem(logItemId: Int): Flow<List<LogItemAndLogCategory>>
 
-    @Query("SELECT * from log_item ORDER BY log_item_date ASC")
-    fun getLogItems(): Flow<List<LogItem>>
+    //@Query("SELECT * from log_item ORDER BY log_item_date ASC")
+    //fun getLogItems(): Flow<List<LogItem>>
 
-    @Query("SELECT * FROM log_item ORDER BY log_item_date ASC")
-    fun getFullLogItems(): Flow<List<LogItemAndLogCategory>>
+    //@Query("SELECT * FROM log_item ORDER BY log_item_date ASC")
+    //fun getFullLogItems(): Flow<List<LogItemAndLogCategory>>
 
-    @Query("SELECT * FROM log_item ORDER BY log_item_id DESC")
+    @Query("SELECT * FROM log_item ORDER BY log_item_id ASC")
     fun getAllPaged(): PagingSource<Int,LogItem>
 }

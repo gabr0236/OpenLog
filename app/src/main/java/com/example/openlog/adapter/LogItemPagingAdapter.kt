@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.databinding.LayoutLogItemBinding
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
@@ -38,10 +37,10 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
         private val editAction: Button = itemView.findViewById(R.id.edit_action)
         private val imageviewEmoji: ImageView = itemView.findViewById(R.id.imageview_emoji)
 
-        fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
+        fun bind(logItem: LogItem?, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
 
-            logItemValue.text = logItem.value.toString()
-            logItemDate.text = logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
+            logItemValue.text = logItem?.value.toString()
+            logItemDate.text = logItem?.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
             editAction.setOnClickListener {
                 onItemClickListenerLogItem.onItemClickedFullLog(logItem)
             }
@@ -54,11 +53,8 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
     }
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
-        val current = getItem(position)
+        val current: LogItem? = getItem(position)
         Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
-
-        //TODO fix !!
-        current?: return
         holder.bind(current, onItemClickListenerLogItem)
     }
 
@@ -66,6 +62,4 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
         //Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
         return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false))
     }
-
-
 }

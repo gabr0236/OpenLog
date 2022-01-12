@@ -43,8 +43,9 @@ class SharedViewModel(
          lastSnapshotLogItems = logItems
     }
 
-    fun setSelectedLogItemToEdit(logItem: LogItem) {
-        _selectedLogItemToEdit.value = logItem
+    fun setSelectedLogItemToEdit(logItem: LogItem?) {
+        logItem?: return
+        _selectedLogItemToEdit.value = logItem!!
     }
 
     /**
