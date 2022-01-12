@@ -145,6 +145,7 @@ class SharedViewModel(
             fileWriter.append(it.value.toString())
             fileWriter.append(SEPERATOR)
             fileWriter.append(it.date.toString())
+                fileWriter.appendLine()
          }
             fileWriter.appendLine()
         }

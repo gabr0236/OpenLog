@@ -65,6 +65,7 @@ class ShareLogItemFragment : Fragment() {
         if (!dir.exists()) {
             dir.mkdir()
         }
+        else dir.delete()
         Log.d("FILE", "Path of mydir: ${dir.absolutePath}")
 
 
@@ -84,8 +85,8 @@ class ShareLogItemFragment : Fragment() {
         val filePath= File(context!!.filesDir, "mydir")
         Log.d("FILE", "Path of filePath (should be same as mydir): ${dir.absolutePath}")
 
-        val newFile = File(filePath, "testfile.txt")
-        Log.d("FILE", "Path of newFile (should be same as OpenLog.csvt): ${newFile.absolutePath}")
+        val newFile = File(filePath, "OpenLog.csv")
+        Log.d("FILE", "Path of newFile (should be same as OpenLog.csv): ${newFile.absolutePath}")
 
 
         if (!newFile.exists() || !newFile.canRead()) throw IllegalArgumentException("newFile not exists")
