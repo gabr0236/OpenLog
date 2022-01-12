@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryAdapter
-import com.example.openlog.adapter.LogItemAdapter
 import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
@@ -88,7 +87,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem.scrollToPosition(0)
 
         //Observe logitems
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
+        sharedViewModel.logItems.observe(this.viewLifecycleOwner) {
             items ->
             (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
                 ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
@@ -165,14 +164,5 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     override fun onItemClickedFullLog(logItem: LogItem) {
         sharedViewModel.setSelectedLogItemToEdit(logItem)
         findNavController().navigate(R.id.edit_log_fragment)
-    }
-
-    private fun show10MoreLogs(){
-        //todo Database query add 10
-    }
-
-    private fun initLogItemAdapter(){
-        val logItemAdapter = LogItemAdapter(this, sharedViewModel.selectedCategory, emptyList<LogItem>())
-        recyclerViewLogItem.adapter = logItemAdapter
     }
 }

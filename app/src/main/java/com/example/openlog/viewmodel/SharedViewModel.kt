@@ -1,12 +1,11 @@
 package com.example.openlog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
-import androidx.paging.PagedList
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
-import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
@@ -23,13 +22,21 @@ class SharedViewModel(
 ) : ViewModel() {
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
-    val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
+    val logItems = Pager(PagingConfig(
+        pageSize = 20,
+        enablePlaceholders = true,
+        maxSize = 50
+    )){
+        logItemDao.getAllPaged()
+    }.flow.asLiveData() //TODO: asLiveData() virker muligvis ikke her
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
 
     private val _selectedLogItemToEdit = MutableLiveData<LogItem>()
     val selectedLogItemToEdit: LiveData<LogItem> = _selectedLogItemToEdit
+
+
 
     fun setSelectedLogItemToEdit(logItem: LogItem) {
         _selectedLogItemToEdit.value = logItem
@@ -155,7 +162,7 @@ class SharedViewModel(
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValues(): List<Float>? {
-        return allLogItems.value?.asSequence()
+        return logItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { it.value }?.toList()
@@ -165,7 +172,7 @@ class SharedViewModel(
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValuesAndDates(): List<Pair<Float, Date?>>? {
-        return allLogItems.value?.asSequence()
+        return logItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { Pair(it.value, it.date) }?.toMutableList()
@@ -185,7 +192,7 @@ class SharedViewModel(
      * @return all the logs of the selected category
      */
     fun logsOfSelectedCategory(): List<LogItem>? {
-        return allLogItems.value?.asSequence()
+        return logItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.toList()
     }
@@ -194,7 +201,7 @@ class SharedViewModel(
      * @return whether any logs for the selected category exists
      */
     fun anyLogsOfSelectedCategory(): Boolean? {
-        return allLogItems.value?.asSequence()
+        return logItems.value?.asSequence()
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.any()
     }
@@ -203,16 +210,5 @@ class SharedViewModel(
         viewModelScope.launch {
             logCategoryDao.delete(logCategory)
         }
-    }
-
-    private val pageSize = 20
-    private var pageIndex = 1
-    private var isLoading = false
-    private var logItems: LiveData<PagedList<LogItem>> = logItemDao.getLogItems().asLiveData()
-
-    fun populateLogList(){
-        val newlogItems = logItemDao.loadMoreLogItems(pageSize,pageIndex++).asLiveData() //get items of current page and increment pageIndex
-        Log.d("TEST", "Items loaded: ${logItems.value?.size}")
-        if (logItems.value!=null) {logItems.value?.plus(newlogItems)}
     }
 }
