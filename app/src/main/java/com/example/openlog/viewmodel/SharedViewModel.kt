@@ -133,18 +133,18 @@ class SharedViewModel(
         fileWriter.append(SEPERATOR)
         fileWriter.appendLine()
 
-        retrieveAllItemsAndCategories().forEach {
-            fileWriter.append(it.logCategory.name.toString())
-            fileWriter.append(SEPERATOR)
-            fileWriter.append(it.logCategory.unit.toString())
-            fileWriter.append(SEPERATOR)
+        retrieveAllItemsAndCategories().forEach { category ->
 
-            it.logItems.forEach{
-            fileWriter.append(it.id.toString())
-            fileWriter.append(SEPERATOR)
-            fileWriter.append(it.value.toString())
-            fileWriter.append(SEPERATOR)
-            fileWriter.append(it.date.toString())
+            category.logItems.forEach{ log ->
+                fileWriter.append(category.logCategory.name.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(category.logCategory.unit.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.id.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.value.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.date.toString())
                 fileWriter.appendLine()
          }
             fileWriter.appendLine()
