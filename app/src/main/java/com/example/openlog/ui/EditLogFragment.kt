@@ -151,8 +151,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         //TODO duplicate method
         //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
+            .setTitle(R.string.delete_category)
+            .setMessage(R.string.delete_category_confirmation)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(
                 android.R.string.yes

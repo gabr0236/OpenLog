@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +28,7 @@ import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
 
 
-class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
+class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
     private val sharedViewModel: SharedViewModel by activityViewModels {
         val db = (activity?.application as LogItemApplication).database
 
@@ -42,7 +41,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private var _binding: FragmentAddLogBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
-    private var date: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,8 +74,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             sharedViewModel.setSelectedCategory(items.first())
         }
 
-        date = Calendar.getInstance().time //Show current date on screen
-        date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
+        this.setDate(Calendar.getInstance().time) //Show current date on screen
+        this.getDate().let { binding.textDate.text =
+            it?.let { it1 -> DateTimeFormatter.formatAsYearDayDateTime(it1) }
+        }
     }
 
     override fun onDestroyView() {
@@ -96,10 +96,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         if (input.isBlank() || !isValidNumber(input)) return //Return if null or blank
 
-        sharedViewModel.addNewLogItem(input, date)
+        sharedViewModel.addNewLogItem(input, this.getDate())
 
         Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT).show()
-        date = null
+        this.setDate(null)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -116,8 +116,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
         //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
+            .setTitle(R.string.delete_category)
+            .setMessage(R.string.delete_category_confirmation)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(
                 android.R.string.yes
@@ -125,7 +125,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 //If yes is selected
                 Toast.makeText(
                     context,
-                    "Kategori Slettet",
+                    R.string.category_deleted,
                     Toast.LENGTH_SHORT
                 ).show()
                 sharedViewModel.deleteCategory(logCategory)
