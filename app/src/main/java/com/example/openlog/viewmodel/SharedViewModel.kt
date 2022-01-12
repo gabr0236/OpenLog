@@ -68,10 +68,6 @@ class SharedViewModel(
         }
     }
 
-    fun shareLogItems() {
-        TODO()
-
-    }
 
     /**
      * creates and returns a log which is to be updated
