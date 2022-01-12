@@ -24,9 +24,9 @@ class SharedViewModel(
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
-        pageSize = 20,
+        pageSize = 10,
         enablePlaceholders = true,
-        maxSize = 100
+        maxSize = 30
     )){
         logItemDao.getAllPaged()
     }.flow

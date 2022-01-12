@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryAdapter
-import com.example.openlog.adapter.LogItemListAdapter
 import com.example.openlog.adapter.LogItemPagingAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
@@ -66,29 +65,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             viewModel = sharedViewModel
         }
 
-        recyclerViewLogItem = binding.logItemRecyclerView
-        recyclerViewLogItem.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        val logItemPagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
-
-        lifecycleScope.launch {
-            @OptIn(ExperimentalCoroutinesApi::class)
-            sharedViewModel.logItems.collectLatest {
-                logItemPagingAdapter.submitData(
-                    it.filter { log -> log.categoryOwnerName==sharedViewModel.selectedCategory.value?.name })
-                updateFragmentView()
-            }
-        }
-
-        //Observe logitems todo slet
-        //sharedViewModel.logItems.observe(this.viewLifecycleOwner) {
-        //        items ->
-        //    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
-        //        ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
-        //        ?.toList())
-        //    updateFragmentView()
-        //}
-
         //Log category recyclerview setup
         recyclerViewCategory = binding.logCategoryRecyclerView
         recyclerViewCategory.layoutManager =
@@ -101,13 +77,28 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
 
 
-        //Log item recyclerview setup
-        //logItemPagingAdapter.submitList(sharedViewModel.logsOfSelectedCategory())
-        //recyclerViewLogItem.adapter=logItemListAdapter
-//
+        //LOG ITEMS
+        recyclerViewLogItem = binding.logItemRecyclerView
+        recyclerViewLogItem.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        val logItemPagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
+
+        lifecycleScope.launch {
+            sharedViewModel.logItems.collectLatest {
+                logItemPagingAdapter.submitData(
+                    it.filter { log -> log.categoryOwnerName==sharedViewModel.selectedCategory.value?.name })
+                updateFragmentView()
+            }
+        }
+        recyclerViewLogItem.adapter=logItemPagingAdapter
+
         //sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
-        //    val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
-        //    (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
+        //    lifecycleScope.launch {
+        //        sharedViewModel.logItems.collectLatest {
+        //            (recyclerViewLogItem.adapter as LogItemPagingAdapter?)?.submitData(
+        //                it.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name })
+        //        }
+        //    }
         //    updateFragmentView()
         //}
         recyclerViewLogItem.scrollToPosition(0)

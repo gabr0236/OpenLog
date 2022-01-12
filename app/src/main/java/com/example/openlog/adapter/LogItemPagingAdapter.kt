@@ -2,11 +2,16 @@ package com.example.openlog.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.LayoutLogItemBinding
@@ -26,34 +31,40 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
     }
 
     inner class ItemViewHolder(
-        private var binding: LayoutLogItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
-            binding.apply {
-                logItemValue.text = logItem.value.toString()
-                logItemDate.text = logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
-                editAction.setOnClickListener {
-                    onItemClickListenerLogItem.onItemClickedFullLog(logItem)
-                }
+        var itemView: View
+    ) : RecyclerView.ViewHolder(itemView){
+        private val logItemValue: TextView = itemView.findViewById(R.id.log_item_value)
+        private val logItemDate: TextView = itemView.findViewById(R.id.log_item_date)
+        private val editAction: Button = itemView.findViewById(R.id.edit_action)
+        private val imageviewEmoji: ImageView = itemView.findViewById(R.id.imageview_emoji)
 
-                val emojiResId = selectedCategory.value?.emojiId?.let {
-                    EmojiRetriever.getEmojiIDOf(it)
-                }
-                imageviewEmoji.setImageDrawable(emojiResId?.let { itemView.context.getDrawable(it) })
+        fun bind(logItem: LogItem, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
+
+            logItemValue.text = logItem.value.toString()
+            logItemDate.text = logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
+            editAction.setOnClickListener {
+                onItemClickListenerLogItem.onItemClickedFullLog(logItem)
             }
+
+            val emojiResId = selectedCategory.value?.emojiId?.let {
+                EmojiRetriever.getEmojiIDOf(it)
+            }
+            imageviewEmoji.setImageDrawable(emojiResId?.let { itemView.context.getDrawable(it) })
         }
     }
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
         val current = getItem(position)
-        Log.d("TEST", "BIND ITEM AT POSITION: $position")
+        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
+
         //TODO fix !!
-        holder.bind(current!!, onItemClickListenerLogItem)
+        current?: return
+        holder.bind(current, onItemClickListenerLogItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogItemPagingAdapter.ItemViewHolder {
-        Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
-        return ItemViewHolder(LayoutLogItemBinding.inflate(LayoutInflater.from(parent.context)))
+        //Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
+        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false))
     }
 
 
