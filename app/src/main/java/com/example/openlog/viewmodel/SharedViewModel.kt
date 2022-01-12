@@ -26,7 +26,7 @@ class SharedViewModel(
     val logItems = Pager(PagingConfig(
         pageSize = 10,
         enablePlaceholders = true,
-        maxSize = 30
+        maxSize = 40
     )){
         logItemDao.getAllPaged()
     }.flow

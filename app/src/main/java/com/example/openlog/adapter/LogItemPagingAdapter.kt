@@ -17,6 +17,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
+import kotlin.math.log
 
 class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
                            private val selectedCategory: LiveData<LogCategory>
@@ -38,7 +39,6 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
         private val imageviewEmoji: ImageView = itemView.findViewById(R.id.imageview_emoji)
 
         fun bind(logItem: LogItem?, onItemClickListenerLogItem: OnItemClickListenerLogItem) {
-
             logItemValue.text = logItem?.value.toString()
             logItemDate.text = logItem?.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) }
             editAction.setOnClickListener {

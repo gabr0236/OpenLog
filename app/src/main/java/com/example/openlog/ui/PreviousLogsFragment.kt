@@ -3,6 +3,7 @@ package com.example.openlog.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,11 +85,13 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         val logItemPagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
 
         lifecycleScope.launch {
+            @OptIn(ExperimentalCoroutinesApi::class)
             sharedViewModel.logItems.collectLatest {
-                logItemPagingAdapter.submitData(
-                    it.filter { log -> log.categoryOwnerName==sharedViewModel.selectedCategory.value?.name })
-                updateFragmentView()
+                logItemPagingAdapter.submitData(it)
+                Log.d("TEST", "COLLECT LATEST CALL, DATA CHANGED")
+                    //todo it.filter { log -> log.categoryOwnerName==sharedViewModel.selectedCategory.value?.name })
             }
+            updateFragmentView()
         }
         recyclerViewLogItem.adapter=logItemPagingAdapter
 
