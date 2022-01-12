@@ -15,6 +15,7 @@ import java.io.BufferedWriter
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SharedViewModel(
     private val logItemDao: LogItemDao,
@@ -28,7 +29,7 @@ class SharedViewModel(
         maxSize = 50
     )){
         logItemDao.getAllPaged()
-    }.flow.asLiveData() //TODO: asLiveData() virker muligvis ikke her
+    }.flow
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
@@ -36,7 +37,11 @@ class SharedViewModel(
     private val _selectedLogItemToEdit = MutableLiveData<LogItem>()
     val selectedLogItemToEdit: LiveData<LogItem> = _selectedLogItemToEdit
 
+    private var lastSnapshotLogItems = ArrayList<LogItem>()
 
+    fun setLastSnapshotLogItems(logItems: ArrayList<LogItem>){
+         lastSnapshotLogItems = logItems
+    }
 
     fun setSelectedLogItemToEdit(logItem: LogItem) {
         _selectedLogItemToEdit.value = logItem
@@ -162,7 +167,7 @@ class SharedViewModel(
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValues(): List<Float>? {
-        return logItems.value?.asSequence()
+        return lastSnapshotLogItems
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { it.value }?.toList()
@@ -172,7 +177,7 @@ class SharedViewModel(
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
     fun logValuesAndDates(): List<Pair<Float, Date?>>? {
-        return logItems.value?.asSequence()
+        return lastSnapshotLogItems
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
             ?.take(quantityOfLogsForDerivingStatistics)
             ?.map { Pair(it.value, it.date) }?.toMutableList()
@@ -192,7 +197,7 @@ class SharedViewModel(
      * @return all the logs of the selected category
      */
     fun logsOfSelectedCategory(): List<LogItem>? {
-        return logItems.value?.asSequence()
+        return lastSnapshotLogItems
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.toList()
     }
@@ -201,7 +206,7 @@ class SharedViewModel(
      * @return whether any logs for the selected category exists
      */
     fun anyLogsOfSelectedCategory(): Boolean? {
-        return logItems.value?.asSequence()
+        return lastSnapshotLogItems
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.any()
     }
