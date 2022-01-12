@@ -80,11 +80,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         date = Calendar.getInstance().time //Show current date on screen
         date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
-
-        lifecycleScope.launch {
-            sharedViewModel.populateLogList()        //TODO: SLET
-        }
-
     }
 
     override fun onDestroyView() {
@@ -98,9 +93,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     fun addNewLogItem() {
-        lifecycleScope.launch {
-            sharedViewModel.populateLogList()        //TODO: SLET
-        }
 
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
