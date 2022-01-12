@@ -114,12 +114,15 @@ class SharedViewModel(
     }
 
 
+    /**
+     * Translates database into csv format and writes this in the file given as param
+     */
     fun exportToCSV(file : File) {
         val SEPERATOR = ","
 
         var fileWriter = FileWriter(file)
 
-
+// Writes out the order of log values in file
         fileWriter.append("Category")
         fileWriter.append(SEPERATOR)
         fileWriter.append("Unit")
@@ -133,7 +136,7 @@ class SharedViewModel(
         fileWriter.appendLine()
 
         retrieveAllItemsAndCategories().forEach { category ->
-
+// writes category/log values in file
             category.logItems.forEach{ log ->
                 fileWriter.append(category.logCategory.name.toString())
                 fileWriter.append(SEPERATOR)
