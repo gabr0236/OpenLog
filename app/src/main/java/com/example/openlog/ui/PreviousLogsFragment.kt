@@ -108,8 +108,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     fun setSDAndAvg(){
-        binding.textviewAverage.text="Gennemsnit: ${sharedViewModel.mean()}"
-        binding.textviewStandardDeviation.text="Standardafvigelse: ${sharedViewModel.standdarddeviation()}"
+        binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
+        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
     }
 
     fun updateFragmentView(){
@@ -130,23 +130,32 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO duplicate method
-        //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Kategori Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.delete_category))
+                    .setMessage(getString(R.string.delete_question_2))
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            getString(R.string.category_deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()

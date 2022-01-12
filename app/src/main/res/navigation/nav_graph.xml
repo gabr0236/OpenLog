@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/add_log_item_fragment"
         android:name="com.example.openlog.ui.AddLogItemFragment"
-        android:label="Skriv Log"
+        android:label="@string/add_log"
         tools:layout="@layout/fragment_add_log">
         <argument
             android:name="title"
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/edit_log_fragment"
         android:name="com.example.openlog.ui.EditLogFragment"
-        android:label="Rediger Log"
+        android:label="@string/edit_log"
         tools:layout="@layout/fragment_edit_log">
         <action
             android:id="@+id/action_edit_log_fragment_to_previous_logs_fragment"
@@ -45,13 +45,13 @@
     <fragment
         android:id="@+id/share_log_item_fragment"
         android:name="com.example.openlog.ui.ShareLogItemFragment"
-        android:label="Del"
+        android:label="@string/share_logs"
         tools:layout="@layout/fragment_share_logs" />
 
     <fragment
         android:id="@+id/previous_logs_fragment"
         android:name="com.example.openlog.ui.PreviousLogsFragment"
-        android:label="Logge"
+        android:label="@string/previous_logs"
         tools:layout="@layout/fragment_previous_logs">
         <action
             android:id="@+id/action_previous_logs_fragment_to_edit_log_fragment"
@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/create_category_fragment"
         android:name="com.example.openlog.ui.CreateCategoryFragment"
-        android:label="Opret Ny Kategori"
+        android:label="@string/create_category"
         tools:layout="@layout/fragment_create_category">
         <action
             android:id="@+id/action_create_category_fragment_to_add_log_item_fragment"

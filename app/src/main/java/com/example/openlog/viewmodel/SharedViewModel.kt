@@ -1,6 +1,5 @@
 package com.example.openlog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
@@ -11,9 +10,7 @@ import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
-import java.io.BufferedWriter
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
+import java.io.*
 import java.util.*
 
 class SharedViewModel(
@@ -71,9 +68,6 @@ class SharedViewModel(
         }
     }
 
-    fun shareLogItems() {
-        TODO()
-    }
 
     /**
      * creates and returns a log which is to be updated
@@ -111,40 +105,55 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-    // TODO: Update to https://developer.android.com/training/data-storage/app-specific
-    private fun exportToCSV(logItemsAndLogCategory: List<LogItemAndLogCategory>) {
+     fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+        return logCategoryDao.getLogCategoriesWithLogItems()
+    }
+
+
+    /**
+     * Translates database into csv format and writes this in the file given as param
+     */
+    fun exportToCSV(file : File) {
         val SEPERATOR = ","
 
-        val bufferedWriter = BufferedWriter(
-            OutputStreamWriter(
-                FileOutputStream("log_items.csv"),
-                "UTF-8"
-            )
-        )
+        var fileWriter = FileWriter(file)
 
-        logItemsAndLogCategory.forEach {
-            val line = StringBuffer()
-            line.append(it.logItem.id)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.name)
-            line.append(SEPERATOR)
-            line.append(it.logItem.value)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.unit)
-            line.append(SEPERATOR)
-            line.append(it.logItem.date)
+// Writes out the order of log values in file
+        fileWriter.append("Category")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Unit")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("ValueID")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Value")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Date")
+        fileWriter.append(SEPERATOR)
+        fileWriter.appendLine()
 
-            bufferedWriter.write(line.toString())
-            bufferedWriter.newLine()
+        retrieveAllItemsAndCategories().forEach { category ->
+// writes category/log values in file
+            category.logItems.forEach{ log ->
+                fileWriter.append(category.logCategory.name.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(category.logCategory.unit.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.id.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.value.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.date.toString())
+                fileWriter.appendLine()
+         }
+            fileWriter.appendLine()
         }
+        fileWriter.flush()
+        fileWriter.close()
 
-        bufferedWriter.flush()
-        bufferedWriter.close()
     }
 
     private val quantityOfLogsForDerivingStatistics =
         20 //Only derive average and standard deviation from n LogItems
-    // TODO this number should be equal to the amount of loaded logs when load is implemented
 
     fun mean(): Double? = logValues()?.average()?.round(2)
     fun standdarddeviation(): Double? = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)

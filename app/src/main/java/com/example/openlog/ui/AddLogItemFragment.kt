@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
@@ -98,7 +99,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         sharedViewModel.addNewLogItem(input, date)
 
-        Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
         date = null
     }
 
@@ -114,22 +115,32 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Kategori Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.delete_category))
+                    .setMessage(getString(R.string.delete_question_2))
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        //If yes is selected
+                        Toast.makeText(
+                            context,
+                            getString(R.string.category_deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sharedViewModel.deleteCategory(logCategory)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()
@@ -165,7 +176,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
         return if (s.isNullOrEmpty()) false
         else if (s.contains(",")){
-            Toast.makeText(requireContext(), "Brug punktum '.' i stedet for komma ','", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.dot_not_comma), Toast.LENGTH_LONG).show()
             false
         } else regex.matches(s)
     }

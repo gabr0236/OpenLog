@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/cardview_graph">
 
-                    <org.eazegraph.lib.charts.ValueLineChart xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <org.eazegraph.lib.charts.ValueLineChart
                         android:id="@+id/logGraph"
                         android:layout_width="match_parent"
                         app:layout_constraintTop_toTopOf="@+id/cardview_graph"
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/tidligere_logge"
+                android:text="@string/previous_logs"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:id="@+id/textview_no_logs_found"
                     android:layout_height="wrap_content"
-                    android:text="Ingen Logge Fundet"
+                    android:text="@string/no_logs_found"
                     android:layout_centerHorizontal="true"
                     android:visibility="invisible"
                     android:layout_marginTop="100dp"

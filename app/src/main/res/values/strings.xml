@@ -1,13 +1,39 @@
 <resources>
     <string name="app_name">OpenLog</string>
-    <string name="edit_title">Edit Log Item</string>
-    <string name="delete_question">Are you sure you want to delete this? You cannot undo it.</string>
-    <string name="yes">Delete</string>
-    <string name="no">Cancel</string>
+    <string name="edit_title">Rediger Log</string>
+    <string name="delete_question">Vil slette denne kategori? Denne handling vil medføre sletning af alle logge tilhørende denne kategori</string>
+    <string name="delete_question_2">Er du sikker? Denne handling kan ikke gøres om.</string>
 
-    <string name="rediger_log">Rediger log</string>
-    <string name="slet_log">Slet log</string>
-    <string name="tidligere_logge">Tidligere logge</string>
-    <string name="gennemsnit">Gennemsnit: %s</string>
-    <string name="standardafvigelse">Standardafvigelse: %s</string>
+    <string name="yes">Slet</string>
+    <string name="no">Anuller</string>
+
+    <string name="edit_log">Rediger Log</string>
+    <string name="delete_log">Slet Log</string>
+    <string name="previous_logs">Tidligere Logs</string>
+    <string name="average">Gennemsnit: %s</string>
+    <string name="standard_deviation">Standardafvigelse: %s</string>
+    <string name="add_category">Tilføj\n Kategori</string>
+    <string name="today">I Dag</string>
+    <string name="change_date">Skift Dato</string>
+    <string name="log">Log</string>
+    <string name="category_name">Kategori Navn</string>
+    <string name="category_unit">Kategori Enhed</string>
+    <string name="create_category">Opret Kategori</string>
+    <string name="save">Gem</string>
+    <string name="no_logs_found">Ingen Logs Fundet</string>
+    <string name="share_logs">Del Logs</string>
+    <string name="placeholder_calories">* Kalorier *</string>
+    <string name="placeholder_calories_unit">*N Kcal*</string>
+    <string name="placeholder_time">* Tidspunkt for Log *</string>
+    <string name="edit">Rediger</string>
+    <string name="add_log">Tilføj Log</string>
+    <string name="log_added">Log Tilføjet</string>
+    <string name="category_deleted">Kategori Slettet</string>
+    <string name="dot_not_comma">Brug punktum \'.\' i stedet for komma \',\'</string>
+    <string name="category_exists">En kategori med dette navn eksiterer allerede</string>
+    <string name="category_has_been_created">Kategori Oprettet</string>
+    <string name="log_has_been_updated">Log Opdateret</string>
+    <string name="delete_category">Slet Kategori</string>
+    <string name="logs">Logs</string>
+    <string name="type">Indtast i %s</string>
 </resources>

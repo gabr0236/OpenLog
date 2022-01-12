@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginBottom="0dp"
-            android:hint="@{`Indtast `+viewModel.selectedCategory.unit}"
+            android:hint="@{@string/type(viewModel.selectedCategory.unit)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_view"
             app:shapeAppearance="@style/Rounded"
@@ -56,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:inputType="number"
                 android:layout_height="wrap_content"
-                android:digits="-0123456789." />
+                android:digits="-0123456789."
+                android:imeOptions="actionGo"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +73,7 @@
                 android:layout_width="237dp"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                android:text="I dag"
+                android:text="@string/today"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_edit_date"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> editLogFragment.pickDateTime()}"
-                android:text="Skift dato"
+                android:text="@string/change_date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -98,7 +99,7 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> editLogFragment.updateLogItem() }"
-            android:text="Gem"
+            android:text="@string/save"
             android:textAlignment="center"
             app:icon="@drawable/ic_baseline_save_alt_24"
             app:iconGravity="textStart"
@@ -126,7 +127,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:onClick="@{() -> editLogFragment.deleteLog()}"
-            android:text="@string/slet_log"
+            android:text="@string/delete_log"
             app:icon="@drawable/ic_baseline_delete_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
