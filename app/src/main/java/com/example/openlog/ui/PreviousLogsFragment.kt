@@ -3,6 +3,7 @@ package com.example.openlog.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     private lateinit var recyclerViewCategory: RecyclerView
     private lateinit var recyclerViewLogItem: RecyclerView
     private lateinit var pagingAdapter: LogItemPagingAdapter
-    private var isEmptyListOfLogItems = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,24 +77,21 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
-        recyclerViewLogItem.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         pagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
         recyclerViewLogItem.adapter=pagingAdapter
-
 
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {
                 sharedViewModel.logItems.collectLatest {
+                    Log.d("TEST", "DATA CHANGED LOGITEMPAGINGADAPTER")
                     pagingAdapter.submitData(it)
                 }
             }
         }
-        recyclerViewLogItem.scrollToPosition(0)
 
         //Observe data load state and provide viewmodel with snapshot of data when dat is loaded
         pagingAdapter.addLoadStateListener { loadState ->
-            if ( loadState.append.endOfPaginationReached )
+            if (loadState.append.endOfPaginationReached)
             {
                 sharedViewModel.setLastSnapshotLogItems(pagingAdapter.snapshot())
                 updateFragmentView()
@@ -103,8 +100,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     fun updateFragmentView(){
-        setSDAndAvg()
         setRecyclerViewLogItemVisible()
+        setSDAndAvg()
         lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 

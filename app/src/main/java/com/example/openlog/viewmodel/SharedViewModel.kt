@@ -25,7 +25,7 @@ class SharedViewModel(
     val logItems = Pager(PagingConfig(
         pageSize = 10,
         enablePlaceholders = false,
-        maxSize = 100,
+        maxSize = 30,
         prefetchDistance = 10,
         initialLoadSize = 10
     )){

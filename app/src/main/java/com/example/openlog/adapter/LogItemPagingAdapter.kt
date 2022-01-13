@@ -1,5 +1,6 @@
 package com.example.openlog.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,12 +52,12 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
         val current: LogItem? = getItem(position)
-        //Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
+        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
         holder.bind(current, onItemClickListenerLogItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogItemPagingAdapter.ItemViewHolder {
-        //Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
+        Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
         return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false))
     }
 }
