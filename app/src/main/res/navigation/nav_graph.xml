@@ -79,7 +79,7 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.openlog.ui.profile.AuthFragment"
-        android:label="fragment_auth"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_auth" >
         <action
             android:id="@+id/action_authFragment_to_loginFragment"
@@ -94,7 +94,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.openlog.ui.profile.LoginFragment"
-        android:label="fragment_login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_authFragment"
@@ -106,7 +106,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.openlog.ui.profile.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/register"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_authFragment"
