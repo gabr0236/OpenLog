@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
@@ -25,7 +24,6 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -44,6 +42,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     private lateinit var lineGraph: LineGraph
     private lateinit var recyclerViewCategory: RecyclerView
     private lateinit var recyclerViewLogItem: RecyclerView
+    private lateinit var pagingAdapter: LogItemPagingAdapter
+    private var isEmptyListOfLogItems = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,9 +80,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        val logItemPagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
+        pagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
 
-        recyclerViewLogItem.adapter=logItemPagingAdapter
+        recyclerViewLogItem.adapter=pagingAdapter
 
         //lifecycleScope.launch {
         //    @OptIn(ExperimentalCoroutinesApi::class)
@@ -96,8 +96,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {
                 sharedViewModel.logItems.collectLatest {
-                    logItemPagingAdapter.submitData(it)
-                    Log.d("TEST", "DATASIZE: ${logItemPagingAdapter.snapshot().size}")
+                    pagingAdapter.submitData(it)
+                    Log.d("TEST", "DATASIZE: ${pagingAdapter.snapshot().size}")
                 }
             }
             updateFragmentView()
@@ -107,10 +107,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
 
     private fun setRecyclerViewLogItemVisible(){
-        val recyclerviewIsPopulated = sharedViewModel.anyLogsOfSelectedCategory()
-        if (
-            //recyclerviewIsPopulated == TODO: REMOVED FOR TESTING
-            true){
+        isEmptyListOfLogItems = pagingAdapter.itemCount<1 //Set weather there was found any data to be loaded
+
+        if (true){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {

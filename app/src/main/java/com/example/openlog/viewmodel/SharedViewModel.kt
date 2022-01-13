@@ -3,6 +3,8 @@ package com.example.openlog.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.filter
+import androidx.paging.map
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
@@ -10,6 +12,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.io.BufferedWriter
 import java.io.FileOutputStream
@@ -25,12 +28,12 @@ class SharedViewModel(
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
         pageSize = 10,
-        enablePlaceholders = false,
+        enablePlaceholders = true,
         maxSize = 30,
         prefetchDistance = 10,
         initialLoadSize = 10
     )){
-        logItemDao.getLogsByCategoryPaged("Kalorier") //TODO FIX
+        logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name) //TODO FIX
     }.flow
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
@@ -203,15 +206,6 @@ class SharedViewModel(
         return lastSnapshotLogItems
             ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
             ?.toList()
-    }
-
-    /**
-     * @return whether any logs for the selected category exists
-     */
-    fun anyLogsOfSelectedCategory(): Boolean? {
-        return lastSnapshotLogItems
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
-            ?.any()
     }
 
     fun deleteCategory(logCategory: LogCategory){
