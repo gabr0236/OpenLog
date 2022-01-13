@@ -133,8 +133,11 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:reverseLayout="true"
                     tools:itemCount="6"
                     tools:listitem="@layout/layout_log_item" />
                 <TextView

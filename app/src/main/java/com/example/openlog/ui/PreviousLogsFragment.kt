@@ -3,6 +3,7 @@ package com.example.openlog.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,22 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.adapter.LogCategoryAdapter
-import com.example.openlog.adapter.LogItemListAdapter
+import com.example.openlog.adapter.LogItemPagingAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -38,7 +43,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     private lateinit var lineGraph: LineGraph
     private lateinit var recyclerViewCategory: RecyclerView
     private lateinit var recyclerViewLogItem: RecyclerView
-
+    private lateinit var pagingAdapter: LogItemPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,32 +78,37 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
         //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
-        recyclerViewLogItem.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        val logItemListAdapter = LogItemListAdapter(this, sharedViewModel.selectedCategory)
-        logItemListAdapter.submitList(sharedViewModel.logsOfSelectedCategory())
-        recyclerViewLogItem.adapter=logItemListAdapter
+        pagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
+        recyclerViewLogItem.adapter=pagingAdapter
 
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
-            val logsOfSelectedCategory = sharedViewModel.logsOfSelectedCategory()
-            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(logsOfSelectedCategory)
-            updateFragmentView()
+            lifecycleScope.launch {
+                @OptIn(ExperimentalCoroutinesApi::class)
+                sharedViewModel.logItems.collectLatest {
+                    Log.d("TEST", "DATA CHANGED LOGITEMPAGINGADAPTER")
+                    pagingAdapter.submitData(it)
+                }
+            }
         }
-        recyclerViewLogItem.scrollToPosition(0)
 
-        //Observe logitems
-        sharedViewModel.allLogItems.observe(this.viewLifecycleOwner) {
-            items ->
-            (recyclerViewLogItem.adapter as LogItemListAdapter).submitList(items.asSequence()
-                ?.filter { log -> log.categoryOwnerName == sharedViewModel.selectedCategory.value?.name}
-                ?.toList())
-            updateFragmentView()
+        //Observe data load state and provide viewmodel with snapshot of data when dat is loaded
+        pagingAdapter.addLoadStateListener { loadState ->
+            if (loadState.append.endOfPaginationReached)
+            {
+                sharedViewModel.setLastSnapshotLogItems(pagingAdapter.snapshot())
+                updateFragmentView()
+            }
         }
     }
 
+    fun updateFragmentView(){
+        setRecyclerViewLogItemVisible()
+        setSDAndAvg()
+        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
+    }
+
     private fun setRecyclerViewLogItemVisible(){
-        val recyclerviewIsPopulated = sharedViewModel.anyLogsOfSelectedCategory()
-        if (recyclerviewIsPopulated == true){
+        if (pagingAdapter.itemCount>1){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {
@@ -110,12 +120,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     fun setSDAndAvg(){
         binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
         binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
-    }
-
-    fun updateFragmentView(){
-        setSDAndAvg()
-        setRecyclerViewLogItemVisible()
-        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -161,7 +165,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             .show()
     }
 
-    override fun onItemClickedFullLog(logItem: LogItem) {
+    override fun onItemClickedFullLog(logItem: LogItem?) {
         sharedViewModel.setSelectedLogItemToEdit(logItem)
         findNavController().navigate(R.id.edit_log_fragment)
     }
