@@ -3,7 +3,6 @@ package com.example.openlog.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,19 +96,29 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             lifecycleScope.launch {
                 sharedViewModel.logItems.collectLatest {
                     pagingAdapter.submitData(it)
-                    Log.d("TEST", "DATASIZE: ${pagingAdapter.snapshot().size}")
                 }
             }
-            updateFragmentView()
         }
         recyclerViewLogItem.scrollToPosition(0)
+
+        //Observe data load state and provide viewmodel with snapshot of data when dat is loaded
+        pagingAdapter.addLoadStateListener { loadState ->
+            if ( loadState.append.endOfPaginationReached )
+            {
+                sharedViewModel.setLastSnapshotLogItems(pagingAdapter.snapshot())
+                updateFragmentView()
+            }
+        }
     }
 
+    fun updateFragmentView(){
+        setSDAndAvg()
+        setRecyclerViewLogItemVisible()
+        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
+    }
 
     private fun setRecyclerViewLogItemVisible(){
-        isEmptyListOfLogItems = pagingAdapter.itemCount<1 //Set weather there was found any data to be loaded
-
-        if (true){
+        if (pagingAdapter.itemCount>1){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {
@@ -121,12 +130,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     fun setSDAndAvg(){
         binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
         binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
-    }
-
-    fun updateFragmentView(){
-        setSDAndAvg()
-        setRecyclerViewLogItemVisible()
-        lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     @SuppressLint("NotifyDataSetChanged")

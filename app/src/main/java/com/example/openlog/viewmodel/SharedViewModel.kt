@@ -1,10 +1,7 @@
 package com.example.openlog.viewmodel
 
 import androidx.lifecycle.*
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.filter
-import androidx.paging.map
+import androidx.paging.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
@@ -12,7 +9,6 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.io.BufferedWriter
 import java.io.FileOutputStream
@@ -42,9 +38,9 @@ class SharedViewModel(
     private val _selectedLogItemToEdit = MutableLiveData<LogItem>()
     val selectedLogItemToEdit: LiveData<LogItem> = _selectedLogItemToEdit
 
-    private var lastSnapshotLogItems = ArrayList<LogItem>()
+    private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
 
-    fun setLastSnapshotLogItems(logItems: ArrayList<LogItem>){
+    fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>){
          lastSnapshotLogItems = logItems
     }
 
@@ -165,28 +161,26 @@ class SharedViewModel(
         20 //Only derive average and standard deviation from n LogItems
     // TODO this number should be equal to the amount of loaded logs when load is implemented
 
-    fun mean(): Double? = logValues()?.average()?.round(2)
-    fun standdarddeviation(): Double? = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
+    fun mean(): Double = logValues().average().round(2)
+    fun standdarddeviation(): Double = logValues().let { Statistics.standardDeviation(it) }.round(2)
 
 
     /**
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValues(): List<Float>? {
+    private fun logValues(): List<Float> {
         return lastSnapshotLogItems
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
-            ?.take(quantityOfLogsForDerivingStatistics)
-            ?.map { it.value }?.toList()
+            .take(quantityOfLogsForDerivingStatistics)
+            .map { it!!.value }.toList() //TODO: !!
     }
 
     /**
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValuesAndDates(): List<Pair<Float, Date?>>? {
+    fun logValuesAndDates(): List<Pair<Float?, Date?>> {
         return lastSnapshotLogItems
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
-            ?.take(quantityOfLogsForDerivingStatistics)
-            ?.map { Pair(it.value, it.date) }?.toMutableList()
+            .take(quantityOfLogsForDerivingStatistics)
+            .map { Pair(it?.value, it?.date) }.toMutableList()
     }
 
     /**
@@ -202,11 +196,11 @@ class SharedViewModel(
     /**
      * @return all the logs of the selected category
      */
-    fun logsOfSelectedCategory(): List<LogItem>? {
-        return lastSnapshotLogItems
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
-            ?.toList()
-    }
+    //fun logsOfSelectedCategory(): List<LogItem>? {
+    //    return lastSnapshotLogItems
+    //        ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
+    //        ?.toList()
+    //}
 
     fun deleteCategory(logCategory: LogCategory){
         viewModelScope.launch {
