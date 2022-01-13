@@ -32,6 +32,6 @@ class EmojiArrayAdapter(private val mContext: Context, private val emojiList: Ar
         currentEmojiId?.let { EmojiRetriever.getEmojiIDOf(it) }
             ?.let { emojiImage?.setImageResource(it) }
 
-        return listItem!! //TODO: fjern "!!"
+        return listItem!! //!! is okay here since we set listItem if null
     }
 }

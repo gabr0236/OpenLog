@@ -39,6 +39,9 @@ class SharedViewModel(
 
     private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
 
+    private val quantityOfLogsForDerivingStatistics =
+        20 //Only derive average and standard deviation from n LogItems
+
     //Snapshot is set in PreviousLogsFragment after the and during when
     // the LogItemPagingAdapter is being populated and updated
     fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>){
@@ -170,9 +173,6 @@ class SharedViewModel(
         fileWriter.close()
 
     }
-
-    private val quantityOfLogsForDerivingStatistics =
-        20 //Only derive average and standard deviation from n LogItems
 
     fun mean(): Double = logValues().average().round(2)
     fun standdarddeviation(): Double = logValues().let { Statistics.standardDeviation(it) }.round(2)

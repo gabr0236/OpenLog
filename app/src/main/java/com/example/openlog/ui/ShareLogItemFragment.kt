@@ -58,10 +58,10 @@ class ShareLogItemFragment : Fragment() {
 
     @SuppressLint("QueryPermissionsNeeded")
     fun createFileAndIntent() {
-        Log.d("FILE", "Path of filesDir: ${context!!.getFilesDir().toString()}")
+        Log.d("FILE", "Path of filesDir: ${context?.getFilesDir().toString()}")
 
         //Lav nyt subdirectory i **internal storage**
-        val dir: File = File(context!!.filesDir, "mydir")
+        val dir: File = File(context?.filesDir, "mydir")
         if (!dir.exists()) {
             dir.mkdir()
         }
@@ -82,7 +82,7 @@ class ShareLogItemFragment : Fragment() {
             e.printStackTrace()
         }
 
-        val filePath= File(context!!.filesDir, "mydir")
+        val filePath= File(context?.filesDir, "mydir")
         Log.d("FILE", "Path of filePath (should be same as mydir): ${dir.absolutePath}")
 
         val newFile = File(filePath, "OpenLog.csv")
@@ -93,7 +93,7 @@ class ShareLogItemFragment : Fragment() {
 
         val fileURI = FileProvider.getUriForFile(
             context!!,
-            context!!.packageName + ".provider",
+            context?.packageName + ".provider",
             newFile)
 
         if (Uri.EMPTY.equals(fileURI)) throw IllegalArgumentException("Uri not found")
@@ -112,7 +112,7 @@ class ShareLogItemFragment : Fragment() {
             .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
         for (resolveInfo in resInfoList) {
             val packageName = resolveInfo.activityInfo.packageName
-            context!!.grantUriPermission(
+            context?.grantUriPermission(
                 packageName,
                 fileURI,
                 Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
