@@ -75,22 +75,13 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             sharedViewModel.setSelectedCategory(items.first())
         }
 
-        //LOG ITEMS
+        //Log item recyclerview setup
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         pagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
-
         recyclerViewLogItem.adapter=pagingAdapter
 
-        //lifecycleScope.launch {
-        //    @OptIn(ExperimentalCoroutinesApi::class)
-        //    sharedViewModel.logItems.collectLatest {
-        //        logItemPagingAdapter.submitData(it)
-        //        Log.d("TEST", "DATASIZE: ${logItemPagingAdapter.snapshot().size}")
-        //    }
-        //    updateFragmentView()
-        //}
 
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {

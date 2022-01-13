@@ -69,7 +69,6 @@ class LogCategoryAdapter(
                 categoryRecyclerviewHandler.onCategoryClicked(logCategory)
             }
             logCategoryContainer.setOnLongClickListener {
-                //TODO delete category
                 categoryRecyclerviewHandler.onDeleteCategoryClicked(logCategory)
                 true
             }

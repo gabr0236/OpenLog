@@ -24,12 +24,12 @@ class SharedViewModel(
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
         pageSize = 10,
-        enablePlaceholders = true,
-        maxSize = 30,
+        enablePlaceholders = false,
+        maxSize = 100,
         prefetchDistance = 10,
         initialLoadSize = 10
     )){
-        logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name) //TODO FIX
+        logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name)
     }.flow
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
@@ -40,6 +40,8 @@ class SharedViewModel(
 
     private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
 
+    //Snapshot is set in PreviousLogsFragment after the and during when
+    // the LogItemPagingAdapter is being populated and updated
     fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>){
          lastSnapshotLogItems = logItems
     }
@@ -171,7 +173,8 @@ class SharedViewModel(
     private fun logValues(): List<Float> {
         return lastSnapshotLogItems
             .take(quantityOfLogsForDerivingStatistics)
-            .map { it!!.value }.toList() //TODO: !!
+            .mapNotNull { it }
+            .map { it.value }.toList()
     }
 
     /**
@@ -192,15 +195,6 @@ class SharedViewModel(
             logCategoryDao.insert(newCategory)
         }
     }
-
-    /**
-     * @return all the logs of the selected category
-     */
-    //fun logsOfSelectedCategory(): List<LogItem>? {
-    //    return lastSnapshotLogItems
-    //        ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
-    //        ?.toList()
-    //}
 
     fun deleteCategory(logCategory: LogCategory){
         viewModelScope.launch {

@@ -4,7 +4,6 @@ import com.example.openlog.R
 
 class EmojiRetriever {
     companion object {
-        //TODO: should eventually switch through category emojiID
         fun getEmojiIDOf(emojiId: Int): Int{
             return when(emojiId){
                 1 -> emojiArray[0]
