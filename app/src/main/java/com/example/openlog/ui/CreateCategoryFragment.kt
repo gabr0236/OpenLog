@@ -94,7 +94,6 @@ class CreateCategoryFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
 
-        //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
         findNavController().popBackStack()
     }
 }

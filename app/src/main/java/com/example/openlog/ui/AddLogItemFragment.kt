@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -92,6 +94,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     fun addNewLogItem() {
+
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
