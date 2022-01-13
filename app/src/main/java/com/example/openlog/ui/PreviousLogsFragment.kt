@@ -24,6 +24,7 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -82,6 +83,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
 
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {
+                @OptIn(ExperimentalCoroutinesApi::class)
                 sharedViewModel.logItems.collectLatest {
                     Log.d("TEST", "DATA CHANGED LOGITEMPAGINGADAPTER")
                     pagingAdapter.submitData(it)

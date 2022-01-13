@@ -22,13 +22,6 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
                            private val selectedCategory: LiveData<LogCategory>
 ): PagingDataAdapter<LogItem, LogItemPagingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>(){
-            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem == newItem
-        }
-    }
-
     inner class ItemViewHolder(itemView: View
     ) : RecyclerView.ViewHolder(itemView){
         private val logItemValue: TextView = itemView.findViewById(R.id.log_item_value)
@@ -59,5 +52,13 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogItemPagingAdapter.ItemViewHolder {
         Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
         return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false))
+    }
+
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>(){
+            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem == newItem
+        }
     }
 }
