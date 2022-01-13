@@ -5,6 +5,7 @@ import androidx.paging.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
+import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
