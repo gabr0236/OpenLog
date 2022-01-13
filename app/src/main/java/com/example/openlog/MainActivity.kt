@@ -2,6 +2,7 @@ package com.example.openlog
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,6 +35,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         findViewById<BottomNavigationView>(R.id.bottom_nav)
             .setupWithNavController(navController)
+
+        // Don't show bottom nav on Auth screens
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav);
+            when (destination.id) {
+                R.id.authFragment, R.id.loginFragment, R.id.registerFragment -> bottomNav.visibility = View.GONE
+                else -> bottomNav.visibility = View.VISIBLE
+            }
+        }
     }
 
     //Navigation using "Back button"
@@ -46,4 +56,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

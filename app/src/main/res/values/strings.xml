@@ -36,4 +36,10 @@
     <string name="delete_category">Slet Kategori</string>
     <string name="logs">Logs</string>
     <string name="type">Indtast i %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="enter_your_password">Enter your Password</string>
 </resources>
