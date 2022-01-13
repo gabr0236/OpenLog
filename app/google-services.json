@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "90868782550",
+    "project_id": "openlog-7a86f",
+    "storage_bucket": "openlog-7a86f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90868782550:android:e086a2c6fbe1572fbac077",
+        "android_client_info": {
+          "package_name": "com.example.openlog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90868782550-nrj0ra4am0aidg84890e6455phoq3u3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQCrusJsGYBO2YWGtROTrxhJibCw50S5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90868782550-nrj0ra4am0aidg84890e6455phoq3u3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
