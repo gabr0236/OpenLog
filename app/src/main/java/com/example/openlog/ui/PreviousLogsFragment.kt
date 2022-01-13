@@ -45,7 +45,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     private lateinit var recyclerViewCategory: RecyclerView
     private lateinit var recyclerViewLogItem: RecyclerView
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,26 +76,28 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             sharedViewModel.setSelectedCategory(items.first())
         }
 
-
         //LOG ITEMS
         recyclerViewLogItem = binding.logItemRecyclerView
         recyclerViewLogItem.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         val logItemPagingAdapter = LogItemPagingAdapter(this, sharedViewModel.selectedCategory)
 
-        lifecycleScope.launch {
-            @OptIn(ExperimentalCoroutinesApi::class)
-            sharedViewModel.logItems.collectLatest {
-                logItemPagingAdapter.submitData(it)
-            }
-            updateFragmentView()
-        }
         recyclerViewLogItem.adapter=logItemPagingAdapter
+
+        //lifecycleScope.launch {
+        //    @OptIn(ExperimentalCoroutinesApi::class)
+        //    sharedViewModel.logItems.collectLatest {
+        //        logItemPagingAdapter.submitData(it)
+        //        Log.d("TEST", "DATASIZE: ${logItemPagingAdapter.snapshot().size}")
+        //    }
+        //    updateFragmentView()
+        //}
 
         sharedViewModel.selectedCategory.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {
                 sharedViewModel.logItems.collectLatest {
-                    (recyclerViewLogItem.adapter as LogItemPagingAdapter?)?.submitData(it)
+                    logItemPagingAdapter.submitData(it)
+                    Log.d("TEST", "DATASIZE: ${logItemPagingAdapter.snapshot().size}")
                 }
             }
             updateFragmentView()
@@ -104,9 +105,12 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         recyclerViewLogItem.scrollToPosition(0)
     }
 
+
     private fun setRecyclerViewLogItemVisible(){
         val recyclerviewIsPopulated = sharedViewModel.anyLogsOfSelectedCategory()
-        if (recyclerviewIsPopulated == true){
+        if (
+            //recyclerviewIsPopulated == TODO: REMOVED FOR TESTING
+            true){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {
