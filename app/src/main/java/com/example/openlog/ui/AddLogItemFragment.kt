@@ -1,18 +1,30 @@
 package com.example.openlog.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -30,6 +42,9 @@ import com.example.openlog.util.InputValidator
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import kotlinx.coroutines.launch
+import java.security.AccessController.checkPermission
+import java.security.Permission
+import java.security.Permissions
 import java.util.*
 
 
@@ -47,6 +62,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
+    private lateinit var microphoneButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +72,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_log, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
         _binding = addLogItemLayoutBinding
+
         return addLogItemLayoutBinding.root
     }
 
@@ -67,6 +84,15 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             lifecycleOwner = viewLifecycleOwner
             addLogItemFragment = this@AddLogItemFragment
             viewModel = sharedViewModel
+        }
+
+        microphoneButton = binding.buttonMicrophone
+        microphoneButton.setOnClickListener {
+            checkAudioPermission()
+            // changing the color of mic icon, which
+            // indicates that it is currently listening
+            microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
+            startSpeechToText()
         }
 
         //Log category recyclerview setup
@@ -169,5 +195,52 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
+    }
+
+    private fun checkAudioPermission() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  // M = 23
+            if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) {
+                // this will open settings which asks for permission
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.openlog"))
+                startActivity(intent)
+                Toast.makeText(requireContext(), "Allow Microphone Permission", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun startSpeechToText() {
+        val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        speechRecognizerIntent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+
+        speechRecognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onReadyForSpeech(bundle: Bundle?) {}
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(v: Float) {}
+            override fun onBufferReceived(bytes: ByteArray?) {}
+            override fun onEndOfSpeech() {
+                // changing the color of our mic icon to
+                // gray to indicate it is not listening
+                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_disabled_color)) // #FF6D6A6A
+            }
+            override fun onError(i: Int) {}
+
+            override fun onResults(bundle: Bundle) {
+                val result = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (result != null) {
+                    // result[0] will give the output of speech
+                    binding.logValue.setText(result[0].toString())
+                    Log.d("TEST", "Result of text to speech: ${result[0]}")
+                }
+            }
+            override fun onPartialResults(bundle: Bundle) {}
+            override fun onEvent(i: Int, bundle: Bundle?) {}
+        })
+        // starts listening ...
+        speechRecognizer.startListening(speechRecognizerIntent)
     }
 }
