@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import androidx.databinding.DataBindingUtil
@@ -62,7 +63,12 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
+
     private lateinit var microphoneButton: ImageView
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private lateinit var speechRecognizerIntent: Intent
+    private var listening = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,13 +92,18 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             viewModel = sharedViewModel
         }
 
+        setupSpeechToText()
         microphoneButton = binding.buttonMicrophone
         microphoneButton.setOnClickListener {
             checkAudioPermission()
-            // changing the color of mic icon, which
-            // indicates that it is currently listening
-            microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
-            startSpeechToText()
+            //Toggle listening
+            Log.d("TEST", "Listening: $listening")
+            if (!listening){
+                speechRecognizer.startListening(speechRecognizerIntent)
+                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
+            } else{
+                speechRecognizer.stopListening()
+            }
         }
 
         //Log category recyclerview setup
@@ -208,39 +219,58 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
     }
 
-    private fun startSpeechToText() {
-        val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
-        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        speechRecognizerIntent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-        )
+    private fun setupSpeechToText() {
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+        speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
 
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
-            override fun onReadyForSpeech(bundle: Bundle?) {}
-            override fun onBeginningOfSpeech() {}
-            override fun onRmsChanged(v: Float) {}
-            override fun onBufferReceived(bytes: ByteArray?) {}
+
+            override fun onReadyForSpeech(bundle: Bundle?) {
+                listening = true
+                Log.i("TEST", "Ready for speech input")
+            }
+            override fun onBeginningOfSpeech() {
+                Log.i("TEST", "Speech beginning")
+            }
+            override fun onRmsChanged(v: Float) {
+                Log.i("TEST", "Speech RMS Changed: " + v)
+            }
+            override fun onBufferReceived(bytes: ByteArray?) {
+                Log.i("TEST", "Speech buffer received: " + bytes.toString())
+            }
             override fun onEndOfSpeech() {
+                listening = false
                 // changing the color of our mic icon to
                 // gray to indicate it is not listening
-                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_disabled_color)) // #FF6D6A6A
+                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_disabled_color))
+                Log.i("TEST", "Speech recognition ended")
             }
-            override fun onError(i: Int) {}
+            override fun onError(i: Int) {
+                if (!listening && i == SpeechRecognizer.ERROR_NO_MATCH) return
+                Log.e("TEST", "Speech recognition error: " + i)
+
+            }
 
             override fun onResults(bundle: Bundle) {
                 val result = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                Log.d("TEST", "Result of text to speech: ${result?.get(0)}")
+
                 if (result != null) {
                     // result[0] will give the output of speech
                     binding.logValue.setText(result[0].toString())
                     Log.d("TEST", "Result of text to speech: ${result[0]}")
                 }
             }
-            override fun onPartialResults(bundle: Bundle) {}
-            override fun onEvent(i: Int, bundle: Bundle?) {}
+            override fun onPartialResults(bundle: Bundle) {
+                Log.i("TEST", "Speech recognition partial results received")
+
+            }
+            override fun onEvent(i: Int, bundle: Bundle?) {
+                Log.i("TEST", "Speech recognition event called: " + i)
+            }
         })
-        // starts listening ...
-        speechRecognizer.startListening(speechRecognizerIntent)
     }
 }
