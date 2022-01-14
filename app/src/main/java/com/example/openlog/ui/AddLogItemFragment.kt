@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,8 +26,10 @@ import com.example.openlog.adapter.LogCategoryAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.util.InputValidator
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -92,10 +95,11 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     fun addNewLogItem() {
+
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
-        if (input.isBlank() || !isValidNumber(input)) return //Return if null or blank
+        if (!InputValidator.isValidNumber(requireContext(),input)) return //Return if not valid input
 
         sharedViewModel.addNewLogItem(input, date)
 
@@ -165,19 +169,5 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
-    }
-
-
-    //TODO: duplicate method
-    /**
-     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
-     */
-    private fun isValidNumber(s: String?) : Boolean {
-        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
-        return if (s.isNullOrEmpty()) false
-        else if (s.contains(",")){
-            Toast.makeText(requireContext(), getString(R.string.dot_not_comma), Toast.LENGTH_LONG).show()
-            false
-        } else regex.matches(s)
     }
 }

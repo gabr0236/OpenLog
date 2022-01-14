@@ -26,6 +26,7 @@
             android:layout_margin="16dp"
             android:hint="@string/category_name"
             android:capitalize="words"
+            android:fontFamily="@font/redhatdisplay_light"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="16dp"
             app:shapeAppearance="@style/Rounded"
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLength="12"
+                android:fontFamily="@font/redhatdisplay_regular"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,6 +50,7 @@
             android:layout_margin="16dp"
             android:layout_marginBottom="0dp"
             android:hint="@string/category_unit"
+            android:fontFamily="@font/redhatdisplay_light"
             app:layout_constraintTop_toBottomOf="@id/textfield_container_category_name"
             app:shapeAppearance="@style/Rounded"
             >
@@ -58,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLength="12"
+                android:fontFamily="@font/redhatdisplay_regular"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,6 +87,7 @@
             android:onClick="@{() -> createCategoryFragment.createCategory()}"
             android:text="@string/create_category"
             android:textAlignment="center"
+            android:fontFamily="@font/redhatdisplay_semibold"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
