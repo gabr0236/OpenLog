@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context="com.example.openlog.ui.AddLogItemFragment"
-    android:background="@color/white">
+    android:background="?colorOnPrimary">
 
     <data>
         <variable
@@ -19,7 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="430dp"
+        android:layout_height="match_parent"
         app:flow_verticalAlign="top">
 
         <androidx.recyclerview.widget.RecyclerView
