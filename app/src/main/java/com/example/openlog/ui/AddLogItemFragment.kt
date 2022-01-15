@@ -2,6 +2,7 @@ package com.example.openlog.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -96,14 +97,9 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         microphoneButton = binding.buttonMicrophone
         microphoneButton.setOnClickListener {
             checkAudioPermission()
-            //Toggle listening
-            Log.d("TEST", "Listening: $listening")
-            if (!listening){
-                speechRecognizer.startListening(speechRecognizerIntent)
-                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
-            } else{
-                speechRecognizer.stopListening()
-            }
+            ////Toggle listening
+            speechRecognizer.startListening(speechRecognizerIntent)
+            microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
         }
 
         //Log category recyclerview setup
@@ -120,6 +116,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         date = Calendar.getInstance().time //Show current date on screen
         date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -219,12 +217,34 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
     }
 
+    //override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    //    super.onActivityResult(requestCode, resultCode, data)
+//
+    //    if (requestCode == reqCode && resultCode == Activity.RESULT_OK){
+    //        val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+    //        binding.logValue.setText(result?.get(0).toString())
+    //    }
+    //}
+
+    //private fun askSpeechInput(){
+    //    if (!SpeechRecognizer.isRecognitionAvailable(context!!)){
+    //        Toast.makeText(context, "Speech not available", Toast.LENGTH_SHORT).show()
+    //    } else {
+    //        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+    //        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+    //        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+    //        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something")
+    //        startActivityForResult(intent, reqCode)
+//
+    //    }
+    //}
+
     private fun setupSpeechToText() {
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this.requireActivity())
         speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "da-DK")
 
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
 
@@ -250,6 +270,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             }
             override fun onError(i: Int) {
                 if (!listening && i == SpeechRecognizer.ERROR_NO_MATCH) return
+                if (i == SpeechRecognizer.ERROR_NO_MATCH) return
                 Log.e("TEST", "Speech recognition error: " + i)
 
             }
