@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.SharedViewModel
+import org.w3c.dom.Text
 import java.util.*
 
 abstract class DuplicateMethods : Fragment() {
@@ -62,7 +64,7 @@ abstract class DuplicateMethods : Fragment() {
         }
     }
 
-    fun pickDateTime(binding: FragmentAddLogBinding?) {
+    fun pickDateTime(binding: TextView) {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()
         val startYear = currentDateTime.get(Calendar.YEAR)
@@ -78,7 +80,7 @@ abstract class DuplicateMethods : Fragment() {
                 date = pickedDateTime.time
                 date?.let {
                     if (binding != null) {
-                        binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it)
+                        binding.text = DateTimeFormatter.formatAsYearDayDateTime(it)
                     }
                 }
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
