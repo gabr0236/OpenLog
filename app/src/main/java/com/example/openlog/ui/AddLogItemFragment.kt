@@ -109,6 +109,7 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
         }
     }
 
+
     override fun onCreateCategoryClicked() {
         findNavController().navigate(R.id.create_category_fragment)
     }
