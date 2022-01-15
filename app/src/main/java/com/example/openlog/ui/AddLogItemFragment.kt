@@ -81,12 +81,17 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             addLogItemFragment = this@AddLogItemFragment
-            viewModel = sharedViewModel
         }
+
+        //Add stuff to layout
+        binding.include.textfieldContainerEditText.hint = "Indtast " + sharedViewModel.selectedCategory.value?.unit //TODO: string resourse <----
+        binding.include.saveAction.text = getString(R.string.log)
+        binding.include.saveAction.setOnClickListener { addNewLogItem() }
+        binding.include.buttonEditDate.setOnClickListener { pickDateTime() }
 
         //Setup for speech to text
         setupSpeechToText()
-        microphoneButton = binding.buttonMicrophone
+        microphoneButton = binding.include.buttonMicrophone
         microphoneButton.setOnClickListener {
             checkAudioPermission()
             ////Toggle listening
@@ -95,7 +100,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
 
         //Log category recyclerview setup
-        recyclerViewCategory = binding.recyclerView
+        recyclerViewCategory = binding.include.recyclerView
         recyclerViewCategory.layoutManager =
             LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         sharedViewModel.allLogCategories.observe(this.viewLifecycleOwner) { items ->
@@ -106,10 +111,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
 
         date = Calendar.getInstance().time //Show current date on screen
-        date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
+        date?.let { binding.include.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -122,9 +125,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     fun addNewLogItem() {
-
-        val input = binding.logValue.text.toString()
-        binding.logValue.text?.clear()
+        val input = binding.include.logValue.text.toString()
+        binding.include.logValue.text?.clear()
 
         if (!InputValidator.isValidNumber(requireContext(),input)) return //Return if not valid input
 
@@ -137,7 +139,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     @SuppressLint("NotifyDataSetChanged")
     override fun onCategoryClicked(logCategory: LogCategory) {
         if (sharedViewModel.setSelectedCategory(logCategory)) {
-            binding.recyclerView.adapter?.notifyDataSetChanged()
+            binding.include.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -192,7 +194,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
                 date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
+                date?.let { binding.include.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
                 Log.d("TEST", "PickDateTime: $pickedDateTime")
             }, startHour, startMinute, true).show()
         }, startYear, startMonth, startDay).show()
@@ -204,7 +206,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 // this will open settings which asks for permission
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.openlog"))
                 startActivity(intent)
-                Toast.makeText(requireContext(), "Allow Microphone Permission", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Allow Microphone Permission", Toast.LENGTH_SHORT).show() //TODO: string resourse <----
             }
         }
     }
@@ -239,7 +241,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 if (!listening && i == SpeechRecognizer.ERROR_NO_MATCH) return
                 if (i == SpeechRecognizer.ERROR_NO_MATCH) return
                 Log.e("TEST", "Speech recognition error: " + i)
-
             }
 
             override fun onResults(bundle: Bundle) {
@@ -248,7 +249,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
                 if (result != null) {
                     // result[0] will give the output of speech
-                    binding.logValue.setText(result[0].toString())
+                    binding.include.logValue.setText(result[0].toString())
                     Log.d("TEST", "Result of text to speech: ${result[0]}")
                 }
             }
