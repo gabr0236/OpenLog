@@ -108,7 +108,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     private fun setRecyclerViewLogItemVisible(){
-        if (pagingAdapter.itemCount>1){
+        if (pagingAdapter.itemCount>=1){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {
