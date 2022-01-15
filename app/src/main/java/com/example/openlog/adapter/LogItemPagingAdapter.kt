@@ -45,7 +45,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
         val current: LogItem? = getItem(position)
-        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
+        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: $current}")
         holder.bind(current, onItemClickListenerLogItem)
     }
 

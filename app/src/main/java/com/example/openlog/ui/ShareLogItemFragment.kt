@@ -1,9 +1,7 @@
 package com.example.openlog.ui
 
 
-import android.R.attr.mimeType
 import android.annotation.SuppressLint
-import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -21,7 +19,6 @@ import com.example.openlog.databinding.FragmentShareLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.io.File
-import java.io.FileWriter
 
 
 class ShareLogItemFragment : Fragment() {
@@ -58,10 +55,10 @@ class ShareLogItemFragment : Fragment() {
 
     @SuppressLint("QueryPermissionsNeeded")
     fun createFileAndIntent() {
-        Log.d("FILE", "Path of filesDir: ${context?.getFilesDir().toString()}")
+        Log.d("FILE", "Path of filesDir: ${context?.filesDir.toString()}")
 
         //Lav nyt subdirectory i **internal storage**
-        val dir: File = File(context?.filesDir, "mydir")
+        val dir = File(context?.filesDir, "mydir")
         if (!dir.exists()) {
             dir.mkdir()
         }
@@ -100,7 +97,7 @@ class ShareLogItemFragment : Fragment() {
 
         val sendIntent = Intent(Intent.ACTION_SEND)
 
-        sendIntent.setType("text/plain")
+        sendIntent.type = "text/plain"
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenLog")
         sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
         sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
@@ -108,7 +105,7 @@ class ShareLogItemFragment : Fragment() {
 
         val chooser = Intent.createChooser(sendIntent, "Share File")
 
-        val resInfoList: List<ResolveInfo> = context!!.getPackageManager()
+        val resInfoList: List<ResolveInfo> = context!!.packageManager
             .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
         for (resolveInfo in resInfoList) {
             val packageName = resolveInfo.activityInfo.packageName

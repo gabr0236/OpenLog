@@ -22,7 +22,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -243,7 +242,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
         speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
 
         Log.d("Language", "${Locale.getDefault()}")
@@ -257,12 +256,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             override fun onBeginningOfSpeech() {
                 Log.i("TEST", "Speech beginning")
             }
-            override fun onRmsChanged(v: Float) {
-                Log.i("TEST", "Speech RMS Changed: " + v)
-            }
-            override fun onBufferReceived(bytes: ByteArray?) {
-                Log.i("TEST", "Speech buffer received: " + bytes.toString())
-            }
+
             override fun onEndOfSpeech() {
                 listening = false
                 // changing the color of our mic icon to
@@ -273,7 +267,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             override fun onError(i: Int) {
                 if (!listening && i == SpeechRecognizer.ERROR_NO_MATCH) return
                 if (i == SpeechRecognizer.ERROR_NO_MATCH) return
-                Log.e("TEST", "Speech recognition error: " + i)
+                Log.e("TEST","Speech recognition error: " + i)
 
             }
 
@@ -287,12 +281,10 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                     Log.d("TEST", "Result of text to speech: ${result[0]}")
                 }
             }
-            override fun onPartialResults(bundle: Bundle) {
-                Log.i("TEST", "Speech recognition partial results received")
-            }
-            override fun onEvent(i: Int, bundle: Bundle?) {
-                Log.i("TEST", "Speech recognition event called: " + i)
-            }
+            override fun onRmsChanged(p0: Float) {}
+            override fun onBufferReceived(p0: ByteArray?) {}
+            override fun onPartialResults(p0: Bundle?) {}
+            override fun onEvent(p0: Int, p1: Bundle?) {}
         })
     }
 }

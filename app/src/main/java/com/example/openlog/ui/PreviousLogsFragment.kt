@@ -101,7 +101,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
     }
 
-    fun updateFragmentView(){
+    private fun updateFragmentView(){
         setRecyclerViewLogItemVisible()
         setSDAndAvg()
         lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
@@ -117,7 +117,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
     }
 
-    fun setSDAndAvg(){
+    private fun setSDAndAvg(){
         binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
         binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
     }

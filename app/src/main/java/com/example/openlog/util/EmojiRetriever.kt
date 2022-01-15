@@ -38,7 +38,7 @@ class EmojiRetriever {
             }
         }
 
-        val emojiArray: Array<Int> = arrayOf(
+        private val emojiArray: Array<Int> = arrayOf(
             R.drawable.emoji_calories,
             R.drawable.emoji_sugar_blood_level,
             R.drawable.emoji_insulin,

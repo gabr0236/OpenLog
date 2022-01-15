@@ -1,12 +1,9 @@
 package com.example.openlog.ui
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -230,12 +227,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             override fun onBeginningOfSpeech() {
                 Log.i("TEST", "Speech beginning")
             }
-            override fun onRmsChanged(v: Float) {
-                Log.i("TEST", "Speech RMS Changed: " + v)
-            }
-            override fun onBufferReceived(bytes: ByteArray?) {
-                Log.i("TEST", "Speech buffer received: " + bytes.toString())
-            }
+
             override fun onEndOfSpeech() {
                 listening = false
                 // changing the color of our mic icon to
@@ -260,12 +252,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                     Log.d("TEST", "Result of text to speech: ${result[0]}")
                 }
             }
-            override fun onPartialResults(bundle: Bundle) {
-                Log.i("TEST", "Speech recognition partial results received")
-            }
-            override fun onEvent(i: Int, bundle: Bundle?) {
-                Log.i("TEST", "Speech recognition event called: " + i)
-            }
+            override fun onRmsChanged(p0: Float) {}
+            override fun onBufferReceived(p0: ByteArray?) {}
+            override fun onPartialResults(p0: Bundle?) {}
+            override fun onEvent(p0: Int, p1: Bundle?) {}
         })
     }
 }

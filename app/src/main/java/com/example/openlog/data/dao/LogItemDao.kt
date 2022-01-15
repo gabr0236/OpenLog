@@ -1,7 +1,5 @@
 package com.example.openlog.data.dao
 
-
-import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.openlog.data.entity.LogItem
