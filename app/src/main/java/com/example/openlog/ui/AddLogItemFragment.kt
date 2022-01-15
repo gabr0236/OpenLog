@@ -83,12 +83,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             addLogItemFragment = this@AddLogItemFragment
         }
 
-        //Add stuff to layout
-        binding.include.textfieldContainerEditText.hint = "Indtast " + sharedViewModel.selectedCategory.value?.unit //TODO: string resourse <----
-        binding.include.saveAction.text = getString(R.string.log)
-        binding.include.saveAction.setOnClickListener { addNewLogItem() }
-        binding.include.buttonEditDate.setOnClickListener { pickDateTime() }
-
         //Setup for speech to text
         setupSpeechToText()
         microphoneButton = binding.include.buttonMicrophone
@@ -109,6 +103,12 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             }
             sharedViewModel.setSelectedCategory(items.first())
         }
+
+        //Add stuff to layout
+        binding.include.textfieldContainerEditText.hint = "Indtast " + sharedViewModel.selectedCategory.value?.unit //TODO: string resourse <----
+        binding.include.saveAction.text = getString(R.string.log)
+        binding.include.saveAction.setOnClickListener { addNewLogItem() }
+        binding.include.buttonEditDate.setOnClickListener { pickDateTime() }
 
         date = Calendar.getInstance().time //Show current date on screen
         date?.let { binding.include.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
