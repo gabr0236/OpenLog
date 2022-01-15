@@ -11,6 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="100dp"
         app:cardUseCompatPadding="true"
+        app:strokeColor="@color/border_gray"
+        app:strokeWidth="1dp"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout

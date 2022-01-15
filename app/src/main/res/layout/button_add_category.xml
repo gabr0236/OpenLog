@@ -17,7 +17,9 @@
             android:clickable="true"
             android:focusable="true"
             android:checkable="true"
-            app:cardBackgroundColor="@color/light_gray">
+            app:cardBackgroundColor="@color/very_light_gray"
+            app:strokeColor="@color/border_gray"
+            app:strokeWidth="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
