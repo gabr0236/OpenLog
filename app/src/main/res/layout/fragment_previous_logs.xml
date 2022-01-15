@@ -60,6 +60,7 @@
                         android:layout_width="match_parent"
                         app:layout_constraintTop_toTopOf="@+id/cardview_graph"
                         android:layout_height="200dp"
+                        android:fontFamily="@font/redhatdisplay_regular"
                         app:egUseCubic="true"
                         app:egUseOverlapFill="true"
                         app:egCurveSmoothness="0.4"
