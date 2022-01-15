@@ -24,13 +24,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,10 +40,6 @@ import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.InputValidator
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import kotlinx.coroutines.launch
-import java.security.AccessController.checkPermission
-import java.security.Permission
-import java.security.Permissions
 import java.util.*
 
 
@@ -65,6 +58,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private lateinit var recyclerViewCategory: RecyclerView
     private var date: Date? = null
 
+    //Speech to text
     private lateinit var microphoneButton: ImageView
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechRecognizerIntent: Intent
@@ -93,6 +87,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             viewModel = sharedViewModel
         }
 
+        //Setup for speech to text
         setupSpeechToText()
         microphoneButton = binding.buttonMicrophone
         microphoneButton.setOnClickListener {
@@ -217,30 +212,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         }
     }
 
-    //override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    //    super.onActivityResult(requestCode, resultCode, data)
-//
-    //    if (requestCode == reqCode && resultCode == Activity.RESULT_OK){
-    //        val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-    //        binding.logValue.setText(result?.get(0).toString())
-    //    }
-    //}
-
-    //private fun askSpeechInput(){
-    //    if (!SpeechRecognizer.isRecognitionAvailable(context!!)){
-    //        Toast.makeText(context, "Speech not available", Toast.LENGTH_SHORT).show()
-    //    } else {
-    //        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-    //        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-    //        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-    //        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something")
-    //        startActivityForResult(intent, reqCode)
-//
-    //    }
-    //}
-
     private fun setupSpeechToText() {
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this.requireActivity())
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
         speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
@@ -289,7 +262,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             }
             override fun onPartialResults(bundle: Bundle) {
                 Log.i("TEST", "Speech recognition partial results received")
-
             }
             override fun onEvent(i: Int, bundle: Bundle?) {
                 Log.i("TEST", "Speech recognition event called: " + i)

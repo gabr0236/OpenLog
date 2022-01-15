@@ -16,9 +16,9 @@
         <entry key="..\:/Users/Tobias/AndroidStudioProjects/OpenLog/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13858695652173914" />
         <entry key="app/src/main/res/layout/button_add_category.xml" value="0.12715298885511653" />
-        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_add_log.xml" value="0.1506172839506173" />
         <entry key="app/src/main/res/layout/fragment_create_category.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.1276595744680851" />
+        <entry key="app/src/main/res/layout/fragment_edit_log.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_log_item.xml" value="0.12771739130434784" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/xml/provider_paths.xml" value="0.12864583333333332" />
