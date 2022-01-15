@@ -20,11 +20,9 @@ class SharedViewModel(
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
-        pageSize = 10,
-        enablePlaceholders = false,
-        maxSize = 30,
-        prefetchDistance = 10,
-        initialLoadSize = 10
+        pageSize = 30,
+        enablePlaceholders = true,
+        maxSize = 120,
     )){
         logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name)
     }.flow
@@ -38,7 +36,7 @@ class SharedViewModel(
     private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
 
     private val quantityOfLogsForDerivingStatistics =
-        20 //Only derive average and standard deviation from n LogItems
+        30 //Only derive average and standard deviation from n LogItems
 
     //Snapshot is set in PreviousLogsFragment after the and during when
     // the LogItemPagingAdapter is being populated and updated

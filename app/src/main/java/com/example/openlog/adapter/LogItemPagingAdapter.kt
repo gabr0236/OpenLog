@@ -57,7 +57,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>(){
-            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem.date == newItem.date
             override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem == newItem
         }
     }
