@@ -108,56 +108,7 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
-
-
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //Confirmation dialog
-        AlertDialog.Builder(context)
-            .setTitle(R.string.delete_category)
-            .setMessage(R.string.delete_category_confirmation)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                Toast.makeText(
-                    context,
-                    R.string.category_deleted,
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
-    }
-
-    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
-    fun pickDateTime() {
-        Log.d("TEST", "PickDateTime clicked")
-        val currentDateTime = Calendar.getInstance()
-        val startYear = currentDateTime.get(Calendar.YEAR)
-        val startMonth = currentDateTime.get(Calendar.MONTH)
-        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
-        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
-        val startMinute = currentDateTime.get(Calendar.MINUTE)
-
-        DatePickerDialog(requireContext(), { _, year, month, day ->
-            TimePickerDialog(requireContext(), { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
-                pickedDateTime.set(year, month, day, hour, minute)
-                date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
-                Log.d("TEST", "PickDateTime: $pickedDateTime")
-            }, startHour, startMinute, true).show()
-        }, startYear, startMonth, startDay).show()
-    }
-
-
+    
     //TODO: duplicate method
     /**
      * Best suited solution if negative and positive number which can be formatted with '-' and '.'

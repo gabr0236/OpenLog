@@ -55,15 +55,6 @@ abstract class DuplicateMethods : Fragment() {
             .show()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun onCategoryClicked(logCategory: LogCategory, sharedViewModel: SharedViewModel, binding: FragmentAddLogBinding?) {
-        if (sharedViewModel.setSelectedCategory(logCategory)) {
-            if (binding != null) {
-                binding.recyclerView.adapter?.notifyDataSetChanged()
-            }
-        }
-    }
-
     fun pickDateTime(binding: TextView) {
         Log.d("TEST", "PickDateTime clicked")
         val currentDateTime = Calendar.getInstance()
