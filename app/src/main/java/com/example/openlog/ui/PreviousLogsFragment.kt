@@ -118,8 +118,9 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
     }
 
     private fun setSDAndAvg(){
-        binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
-        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
+        Log.d("TEST", sharedViewModel.mean().toString())
+        binding.textviewAverage.text= getString(R.string.average, if(sharedViewModel.mean().toString().equals("NaN")) 0 else sharedViewModel.mean().toString())
+        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, if(sharedViewModel.standdarddeviation().toString().equals("NaN")) 0 else sharedViewModel.standdarddeviation().toString())
     }
 
     @SuppressLint("NotifyDataSetChanged")
