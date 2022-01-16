@@ -54,7 +54,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="6dp"
                 android:fontFamily="@font/redhatdisplay_light"
-                android:hint="@{`Indtast `+viewModel.selectedCategory.unit}"
+                android:hint="@{@string/type(viewModel.selectedCategory.unit)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:shapeAppearance="@style/Rounded">
 

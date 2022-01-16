@@ -233,7 +233,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                 // this will open settings which asks for permission
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.openlog"))
                 startActivity(intent)
-                Toast.makeText(requireContext(), "Allow Microphone Permission", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.allow_mic), Toast.LENGTH_LONG).show()
             }
         }
     }

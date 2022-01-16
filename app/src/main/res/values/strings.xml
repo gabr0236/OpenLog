@@ -36,4 +36,5 @@
     <string name="delete_category">Slet Kategori</string>
     <string name="logs">Logs</string>
     <string name="type">Indtast i %s</string>
+    <string name="allow_mic">Tillad brug af mikrofon</string>
 </resources>
