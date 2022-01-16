@@ -19,14 +19,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:flow_verticalAlign="top">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -34,7 +32,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="6"
+            tools:itemCount="3"
             tools:listitem="@layout/layout_log_category" />
 
         <RelativeLayout
@@ -94,8 +92,9 @@
                 android:id="@+id/text_date"
                 android:layout_width="237dp"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="@string/today"
+
                 android:fontFamily="@font/redhatdisplay_regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_edit_date"
