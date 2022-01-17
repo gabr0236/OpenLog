@@ -102,7 +102,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-            sharedViewModel.setSelectedCategory(items.first())
+            if (!items.isNullOrEmpty()) sharedViewModel.setSelectedCategory(items.first())
         }
 
         date = Calendar.getInstance().time //Show current date on screen
