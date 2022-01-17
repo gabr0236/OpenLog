@@ -99,7 +99,6 @@ class ShareLogItemFragment : Fragment() {
 
         sendIntent.type = "text/plain"
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenLog")
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "body text")
         sendIntent.putExtra(Intent.EXTRA_STREAM, fileURI)
 
 

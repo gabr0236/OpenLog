@@ -108,6 +108,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             ?: return //return if selectedLogItemToEdit is null
         logItem = sharedViewModel.selectedLogItemToEdit.value!!
 
+        binding.logValue.setText(logItem.value.toString())
         binding.textDate.text =
             logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) } //Date of log
     }
