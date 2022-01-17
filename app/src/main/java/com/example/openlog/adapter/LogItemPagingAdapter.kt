@@ -45,7 +45,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     override fun onBindViewHolder(holder: LogItemPagingAdapter.ItemViewHolder, position: Int) {
         val current: LogItem? = getItem(position)
-        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: ${current}")
+        Log.d("TEST", "BIND ITEM AT POSITION: $position, is null?: $current}")
         holder.bind(current, onItemClickListenerLogItem)
     }
 
@@ -57,7 +57,7 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>(){
-            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = (oldItem.date == newItem.date && oldItem.id == newItem.id)
             override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem == newItem
         }
     }

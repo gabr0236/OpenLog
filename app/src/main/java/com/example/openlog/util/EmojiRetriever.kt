@@ -31,14 +31,11 @@ class EmojiRetriever {
                 23 -> emojiArray[22]
                 24 -> emojiArray[23]
                 25 -> emojiArray[24]
-                26 -> emojiArray[25]
-                27 -> emojiArray[26]
-                28 -> emojiArray[27]
                 else -> R.drawable.ic_baseline_image_not_supported_24
             }
         }
 
-        val emojiArray: Array<Int> = arrayOf(
+        private val emojiArray: Array<Int> = arrayOf(
             R.drawable.emoji_calories,
             R.drawable.emoji_sugar_blood_level,
             R.drawable.emoji_insulin,
@@ -46,23 +43,20 @@ class EmojiRetriever {
             R.drawable.emoji_arm,
             R.drawable.emoji_books,
             R.drawable.emoji_burger,
-            R.drawable.emoji_calculator,
-            R.drawable.emoji_cashless_payment,
-            R.drawable.emoji_creative_thinking,
             R.drawable.emoji_dart_board,
-            R.drawable.emoji_diagram,
-            R.drawable.emoji_graphic_design,
+            R.drawable.emoji_dog,
+            R.drawable.emoji_creative_thinking,
+            R.drawable.emoji_journal,
+            R.drawable.emoji_money,
             R.drawable.emoji_hammer,
-            R.drawable.emoji_moon,
+            R.drawable.emoji_mood,
             R.drawable.emoji_mop,
-            R.drawable.emoji_mortarboard,
-            R.drawable.emoji_music_player,
-            R.drawable.emoji_namaste,
-            R.drawable.emoji_notebook,
-            R.drawable.emoji_open_book,
-            R.drawable.emoji_painting,
-            R.drawable.emoji_seeding,
-            R.drawable.emoji_sword,
+            R.drawable.emoji_running,
+            R.drawable.emoji_savings,
+            R.drawable.emoji_scale,
+            R.drawable.emoji_screentime,
+            R.drawable.emoji_water,
+            R.drawable.emoji_water_plants,
             R.drawable.emoji_uterus,
             R.drawable.emoji_videogame,
             R.drawable.emoji_yoga_pose2,

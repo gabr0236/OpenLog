@@ -101,14 +101,14 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
     }
 
-    fun updateFragmentView(){
+    private fun updateFragmentView(){
         setRecyclerViewLogItemVisible()
         setSDAndAvg()
         lineGraph = LineGraph(sharedViewModel.logValuesAndDates(), binding.logGraph)
     }
 
     private fun setRecyclerViewLogItemVisible(){
-        if (pagingAdapter.itemCount>1){
+        if (pagingAdapter.itemCount>=1){
             binding.logItemRecyclerView.visibility=View.VISIBLE
             binding.textviewNoLogsFound.visibility=View.INVISIBLE
         } else {
@@ -117,9 +117,10 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         }
     }
 
-    fun setSDAndAvg(){
-        binding.textviewAverage.text= getString(R.string.average, sharedViewModel.mean().toString())
-        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, sharedViewModel.standdarddeviation().toString())
+    private fun setSDAndAvg(){
+        Log.d("TEST", sharedViewModel.mean().toString())
+        binding.textviewAverage.text= getString(R.string.average, if(sharedViewModel.mean().toString().equals("NaN")) 0 else sharedViewModel.mean().toString())
+        binding.textviewStandardDeviation.text= getString(R.string.standard_deviation, if(sharedViewModel.standdarddeviation().toString().equals("NaN")) 0 else sharedViewModel.standdarddeviation().toString())
     }
 
     @SuppressLint("NotifyDataSetChanged")

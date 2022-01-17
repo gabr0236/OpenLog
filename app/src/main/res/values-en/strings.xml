@@ -37,4 +37,6 @@
     <string name="delete_category">Delete Category</string>
     <string name="logs">Logs</string>
     <string name="type">Type in %s</string>
+    <string name="allow_mic">Allow Microphone Permission</string>
+
 </resources>

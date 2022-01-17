@@ -7,13 +7,11 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SharedViewModel(
     private val logItemDao: LogItemDao,
@@ -22,11 +20,9 @@ class SharedViewModel(
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
     val logItems = Pager(PagingConfig(
-        pageSize = 10,
-        enablePlaceholders = false,
-        maxSize = 30,
-        prefetchDistance = 10,
-        initialLoadSize = 10
+        pageSize = 30,
+        enablePlaceholders = true,
+        maxSize = 120,
     )){
         logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name)
     }.flow
@@ -40,7 +36,7 @@ class SharedViewModel(
     private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
 
     private val quantityOfLogsForDerivingStatistics =
-        20 //Only derive average and standard deviation from n LogItems
+        30 //Only derive average and standard deviation from n LogItems
 
     //Snapshot is set in PreviousLogsFragment after the and during when
     // the LogItemPagingAdapter is being populated and updated
@@ -127,7 +123,7 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-     fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+     private fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
         return logCategoryDao.getLogCategoriesWithLogItems()
     }
 
@@ -138,7 +134,7 @@ class SharedViewModel(
     fun exportToCSV(file : File) {
         val SEPERATOR = ","
 
-        var fileWriter = FileWriter(file)
+        val fileWriter = FileWriter(file)
 
 // Writes out the order of log values in file
         fileWriter.append("Category")
@@ -156,9 +152,9 @@ class SharedViewModel(
         retrieveAllItemsAndCategories().forEach { category ->
 // writes category/log values in file
             category.logItems.forEach{ log ->
-                fileWriter.append(category.logCategory.name.toString())
+                fileWriter.append(category.logCategory.name)
                 fileWriter.append(SEPERATOR)
-                fileWriter.append(category.logCategory.unit.toString())
+                fileWriter.append(category.logCategory.unit)
                 fileWriter.append(SEPERATOR)
                 fileWriter.append(log.id.toString())
                 fileWriter.append(SEPERATOR)

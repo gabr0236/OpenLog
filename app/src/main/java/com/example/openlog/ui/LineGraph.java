@@ -37,7 +37,7 @@ public class LineGraph {
             series.setColor(0xFF56B7F1);
 
             for (Pair<Float, Date> pair : dataSet) {
-                series.addPoint(new ValueLinePoint(DateTimeFormatter.Companion.formatAsDate(pair.component2()), pair.component1().floatValue()));
+                series.addPoint(new ValueLinePoint(DateTimeFormatter.Companion.formatAsDate(pair.component2()), pair.component1()));
             }
 
             cubicValueLineChart.addSeries(series);
