@@ -35,11 +35,19 @@ This button navigates the user to a screen where the user can select name, unit 
 
 #### Share log data
 
-Lastly the user is able to send all data via email as a csv-file
+Lastly the user is able to send all data via email or other as a csv-file
 
 <img src="https://github.com/gabr0236/OpenLog/blob/the_big_merge/readmeImages/sharelogs.png" width="200">
 
 ***
+
+#### Other features
+
+- Speech to text
+- Datetimepicker for selecting date
+- Edit log; Change category, datetime, logvalue
+- Many diffrent emojis to chose from when creating new category
+- Darkmode
 
 ## Built with
 - Kotlin
