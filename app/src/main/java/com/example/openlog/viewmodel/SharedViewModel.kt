@@ -7,6 +7,7 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
+import com.example.openlog.util.InputValidator
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
@@ -172,6 +173,8 @@ class SharedViewModel(
 
     fun mean(): Double = logValues().average().round(2)
     fun standdarddeviation(): Double = logValues().let { Statistics.standardDeviation(it) }.round(2)
+
+
 
 
     /**
