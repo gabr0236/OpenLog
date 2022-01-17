@@ -23,15 +23,7 @@ import com.example.openlog.databinding.FragmentPreviousLogsBinding
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 
-class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        val db = (activity?.application as LogItemApplication).database
-
-        SharedViewModelFactory(
-            db.logItemDao(),
-            db.logCategoryDao()
-        )
-    }
+class PreviousLogsFragment : DuplicateMethods(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
 
     private var _binding: FragmentPreviousLogsBinding? = null
     private val binding get() = _binding!!
@@ -123,33 +115,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         if (sharedViewModel.setSelectedCategory(logCategory)) {
             recyclerViewCategory.adapter?.notifyDataSetChanged()
         }
-    }
-
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //TODO duplicate method
-        //Confirmation dialog
-        AlertDialog.Builder(context)
-            .setTitle("Slet Kategori")
-            .setMessage("Er du sikker på at du vil slette denne kategori? Slettet Data kan ikke genskabes.")
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Kategori Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
     }
 
     override fun onItemClickedFullLog(logItem: LogItem) {

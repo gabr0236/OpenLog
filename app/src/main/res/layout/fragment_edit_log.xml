@@ -14,6 +14,9 @@
         <variable
             name="editLogFragment"
             type="com.example.openlog.ui.EditLogFragment" />
+        <variable
+            name="duplicateMethods"
+            type="com.example.openlog.ui.DuplicateMethods" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +85,6 @@
                 android:id="@+id/button_edit_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> editLogFragment.pickDateTime()}"
                 android:text="Skift dato"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

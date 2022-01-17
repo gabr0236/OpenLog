@@ -8,16 +8,27 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.viewmodel.SharedViewModel
+import com.example.openlog.viewmodel.SharedViewModelFactory
 import org.w3c.dom.Text
 import java.util.*
 
 abstract class DuplicateMethods : Fragment() {
+    val sharedViewModel: SharedViewModel by activityViewModels {
+        val db = (activity?.application as LogItemApplication).database
+
+        SharedViewModelFactory(
+            db.logItemDao(),
+            db.logCategoryDao()
+        )
+    }
 
     private var date: Date? = null
 
@@ -33,7 +44,7 @@ abstract class DuplicateMethods : Fragment() {
         findNavController().navigate(R.id.create_category_fragment)
     }
 
-    fun onDeleteCategoryClicked(logCategory: LogCategory, sharedViewModel: SharedViewModel) {
+    fun onDeleteCategoryClicked(logCategory: LogCategory) {
         //Confirmation dialog
         AlertDialog.Builder(context)
             .setTitle(R.string.delete_category)

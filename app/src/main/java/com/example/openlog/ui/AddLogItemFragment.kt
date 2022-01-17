@@ -29,14 +29,6 @@ import java.util.*
 
 
 class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        val db = (activity?.application as LogItemApplication).database
-
-        SharedViewModelFactory(
-            db.logItemDao(),
-            db.logCategoryDao()
-        )
-    }
 
     private var _binding: FragmentAddLogBinding? = null
     private val binding get() = _binding!!
@@ -49,6 +41,7 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
         val addLogItemLayoutBinding: FragmentAddLogBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_log, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
+        addLogItemLayoutBinding.duplicateMethods = this
         _binding = addLogItemLayoutBinding
         return addLogItemLayoutBinding.root
     }
@@ -62,7 +55,7 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
             addLogItemFragment = this@AddLogItemFragment
             viewModel = sharedViewModel
         }
-
+        binding.buttonEditDate.setOnClickListener{pickDateTime(binding.textDate)}
         //Log category recyclerview setup
         recyclerViewCategory = binding.recyclerView
         recyclerViewCategory.layoutManager =
@@ -108,7 +101,7 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
     }
-    
+
     //TODO: duplicate method
     /**
      * Best suited solution if negative and positive number which can be formatted with '-' and '.'
