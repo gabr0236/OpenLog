@@ -1,5 +1,6 @@
 package com.example.openlog.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -7,10 +8,7 @@ import android.app.TimePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -21,6 +19,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -60,6 +59,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechRecognizerIntent: Intent
     private var listening = false
+    private val RECORD_REQUEST_CODE = 101
+
 
 
     override fun onCreateView(
@@ -199,12 +200,26 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     private fun checkAudioPermission() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  // M = 23
-            if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) {
-                // this will open settings which asks for permission
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.openlog"))
-                startActivity(intent)
-                Toast.makeText(requireContext(), "Allow Microphone Permission", Toast.LENGTH_LONG).show()
+            val permission = ContextCompat.checkSelfPermission(context!!,
+                Manifest.permission.RECORD_AUDIO)
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(),
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    RECORD_REQUEST_CODE)
+            }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            RECORD_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(context,"Permission Granted",Toast.LENGTH_SHORT).show()
+
+                }
             }
         }
     }
@@ -236,10 +251,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 Log.i("TEST", "Speech recognition ended")
             }
             override fun onError(i: Int) {
+                microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_disabled_color))
                 if (!listening && i == SpeechRecognizer.ERROR_NO_MATCH) return
                 if (i == SpeechRecognizer.ERROR_NO_MATCH) return
                 Log.e("TEST", "Speech recognition error: " + i)
-
             }
 
             override fun onResults(bundle: Bundle) {
