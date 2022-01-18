@@ -48,6 +48,7 @@ Lastly the user is able to send all data via email or other as a csv-file
 - Edit log; Change category, datetime, logvalue
 - Many diffrent emojis to chose from when creating new category
 - Darkmode
+- Localization; App works in both english and danish depending on location
 
 ## Built with
 - Kotlin
