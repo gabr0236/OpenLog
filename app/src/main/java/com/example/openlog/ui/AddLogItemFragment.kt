@@ -34,6 +34,7 @@ import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.InputValidator
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
@@ -131,13 +132,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         sharedViewModel.addNewLogItem(input, date)
 
         //Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
-        val layout = layoutInflater.inflate(
-            R.layout.toast_custom,
-            activity?.findViewById(R.id.cardview_toast)
-        )
-        val toast = Toast(context)
-        toast.view = layout
-        toast.show()
+        Toast(context).showCustomToast(getString(R.string.log_added), R.drawable.emoji_checkmark, true, requireActivity())
 
         date = null
     }
