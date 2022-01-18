@@ -29,15 +29,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        val db = (activity?.application as LogItemApplication).database
-
-        SharedViewModelFactory(
-            db.logItemDao(),
-            db.logCategoryDao()
-        )
-    }
+class PreviousLogsFragment : DuplicateMethods(), OnItemClickListenerLogItem, CategoryRecyclerviewHandler {
 
     private var _binding: FragmentPreviousLogsBinding? = null
     private val binding get() = _binding!!
@@ -129,39 +121,6 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
         if (sharedViewModel.setSelectedCategory(logCategory)) {
             recyclerViewCategory.adapter?.notifyDataSetChanged()
         }
-    }
-
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.delete_category))
-            .setMessage(getString(R.string.delete_question))
-            .setIcon(R.drawable.emoji_warning)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                //Ask for confirmation
-                AlertDialog.Builder(context)
-                    .setTitle(getString(R.string.delete_category))
-                    .setMessage(getString(R.string.delete_question_2))
-                    .setIcon(R.drawable.emoji_warning)
-                    .setPositiveButton(
-                        android.R.string.yes
-                    ) { _, _ ->
-                        //If yes is selected
-                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
-
-                        sharedViewModel.deleteCategory(logCategory)
-                    }
-                    .setNegativeButton(android.R.string.no, null)
-                    .show()
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
     }
 
     override fun onItemClickedFullLog(logItem: LogItem?) {

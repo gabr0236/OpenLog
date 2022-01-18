@@ -44,22 +44,13 @@ import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
 
-class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        val db = (activity?.application as LogItemApplication).database
-
-        SharedViewModelFactory(
-            db.logItemDao(),
-            db.logCategoryDao()
-        )
-    }
+class EditLogFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
 
     private var _binding: FragmentEditLogBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
 
     private lateinit var logItem: LogItem
-    private var date: Date? = null
 
     //Speech to text
     private lateinit var microphoneButton: ImageView
@@ -89,6 +80,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             editLogFragment = this@EditLogFragment
             viewModel = sharedViewModel
         }
+        binding.buttonEditDate.setOnClickListener{pickDateTime(binding.textDate)}
 
         //Setup for speech to text
         setupSpeechToText()
@@ -137,10 +129,10 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         sharedViewModel.updateLogItem(
             logItem.id,
             input,
-            date ?: logItem.date
+            this.getDate() ?: logItem.date
         )
         binding.logValue.text?.clear()
-        date = null
+        this.setDate(null)
 
         sharedViewModel.selectedCategory.value?.emojiId?.let { EmojiRetriever.getEmojiIDOf(it) }?.let {
             Toast(context).showCustomToast(
@@ -177,61 +169,6 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
-    }
-
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.delete_category))
-            .setMessage(getString(R.string.delete_question))
-            .setIcon(R.drawable.emoji_warning)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                    //Ask for confirmation
-                AlertDialog.Builder(context)
-                    .setTitle(getString(R.string.category_deleted))
-                    .setMessage(getString(R.string.delete_question_2))
-                    .setIcon(R.drawable.emoji_warning)
-                    .setPositiveButton(
-                        android.R.string.yes
-                    ) { _, _ ->
-                        //If yes is selected
-                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
-
-                        sharedViewModel.deleteCategory(logCategory)
-                        findNavController().navigate(R.id.add_log_item_fragment)
-                    }
-                    .setNegativeButton(android.R.string.no, null)
-                    .show()
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
-    }
-
-    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
-    fun pickDateTime() {
-        Log.d("TEST", "PickDateTime clicked")
-        val currentDateTime = Calendar.getInstance()
-        val startYear = currentDateTime.get(Calendar.YEAR)
-        val startMonth = currentDateTime.get(Calendar.MONTH)
-        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
-        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
-        val startMinute = currentDateTime.get(Calendar.MINUTE)
-
-        DatePickerDialog(requireContext(), { _, year, month, day ->
-            TimePickerDialog(requireContext(), { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
-                pickedDateTime.set(year, month, day, hour, minute)
-                date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
-                Log.d("TEST", "PickDateTime: ${pickedDateTime}")
-            }, startHour, startMinute, true).show()
-        }, startYear, startMonth, startDay).show()
     }
 
     private fun checkAudioPermission() {

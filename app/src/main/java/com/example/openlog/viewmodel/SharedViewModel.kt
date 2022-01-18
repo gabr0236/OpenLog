@@ -1,3 +1,4 @@
+
 package com.example.openlog.viewmodel
 
 import androidx.lifecycle.*
@@ -123,7 +124,7 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-     private fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+    private fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
         return logCategoryDao.getLogCategoriesWithLogItems()
     }
 

@@ -41,20 +41,11 @@ import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
 
 
-class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        val db = (activity?.application as LogItemApplication).database
-
-        SharedViewModelFactory(
-            db.logItemDao(),
-            db.logCategoryDao()
-        )
-    }
+class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
 
     private var _binding: FragmentAddLogBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerViewCategory: RecyclerView
-    private var date: Date? = null
 
     //Speech to text
     private lateinit var microphoneButton: ImageView
@@ -72,6 +63,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val addLogItemLayoutBinding: FragmentAddLogBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_log, container, false)
         addLogItemLayoutBinding.addLogItemFragment = this
+        addLogItemLayoutBinding.duplicateMethods = this
         _binding = addLogItemLayoutBinding
 
         return addLogItemLayoutBinding.root
@@ -97,6 +89,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             microphoneButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.mic_enabled_color))
         }
 
+        binding.buttonEditDate.setOnClickListener{pickDateTime(binding.textDate)}
         //Log category recyclerview setup
         recyclerViewCategory = binding.recyclerView
         recyclerViewCategory.layoutManager =
@@ -108,11 +101,11 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             if (!items.isNullOrEmpty()) sharedViewModel.setSelectedCategory(items.first())
         }
 
-        date = Calendar.getInstance().time //Show current date on screen
-        date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
+        this.setDate(Calendar.getInstance().time) //Show current date on screen
+        this.getDate().let { binding.textDate.text =
+            it?.let { it1 -> DateTimeFormatter.formatAsYearDayDateTime(it1) }
+        }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -130,7 +123,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         if (!InputValidator.isValidNumber(requireContext(),requireActivity(),input)) return //Return if not valid input
 
-        sharedViewModel.addNewLogItem(input, date)
+        sharedViewModel.addNewLogItem(input, this.getDate())
 
         sharedViewModel.selectedCategory.value?.emojiId?.let { EmojiRetriever.getEmojiIDOf(it) }?.let {
             Toast(context).showCustomToast(
@@ -140,7 +133,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                 requireActivity())
         }
 
-        date = null
+        this.setDate(null)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -148,59 +141,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
-    }
-
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.delete_category))
-            .setMessage(getString(R.string.delete_question))
-            .setIcon(R.drawable.emoji_warning)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                //Ask for confirmation
-                AlertDialog.Builder(context)
-                    .setTitle(getString(R.string.delete_category))
-                    .setMessage(getString(R.string.delete_question_2))
-                    .setIcon(R.drawable.emoji_warning)
-                    .setPositiveButton(
-                        android.R.string.yes
-                    ) { _, _ ->
-                        //If yes is selected
-                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
-                        sharedViewModel.deleteCategory(logCategory)
-                    }
-                    .setNegativeButton(android.R.string.no, null)
-                    .show()
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
-    }
-
-    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
-    fun pickDateTime() {
-        Log.d("TEST", "PickDateTime clicked")
-        val currentDateTime = Calendar.getInstance()
-        val startYear = currentDateTime.get(Calendar.YEAR)
-        val startMonth = currentDateTime.get(Calendar.MONTH)
-        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
-        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
-        val startMinute = currentDateTime.get(Calendar.MINUTE)
-
-        DatePickerDialog(requireContext(), { _, year, month, day ->
-            TimePickerDialog(requireContext(), { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
-                pickedDateTime.set(year, month, day, hour, minute)
-                date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
-                Log.d("TEST", "PickDateTime: $pickedDateTime")
-            }, startHour, startMinute, true).show()
-        }, startYear, startMonth, startDay).show()
     }
 
     private fun checkAudioPermission() {
