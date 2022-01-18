@@ -16,6 +16,7 @@ import com.example.openlog.R
 import com.example.openlog.adapter.EmojiArrayAdapter
 import com.example.openlog.databinding.FragmentCreateCategoryBinding
 import com.example.openlog.util.EmojiRetriever
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
@@ -78,20 +79,12 @@ class CreateCategoryFragment : Fragment() {
         if (sharedViewModel.allLogCategories.value?.any { lc -> lc.name == name.toString() } == true) {
             name.clear()
             unit.clear()
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.category_exists),
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast(context).showCustomToast(getString(R.string.category_exists), R.drawable.emoji_x, true, requireActivity())
             return
         }
         sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
 
-        Toast.makeText(
-            this.context,
-            getString(R.string.category_has_been_created),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast(context).showCustomToast(getString(R.string.category_has_been_created), R.drawable.emoji_checkmark, true, requireActivity())
 
         findNavController().popBackStack()
     }

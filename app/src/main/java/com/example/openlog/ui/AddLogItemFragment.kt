@@ -127,11 +127,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
-        if (!InputValidator.isValidNumber(requireContext(),input)) return //Return if not valid input
+        if (!InputValidator.isValidNumber(requireContext(),requireActivity(),input)) return //Return if not valid input
 
         sharedViewModel.addNewLogItem(input, date)
 
-        //Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
         Toast(context).showCustomToast(getString(R.string.log_added), R.drawable.emoji_checkmark, true, requireActivity())
 
         date = null
@@ -166,11 +165,7 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
                         android.R.string.yes
                     ) { _, _ ->
                         //If yes is selected
-                        Toast.makeText(
-                            context,
-                            getString(R.string.category_deleted),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
                         sharedViewModel.deleteCategory(logCategory)
                     }
                     .setNegativeButton(android.R.string.no, null)
@@ -215,9 +210,10 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
+                    Toast(context).showCustomToast(getString(R.string.permission_denied), R.drawable.emoji_x, true, requireActivity())
+
                 } else {
-                    Toast.makeText(context,"Permission Granted",Toast.LENGTH_SHORT).show()
+                    Toast(context).showCustomToast(getString(R.string.permission_granted), R.drawable.emoji_x, true, requireActivity())
                 }
             }
         }

@@ -22,6 +22,7 @@ import com.example.openlog.adapter.LogItemPagingAdapter
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentPreviousLogsBinding
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -152,11 +153,8 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
                         android.R.string.yes
                     ) { _, _ ->
                         //If yes is selected
-                        Toast.makeText(
-                            context,
-                            getString(R.string.category_deleted),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
+
                         sharedViewModel.deleteCategory(logCategory)
                     }
                     .setNegativeButton(android.R.string.no, null)
