@@ -37,7 +37,7 @@
     <string name="logs">Logs</string>
     <string name="type">Indtast i %s</string>
     <string name="allow_mic">Tillad brug af mikrofon</string>
-    <string name="msg_no_input">Indtast værdi</string>
+    <string name="msg_no_input">Indtast en værdi</string>
     <string name="msg_invalid_input">Ugyldigt input</string>
     <string name="permission_denied">Tilladelse afvist</string>
     <string name="permission_granted">Tilladelse givet</string>

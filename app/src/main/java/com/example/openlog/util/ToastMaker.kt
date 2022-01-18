@@ -24,7 +24,6 @@ fun Toast.showCustomToast(message: String, imageResourceId: Int, durationShort: 
 
     // use the application extension function
     this.apply {
-        setGravity(Gravity.BOTTOM, 0, 40)
         duration = if (durationShort) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
         view = layout
         show()
