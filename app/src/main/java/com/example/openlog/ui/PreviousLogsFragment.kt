@@ -74,7 +74,7 @@ class PreviousLogsFragment : Fragment(), OnItemClickListenerLogItem, CategoryRec
             items.let {
                 recyclerViewCategory.adapter = LogCategoryAdapter(it, this)
             }
-            sharedViewModel.setSelectedCategory(items.first())
+            if (items.any()) sharedViewModel.setSelectedCategory(items.first())
         }
 
         //Log item recyclerview setup
