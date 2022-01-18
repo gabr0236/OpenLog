@@ -38,5 +38,11 @@
     <string name="logs">Logs</string>
     <string name="type">Type in %s</string>
     <string name="allow_mic">Allow Microphone Permission</string>
+    <string name="msg_no_input">Type a value</string>
+    <string name="msg_invalid_input">Invalid input</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="log_deleted">Log deleted</string>
+
 
 </resources>

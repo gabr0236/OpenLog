@@ -1,5 +1,6 @@
 package com.example.openlog.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -21,6 +22,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -35,7 +37,9 @@ import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentEditLogBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.util.EmojiRetriever
 import com.example.openlog.util.InputValidator
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
@@ -62,6 +66,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechRecognizerIntent: Intent
     private var listening = false
+    private val RECORD_REQUEST_CODE = 101
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,6 +114,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
             ?: return //return if selectedLogItemToEdit is null
         logItem = sharedViewModel.selectedLogItemToEdit.value!!
 
+        binding.logValue.setText(logItem.value.toString())
         binding.textDate.text =
             logItem.date?.let { DateTimeFormatter.formatAsYearDayDateTime(it) } //Date of log
     }
@@ -123,7 +130,7 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
 
     fun updateLogItem() {
         val input = binding.logValue.text.toString()
-        if (!InputValidator.isValidNumber(requireContext(),input)) {
+        if (!InputValidator.isValidNumber(requireContext(),requireActivity(),input)) {
             binding.logValue.setText(logItem.value.toString())
             return
         }
@@ -135,7 +142,13 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.logValue.text?.clear()
         date = null
 
-        Toast.makeText(requireContext(), getString(R.string.log_has_been_updated), Toast.LENGTH_SHORT).show()
+        sharedViewModel.selectedCategory.value?.emojiId?.let { EmojiRetriever.getEmojiIDOf(it) }?.let {
+            Toast(context).showCustomToast(
+                getString(R.string.log_has_been_updated),
+                it,
+                true,
+                requireActivity())
+        }
 
         findNavController().navigate(R.id.previous_logs_fragment)
     }
@@ -150,11 +163,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                 android.R.string.yes
             ) { _, _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    "Log Slettet",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast(context).showCustomToast(getString(R.string.log_deleted), R.drawable.emoji_checkmark, true, requireActivity())
+
                 sharedViewModel.deleteLogItem(logItem)
                 findNavController().navigate(R.id.previous_logs_fragment)
             }
@@ -191,11 +201,8 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
                         android.R.string.yes
                     ) { _, _ ->
                         //If yes is selected
-                        Toast.makeText(
-                            context,
-                            getString(R.string.category_deleted),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
+
                         sharedViewModel.deleteCategory(logCategory)
                         findNavController().navigate(R.id.add_log_item_fragment)
                     }
@@ -228,12 +235,24 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     private fun checkAudioPermission() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  // M = 23
-            if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) {
-                // this will open settings which asks for permission
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.openlog"))
-                startActivity(intent)
-                Toast.makeText(requireContext(), getString(R.string.allow_mic), Toast.LENGTH_LONG).show()
+        val permission = ContextCompat.checkSelfPermission(context!!,
+            Manifest.permission.RECORD_AUDIO)
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                RECORD_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            RECORD_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast(context).showCustomToast(getString(R.string.permission_denied), R.drawable.emoji_x, true, requireActivity())
+
+                } else {
+                    Toast(context).showCustomToast(getString(R.string.permission_granted), R.drawable.emoji_x, true, requireActivity())
+                }
             }
         }
     }
