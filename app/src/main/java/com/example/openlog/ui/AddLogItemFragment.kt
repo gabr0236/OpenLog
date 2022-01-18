@@ -123,7 +123,6 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
     }
 
     fun addNewLogItem() {
-
         val input = binding.logValue.text.toString()
         binding.logValue.text?.clear()
 
@@ -131,7 +130,15 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
 
         sharedViewModel.addNewLogItem(input, date)
 
-        Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), getString(R.string.log_added), Toast.LENGTH_SHORT).show()
+        val layout = layoutInflater.inflate(
+            R.layout.toast_custom,
+            activity?.findViewById(R.id.cardview_toast)
+        )
+        val toast = Toast(context)
+        toast.view = layout
+        toast.show()
+
         date = null
     }
 
@@ -213,12 +220,9 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-
                     Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
-
                 } else {
                     Toast.makeText(context,"Permission Granted",Toast.LENGTH_SHORT).show()
-
                 }
             }
         }

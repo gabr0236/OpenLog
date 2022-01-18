@@ -80,4 +80,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
     implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha02"
     implementation("androidx.room:room-paging:2.4.0")
+
+    implementation 'com.github.johnpersano:supertoasts:2.0'
+
 }
