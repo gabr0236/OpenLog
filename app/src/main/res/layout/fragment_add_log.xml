@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context="com.example.openlog.ui.AddLogItemFragment"
-    android:background="@color/white">
+    android:background="?colorOnPrimary">
 
     <data>
         <variable
@@ -22,14 +22,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="430dp"
-        app:flow_verticalAlign="top">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -37,46 +35,70 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="6"
+            tools:itemCount="3"
             tools:listitem="@layout/layout_log_category" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textfield_container_edit_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/relativelayout_textinput"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="0dp"
-            android:hint="@{`Indtast `+viewModel.selectedCategory.unit}"
+            android:layout_centerInParent="true"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view"
-            app:shapeAppearance="@style/Rounded"
-            >
+            app:layout_constraintTop_toBottomOf="@id/recycler_view">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/log_value"
-                android:inputType="number"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textfield_container_edit_text"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="-0123456789."
-                android:imeOptions="actionDone"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="@font/redhatdisplay_light"
+                android:hint="@{@string/type(viewModel.selectedCategory.unit)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearance="@style/Rounded">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/log_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="-0123456789."
+                    android:fontFamily="@font/redhatdisplay_regular"
+                    android:imeOptions="actionGo"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/button_microphone"
+                android:layout_width="35dp"
+                android:layout_marginTop="30dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="#F9F8FA"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_baseline_mic_24" />
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="380dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:paddingHorizontal="16dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textfield_container_edit_text">
+            app:layout_constraintTop_toBottomOf="@+id/relativelayout_textinput">
 
             <TextView
                 android:id="@+id/text_date"
                 android:layout_width="237dp"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:text="I dag"
+                android:gravity="center"
+                android:text="@string/today"
+
+                android:fontFamily="@font/redhatdisplay_regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_edit_date"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +108,8 @@
                 android:id="@+id/button_edit_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Skift dato"
+                android:text="@string/change_date"
+                android:fontFamily="@font/redhatdisplay_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -101,8 +124,10 @@
             android:enabled="true"
             android:gravity="center"
             android:onClick="@{() -> addLogItemFragment.addNewLogItem()}"
-            android:text="LOG"
+            android:text="@string/log"
+            android:textAllCaps="true"
             android:textAlignment="center"
+            android:fontFamily="@font/redhatdisplay_semibold"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="parent"

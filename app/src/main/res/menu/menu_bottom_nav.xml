@@ -4,16 +4,16 @@
     <item
         android:id="@+id/share_log_item_fragment"
         android:icon="@drawable/ic_log_item_share"
-        android:title="Del" />
+        android:title="@string/share_logs" />
 
     <item
         android:id="@+id/add_log_item_fragment"
         android:icon="@drawable/ic_log_item_create"
-        android:title="Tilføj Log" />
+        android:title="@string/add_log" />
 
 
     <item
         android:id="@+id/previous_logs_fragment"
         android:icon="@drawable/ic_log_item_list"
-        android:title="Tidligere Logge" />
+        android:title="@string/previous_logs" />
 </menu>

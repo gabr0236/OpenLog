@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -18,17 +18,22 @@
             android:clickable="true"
             android:focusable="true"
             android:checkable="true"
+            app:strokeColor="@color/border_gray"
+            app:strokeWidth="1dp"
             app:rippleColor="@color/pink_200">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="8dp">
+                android:padding="6dp">
 
                 <ImageView
                     android:id="@+id/imageview_emoji"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    app:layout_constraintBottom_toTopOf="@+id/log_category_name"
+                    android:layout_marginTop="8dp"
+                    android:paddingRight="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -36,40 +41,41 @@
 
                 <TextView
                     android:id="@+id/log_category_name"
-                    android:layout_width="0dp"
+                    android:layout_width="81dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="0dp"
-                    android:hint="*Kalorier*"
+                    android:fontFamily="@font/redhatdisplay_extrabold"
+                    android:hint="@string/placeholder_calories"
                     android:lines="1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="7sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@+id/log_category_unit"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageview_emoji"
-                    tools:text="Kalorier"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="7sp"
-                    app:autoSizeMaxTextSize="20sp"
-                    app:autoSizeStepGranularity="2sp"/>
+                    tools:text="Kalorier" />
 
                 <TextView
                     android:id="@+id/log_category_unit"
-                    android:layout_width="0dp"
+                    android:layout_width="81dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="*XX Kcal*"
+                    android:fontFamily="@font/redhatdisplay_regular"
+                    android:hint="@string/placeholder_calories_unit"
+                    android:lines="1"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    app:autoSizeMaxTextSize="19sp"
+                    app:autoSizeMinTextSize="6sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/log_category_name"
-                    tools:text="3409 Kcal"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="6sp"
-                    app:autoSizeMaxTextSize="19sp"
-                    app:autoSizeStepGranularity="2sp"
-                    android:lines="1"
-                    />
+                    tools:text="3409 Kcal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>

@@ -2,7 +2,6 @@ package com.example.openlog.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.example.openlog.R
 import com.example.openlog.adapter.EmojiArrayAdapter
 import com.example.openlog.databinding.FragmentCreateCategoryBinding
 import com.example.openlog.util.EmojiRetriever
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import java.util.*
@@ -79,15 +79,13 @@ class CreateCategoryFragment : Fragment() {
         if (sharedViewModel.allLogCategories.value?.any { lc -> lc.name == name.toString() } == true) {
             name.clear()
             unit.clear()
-            Toast.makeText(
-                requireContext(),
-                "En kategori med dette navn eksitere allerede",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast(context).showCustomToast(getString(R.string.category_exists), R.drawable.emoji_x, true, requireActivity())
             return
         }
         sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
-        //TODO: add selected emoji id to category with binding.spinnerEmojis.selectedItem.toString()
+
+        Toast(context).showCustomToast(getString(R.string.category_has_been_created), R.drawable.emoji_checkmark, true, requireActivity())
+
         findNavController().popBackStack()
     }
 }

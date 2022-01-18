@@ -11,6 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="100dp"
         app:cardUseCompatPadding="true"
+        app:strokeColor="@color/border_gray"
+        app:strokeWidth="1dp"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,9 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="*Time of Log*"
+                android:text="@string/placeholder_time"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:fontFamily="@font/redhatdisplay_bold"
                 app:layout_constraintStart_toEndOf="@+id/imageview_emoji"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="12:14" />
@@ -49,21 +52,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
-                android:text="*XX Kcal*"
+                android:text="@string/placeholder_calories_unit"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:fontFamily="@font/redhatdisplay_regular"
                 app:layout_constraintStart_toEndOf="@+id/imageview_emoji"
                 app:layout_constraintTop_toBottomOf="@id/log_item_date"
                 tools:text="312 Kcal" />
 
             <Button
                 android:id="@+id/edit_action"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="EDIT"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:fontFamily="@font/redhatdisplay_semibold"
+                android:text="@string/edit"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@id/log_item_date"
