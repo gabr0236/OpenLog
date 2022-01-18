@@ -37,6 +37,7 @@ import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogItem
 import com.example.openlog.databinding.FragmentEditLogBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.util.EmojiRetriever
 import com.example.openlog.util.InputValidator
 import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
@@ -141,7 +142,13 @@ class EditLogFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.logValue.text?.clear()
         date = null
 
-        Toast(context).showCustomToast(getString(R.string.log_has_been_updated), R.drawable.emoji_checkmark, true, requireActivity())
+        sharedViewModel.selectedCategory.value?.emojiId?.let { EmojiRetriever.getEmojiIDOf(it) }?.let {
+            Toast(context).showCustomToast(
+                getString(R.string.log_has_been_updated),
+                it,
+                true,
+                requireActivity())
+        }
 
         findNavController().navigate(R.id.previous_logs_fragment)
     }
