@@ -107,8 +107,6 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
         }
     }
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -127,7 +125,14 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
 
         sharedViewModel.addNewLogItem(input, this.getDate())
 
-        Toast.makeText(requireContext(), "Log Tilføjet", Toast.LENGTH_SHORT).show()
+        sharedViewModel.selectedCategory.value?.emojiId?.let { EmojiRetriever.getEmojiIDOf(it) }?.let {
+            Toast(context).showCustomToast(
+                getString(R.string.log_added),
+                it,
+                true,
+                requireActivity())
+        }
+
         this.setDate(null)
     }
 
@@ -136,70 +141,6 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
         if (sharedViewModel.setSelectedCategory(logCategory)) {
             binding.recyclerView.adapter?.notifyDataSetChanged()
         }
-    }
-
-    //TODO: duplicate method
-    /**
-     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
-     */
-    private fun isValidNumber(s: String?) : Boolean {
-        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
-        return if (s.isNullOrEmpty()) false
-        else if (s.contains(",")){
-            Toast.makeText(requireContext(), "Brug punktum '.' i stedet for komma ','", Toast.LENGTH_LONG).show()
-            false
-        } else regex.matches(s)
-    override fun onCreateCategoryClicked() {
-        findNavController().navigate(R.id.create_category_fragment)
-    }
-
-    override fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.delete_category))
-            .setMessage(getString(R.string.delete_question))
-            .setIcon(R.drawable.emoji_warning)
-            .setPositiveButton(
-                android.R.string.yes
-            ) { _, _ ->
-                //If yes is selected
-                //Ask for confirmation
-                AlertDialog.Builder(context)
-                    .setTitle(getString(R.string.delete_category))
-                    .setMessage(getString(R.string.delete_question_2))
-                    .setIcon(R.drawable.emoji_warning)
-                    .setPositiveButton(
-                        android.R.string.yes
-                    ) { _, _ ->
-                        //If yes is selected
-                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
-                        sharedViewModel.deleteCategory(logCategory)
-                    }
-                    .setNegativeButton(android.R.string.no, null)
-                    .show()
-            }
-            .setNegativeButton(android.R.string.no, null)
-            .show()
-    }
-
-    //TODO: lav i anden klasse så denne metode ikke skrives i 2 fragments
-    fun pickDateTime() {
-        Log.d("TEST", "PickDateTime clicked")
-        val currentDateTime = Calendar.getInstance()
-        val startYear = currentDateTime.get(Calendar.YEAR)
-        val startMonth = currentDateTime.get(Calendar.MONTH)
-        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
-        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
-        val startMinute = currentDateTime.get(Calendar.MINUTE)
-
-        DatePickerDialog(requireContext(), { _, year, month, day ->
-            TimePickerDialog(requireContext(), { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
-                pickedDateTime.set(year, month, day, hour, minute)
-                date = pickedDateTime.time
-                date?.let { binding.textDate.text = DateTimeFormatter.formatAsYearDayDateTime(it) }
-                Log.d("TEST", "PickDateTime: $pickedDateTime")
-            }, startHour, startMinute, true).show()
-        }, startYear, startMonth, startDay).show()
     }
 
     private fun checkAudioPermission() {

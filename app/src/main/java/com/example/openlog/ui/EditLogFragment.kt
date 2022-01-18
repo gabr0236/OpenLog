@@ -171,8 +171,6 @@ class EditLogFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
         }
     }
 
-
-
     private fun checkAudioPermission() {
         val permission = ContextCompat.checkSelfPermission(context!!,
             Manifest.permission.RECORD_AUDIO)
@@ -244,13 +242,5 @@ class EditLogFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
             override fun onPartialResults(p0: Bundle?) {}
             override fun onEvent(p0: Int, p1: Bundle?) {}
         })
-    //TODO: duplicate method
-    /**
-     * Best suited solution if negative and positive number which can be formatted with '-' and '.'
-     */
-    private fun isValidNumber(s: String?) : Boolean {
-        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
-        return if (s.isNullOrEmpty()) false
-        else regex.matches(s)
     }
 }

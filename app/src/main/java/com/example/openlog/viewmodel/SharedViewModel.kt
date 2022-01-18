@@ -1,19 +1,17 @@
+
 package com.example.openlog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
+import androidx.paging.*
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.data.entity.LogItemAndLogCategory
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
-import java.io.BufferedWriter
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
+import java.io.*
 import java.util.*
 
 class SharedViewModel(
@@ -22,7 +20,13 @@ class SharedViewModel(
 ) : ViewModel() {
 
     val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
-    val allLogItems: LiveData<List<LogItem>> = logItemDao.getLogItems().asLiveData()
+    val logItems = Pager(PagingConfig(
+        pageSize = 30,
+        enablePlaceholders = true,
+        maxSize = 120,
+    )){
+        logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name)
+    }.flow
 
     private val _selectedCategory = MutableLiveData<LogCategory>()
     val selectedCategory: LiveData<LogCategory> = _selectedCategory
@@ -30,8 +34,20 @@ class SharedViewModel(
     private val _selectedLogItemToEdit = MutableLiveData<LogItem>()
     val selectedLogItemToEdit: LiveData<LogItem> = _selectedLogItemToEdit
 
-    fun setSelectedLogItemToEdit(logItem: LogItem) {
-        _selectedLogItemToEdit.value = logItem
+    private lateinit var lastSnapshotLogItems: ItemSnapshotList<LogItem>
+
+    private val quantityOfLogsForDerivingStatistics =
+        30 //Only derive average and standard deviation from n LogItems
+
+    //Snapshot is set in PreviousLogsFragment after the and during when
+    // the LogItemPagingAdapter is being populated and updated
+    fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>){
+         lastSnapshotLogItems = logItems
+    }
+
+    fun setSelectedLogItemToEdit(logItem: LogItem?) {
+        logItem?: return
+        _selectedLogItemToEdit.value = logItem!!
     }
 
     /**
@@ -71,9 +87,6 @@ class SharedViewModel(
         }
     }
 
-    fun shareLogItems() {
-        TODO()
-    }
 
     /**
      * creates and returns a log which is to be updated
@@ -111,63 +124,74 @@ class SharedViewModel(
         return Calendar.getInstance().time
     }
 
-    // TODO: Update to https://developer.android.com/training/data-storage/app-specific
-    private fun exportToCSV(logItemsAndLogCategory: List<LogItemAndLogCategory>) {
-        val SEPERATOR = ","
-
-        val bufferedWriter = BufferedWriter(
-            OutputStreamWriter(
-                FileOutputStream("log_items.csv"),
-                "UTF-8"
-            )
-        )
-
-        logItemsAndLogCategory.forEach {
-            val line = StringBuffer()
-            line.append(it.logItem.id)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.name)
-            line.append(SEPERATOR)
-            line.append(it.logItem.value)
-            line.append(SEPERATOR)
-            line.append(it.logCategory.unit)
-            line.append(SEPERATOR)
-            line.append(it.logItem.date)
-
-            bufferedWriter.write(line.toString())
-            bufferedWriter.newLine()
-        }
-
-        bufferedWriter.flush()
-        bufferedWriter.close()
+    private fun retrieveAllItemsAndCategories(): List<LogCategoryWithLogItems> {
+        return logCategoryDao.getLogCategoriesWithLogItems()
     }
 
-    private val quantityOfLogsForDerivingStatistics =
-        20 //Only derive average and standard deviation from n LogItems
-    // TODO this number should be equal to the amount of loaded logs when load is implemented
 
-    fun mean(): Double? = logValues()?.average()?.round(2)
-    fun standdarddeviation(): Double? = logValues()?.let { Statistics.standardDeviation(it) }?.round(2)
+    /**
+     * Translates database into csv format and writes this in the file given as param
+     */
+    fun exportToCSV(file : File) {
+        val SEPERATOR = ","
+
+        val fileWriter = FileWriter(file)
+
+// Writes out the order of log values in file
+        fileWriter.append("Category")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Unit")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("ValueID")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Value")
+        fileWriter.append(SEPERATOR)
+        fileWriter.append("Date")
+        fileWriter.append(SEPERATOR)
+        fileWriter.appendLine()
+
+        retrieveAllItemsAndCategories().forEach { category ->
+// writes category/log values in file
+            category.logItems.forEach{ log ->
+                fileWriter.append(category.logCategory.name)
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(category.logCategory.unit)
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.id.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.value.toString())
+                fileWriter.append(SEPERATOR)
+                fileWriter.append(log.date.toString())
+                fileWriter.appendLine()
+         }
+            fileWriter.appendLine()
+        }
+        fileWriter.flush()
+        fileWriter.close()
+
+    }
+
+    fun mean(): Double = logValues().average().round(2)
+    fun standdarddeviation(): Double = logValues().let { Statistics.standardDeviation(it) }.round(2)
 
 
     /**
      * @return the values of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValues(): List<Float>? {
-        return allLogItems.value?.asSequence()
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
-            ?.take(quantityOfLogsForDerivingStatistics)
-            ?.map { it.value }?.toList()
+    private fun logValues(): List<Float> {
+        return lastSnapshotLogItems
+            .take(quantityOfLogsForDerivingStatistics)
+            .mapNotNull { it }
+            .map { it.value }.toList()
     }
 
     /**
      * @return the values and dates of the LogItems where category equals selectedCategoryStatistics
      */
-    fun logValuesAndDates(): List<Pair<Float, Date?>>? {
-        return allLogItems.value?.asSequence()
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name }
-            ?.take(quantityOfLogsForDerivingStatistics)
-            ?.map { Pair(it.value, it.date) }?.toMutableList()
+    fun logValuesAndDates(): List<Pair<Float?, Date?>> {
+        return lastSnapshotLogItems
+            .take(quantityOfLogsForDerivingStatistics)
+            .map { Pair(it?.value, it?.date) }.toMutableList()
     }
 
     /**
@@ -180,29 +204,9 @@ class SharedViewModel(
         }
     }
 
-    /**
-     * @return all the logs of the selected category
-     */
-    fun logsOfSelectedCategory(): List<LogItem>? {
-        return allLogItems.value?.asSequence()
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
-            ?.toList()
-    }
-
-    /**
-     * @return whether any logs for the selected category exists
-     */
-    fun anyLogsOfSelectedCategory(): Boolean? {
-        return allLogItems.value?.asSequence()
-            ?.filter { log -> log.categoryOwnerName == selectedCategory.value?.name}
-            ?.any()
-    }
-
     fun deleteCategory(logCategory: LogCategory){
         viewModelScope.launch {
             logCategoryDao.delete(logCategory)
         }
     }
-
-
 }

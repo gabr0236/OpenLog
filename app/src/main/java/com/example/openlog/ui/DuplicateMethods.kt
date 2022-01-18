@@ -15,6 +15,7 @@ import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
+import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
 import org.w3c.dom.Text
@@ -45,22 +46,28 @@ abstract class DuplicateMethods : Fragment() {
     }
 
     fun onDeleteCategoryClicked(logCategory: LogCategory) {
-        //Confirmation dialog
         AlertDialog.Builder(context)
-            .setTitle(R.string.delete_category)
-            .setMessage(R.string.delete_category_confirmation)
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(getString(R.string.delete_category))
+            .setMessage(getString(R.string.delete_question))
+            .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
-            ) { _, _ ->
+            ) { _ , _ ->
                 //If yes is selected
-                Toast.makeText(
-                    context,
-                    R.string.category_deleted,
-                    Toast.LENGTH_SHORT
-                ).show()
-                sharedViewModel.deleteCategory(logCategory)
-                findNavController().navigate(R.id.previous_logs_fragment)
+                //Ask for confirmation
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.delete_category))
+                    .setMessage(getString(R.string.delete_question_2))
+                    .setIcon(R.drawable.emoji_warning)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _ , _ ->
+                        //If yes is selected
+                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
+                        sharedViewModel.deleteCategory(logCategory)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .show()
             }
             .setNegativeButton(android.R.string.no, null)
             .show()

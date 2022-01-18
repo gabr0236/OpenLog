@@ -123,7 +123,7 @@ class PreviousLogsFragment : DuplicateMethods(), OnItemClickListenerLogItem, Cat
         }
     }
 
-    override fun onItemClickedFullLog(logItem: LogItem) {
+    override fun onItemClickedFullLog(logItem: LogItem?) {
         sharedViewModel.setSelectedLogItemToEdit(logItem)
         findNavController().navigate(R.id.edit_log_fragment)
     }
