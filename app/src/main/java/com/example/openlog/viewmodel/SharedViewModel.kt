@@ -7,9 +7,9 @@ import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
 import com.example.openlog.data.entity.LogCategoryWithLogItems
 import com.example.openlog.data.entity.LogItem
-import com.example.openlog.util.InputValidator
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.*
 import java.util.*
@@ -38,6 +38,8 @@ class SharedViewModel(
 
     private val quantityOfLogsForDerivingStatistics =
         30 //Only derive average and standard deviation from n LogItems
+
+    var latestValue = ""
 
     //Snapshot is set in PreviousLogsFragment after the and during when
     // the LogItemPagingAdapter is being populated and updated
@@ -79,6 +81,7 @@ class SharedViewModel(
         viewModelScope.launch {
             logItemDao.insert(newLog)
         }
+        latestValue = value
     }
 
     fun deleteLogItem(logItem: LogItem) {
@@ -128,6 +131,17 @@ class SharedViewModel(
         return logCategoryDao.getLogCategoriesWithLogItems()
     }
 
+    fun retrieveCategoryItems(): MutableList<Float> {
+        var selectedCategoryList : MutableList<Float> = null
+        retrieveAllItemsAndCategories().forEach{category ->
+            if (category.logCategory.name == selectedCategory.toString()){
+                category.logItems.forEach{ log ->
+                    selectedCategoryList.add(log.value)
+                }
+            }
+        }
+        return selectedCategoryList
+    }
 
     /**
      * Translates database into csv format and writes this in the file given as param

@@ -37,6 +37,8 @@ import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.InputValidator
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
+import kotlinx.coroutines.flow.toList
+import java.lang.Float.parseFloat
 import java.util.*
 
 
@@ -127,6 +129,8 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
         binding.logValue.text?.clear()
 
         if (!InputValidator.isValidNumber(requireContext(),input)) return //Return if not valid input
+
+        validateInputPopUp(input)
 
         sharedViewModel.addNewLogItem(input, date)
 
@@ -257,5 +261,24 @@ class AddLogItemFragment : Fragment(), CategoryRecyclerviewHandler {
             override fun onPartialResults(p0: Bundle?) {}
             override fun onEvent(p0: Int, p1: Bundle?) {}
         })
+    }
+
+    fun validateInputPopUp(input: String) {
+        var numeric = true
+        var inputAsFloat : Float? = null
+        try {
+            val num = parseFloat(input)
+            inputAsFloat = num
+        } catch (e: NumberFormatException) {
+            numeric = false
+        }
+
+
+        if (inputAsFloat != null && numeric && InputValidator.isUnlikelyNumber(sharedViewModel.retrieveCategoryItems(), inputAsFloat)) {
+            val intent = Intent(context, ValidateInputPopUpFragment::class.java)
+            intent.putExtra("popuptitle", "Error")
+            intent.putExtra("darkstatusbar", false)
+            startActivity(intent)
+        }
     }
 }

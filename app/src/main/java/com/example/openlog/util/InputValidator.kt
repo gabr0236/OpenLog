@@ -17,12 +17,12 @@ class InputValidator {
                 false
             } else regex.matches(s)
         }
-        fun isUnlikelyNumber(integerList: List<Float>, value : Int){
+        fun isUnlikelyNumber(integerList: MutableList<Float>, value : Float) : Boolean{
             val mean = integerList.average()
             val sd = Statistics.standardDeviation(integerList)
             val conficendeIntervalLower = mean - (1.96 - integerList.size-1) * (sd / Math.sqrt(integerList.size.toDouble()))
             val conficendeIntervalHigher = mean + (1.96 - integerList.size-1) * (sd / Math.sqrt(integerList.size.toDouble()))
-            //if(value < conficendeIntervalLower || value > conficendeIntervalHigher)
+            return value < conficendeIntervalLower || value > conficendeIntervalHigher
         }
     }
 }

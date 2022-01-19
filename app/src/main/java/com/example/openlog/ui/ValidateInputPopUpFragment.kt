@@ -9,14 +9,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
+import androidx.fragment.app.activityViewModels
+import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.databinding.FragmentEditLogBinding
 import com.example.openlog.databinding.FragmentValidateInputPopUpBinding
+import com.example.openlog.viewmodel.SharedViewModel
+import com.example.openlog.viewmodel.SharedViewModelFactory
 
 class ValidateInputPopUpFragment : Fragment() {
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        val db = (activity?.application as LogItemApplication).database
+
+        SharedViewModelFactory(
+            db.logItemDao(),
+            db.logCategoryDao()
+        )
+    }
 
     private var _binding: FragmentValidateInputPopUpBinding? = null
     private val binding get() = _binding!!
+
+    private var popupTitle = ""
 
 
     override fun onCreateView(
@@ -30,6 +44,8 @@ class ValidateInputPopUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //binding.popupWindowTitle.setText("Du skrev:" + sharedViewModel.latestValue)
 
         val alpha = 100 //between 0-255
         val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
