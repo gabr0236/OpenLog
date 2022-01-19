@@ -215,4 +215,5 @@ class AddLogItemFragment : DuplicateMethods(), CategoryRecyclerviewHandler {
             override fun onEvent(p0: Int, p1: Bundle?) {}
         })
     }
+
 }
