@@ -1,15 +1,18 @@
 package com.example.openlog.util
 
-import android.widget.Toast
 import android.app.Activity
-import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.openlog.R
 
-fun Toast.showCustomToast(message: String, imageResourceId: Int, durationShort: Boolean, activity: Activity)
-{
-    val layout = activity.layoutInflater.inflate (
+fun Toast.showCustomToast(
+    message: String,
+    imageResourceId: Int,
+    durationShort: Boolean,
+    activity: Activity
+) {
+    val layout = activity.layoutInflater.inflate(
         R.layout.toast_custom,
         activity.findViewById(R.id.cardview_toast)
     )

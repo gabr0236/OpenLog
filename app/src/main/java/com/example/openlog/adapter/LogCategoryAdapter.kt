@@ -72,12 +72,19 @@ class LogCategoryAdapter(
                 true
             }
             logCategoryContainer.isChecked = logCategory.isSelected
-            categoryEmoji.setImageDrawable(itemView.context.getDrawable(EmojiRetriever.getEmojiIDOf(logCategory.emojiId)))
+            categoryEmoji.setImageDrawable(
+                itemView.context.getDrawable(
+                    EmojiRetriever.getEmojiIDOf(
+                        logCategory.emojiId
+                    )
+                )
+            )
         }
     }
 
     inner class ButtonViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val addCategoryCardView: MaterialCardView = view.findViewById(R.id.cardview_create_category)
+        private val addCategoryCardView: MaterialCardView =
+            view.findViewById(R.id.cardview_create_category)
 
         fun bind(categoryRecyclerviewHandler: CategoryRecyclerviewHandler) {
             addCategoryCardView.setOnClickListener {

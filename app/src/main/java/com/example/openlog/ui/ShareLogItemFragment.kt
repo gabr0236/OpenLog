@@ -61,15 +61,14 @@ class ShareLogItemFragment : Fragment() {
         val dir = File(context?.filesDir, "mydir")
         if (!dir.exists()) {
             dir.mkdir()
-        }
-        else dir.delete()
+        } else dir.delete()
         Log.d("FILE", "Path of mydir: ${dir.absolutePath}")
 
 
         //Skriv fil til internal storage
         try {
             val gpxfile = File(dir, "OpenLog.csv")
-            
+
             sharedViewModel.exportToCSV(gpxfile)
 
             Log.d("FILE", "Path of OpenLog.csv: ${gpxfile.absolutePath}")
@@ -79,7 +78,7 @@ class ShareLogItemFragment : Fragment() {
             e.printStackTrace()
         }
 
-        val filePath= File(context?.filesDir, "mydir")
+        val filePath = File(context?.filesDir, "mydir")
         Log.d("FILE", "Path of filePath (should be same as mydir): ${dir.absolutePath}")
 
         val newFile = File(filePath, "OpenLog.csv")
@@ -91,7 +90,8 @@ class ShareLogItemFragment : Fragment() {
         val fileURI = FileProvider.getUriForFile(
             context!!,
             context?.packageName + ".provider",
-            newFile)
+            newFile
+        )
 
         if (Uri.EMPTY.equals(fileURI)) throw IllegalArgumentException("Uri not found")
 

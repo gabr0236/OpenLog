@@ -56,8 +56,9 @@ class CreateCategoryFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        emojiArrayAdapter = context?.let { EmojiArrayAdapter(it, EmojiRetriever.getEmojiIdIndexes()) }
-        binding.spinnerEmojis.adapter=emojiArrayAdapter
+        emojiArrayAdapter =
+            context?.let { EmojiArrayAdapter(it, EmojiRetriever.getEmojiIdIndexes()) }
+        binding.spinnerEmojis.adapter = emojiArrayAdapter
     }
 
     override fun onDestroyView() {
@@ -79,12 +80,26 @@ class CreateCategoryFragment : Fragment() {
         if (sharedViewModel.allLogCategories.value?.any { lc -> lc.name == name.toString() } == true) {
             name.clear()
             unit.clear()
-            Toast(context).showCustomToast(getString(R.string.category_exists), R.drawable.emoji_x, true, requireActivity())
+            Toast(context).showCustomToast(
+                getString(R.string.category_exists),
+                R.drawable.emoji_x,
+                true,
+                requireActivity()
+            )
             return
         }
-        sharedViewModel.createCategory(name.toString(), unit.toString(), binding.spinnerEmojis.selectedItem.toString().toInt())
+        sharedViewModel.createCategory(
+            name.toString(),
+            unit.toString(),
+            binding.spinnerEmojis.selectedItem.toString().toInt()
+        )
 
-        Toast(context).showCustomToast(getString(R.string.category_has_been_created), R.drawable.emoji_checkmark, true, requireActivity())
+        Toast(context).showCustomToast(
+            getString(R.string.category_has_been_created),
+            R.drawable.emoji_checkmark,
+            true,
+            requireActivity()
+        )
 
         findNavController().popBackStack()
     }

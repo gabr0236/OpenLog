@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -12,15 +13,15 @@
             android:id="@+id/log_category_container"
             android:layout_width="100dp"
             android:layout_height="120dp"
-            app:cardUseCompatPadding="true"
-            tools:ignore="MissingConstraints"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:checkable="true"
             android:clickable="true"
             android:focusable="true"
-            android:checkable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardUseCompatPadding="true"
+            app:rippleColor="@color/pink_200"
             app:strokeColor="@color/border_gray"
             app:strokeWidth="1dp"
-            app:rippleColor="@color/pink_200">
+            tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -31,9 +32,9 @@
                     android:id="@+id/imageview_emoji"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:layout_constraintBottom_toTopOf="@+id/log_category_name"
                     android:layout_marginTop="8dp"
                     android:paddingRight="1dp"
+                    app:layout_constraintBottom_toTopOf="@+id/log_category_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

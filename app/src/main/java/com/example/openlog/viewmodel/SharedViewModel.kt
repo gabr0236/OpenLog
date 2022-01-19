@@ -1,8 +1,9 @@
-
 package com.example.openlog.viewmodel
 
 import androidx.lifecycle.*
-import androidx.paging.*
+import androidx.paging.ItemSnapshotList
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.example.openlog.data.dao.LogCategoryDao
 import com.example.openlog.data.dao.LogItemDao
 import com.example.openlog.data.entity.LogCategory
@@ -11,7 +12,8 @@ import com.example.openlog.data.entity.LogItem
 import com.example.openlog.util.Statistics
 import com.example.openlog.util.Statistics.Companion.round
 import kotlinx.coroutines.launch
-import java.io.*
+import java.io.File
+import java.io.FileWriter
 import java.util.*
 
 class SharedViewModel(
@@ -19,12 +21,15 @@ class SharedViewModel(
     private val logCategoryDao: LogCategoryDao
 ) : ViewModel() {
 
-    val allLogCategories: LiveData<List<LogCategory>> = logCategoryDao.getLogCategories().asLiveData()
-    val logItems = Pager(PagingConfig(
-        pageSize = 30,
-        enablePlaceholders = true,
-        maxSize = 120,
-    )){
+    val allLogCategories: LiveData<List<LogCategory>> =
+        logCategoryDao.getLogCategories().asLiveData()
+    val logItems = Pager(
+        PagingConfig(
+            pageSize = 30,
+            enablePlaceholders = true,
+            maxSize = 120,
+        )
+    ) {
         logItemDao.getLogsByCategoryPaged(selectedCategory.value?.name)
     }.flow
 
@@ -41,13 +46,13 @@ class SharedViewModel(
 
     //Snapshot is set in PreviousLogsFragment after the and during when
     // the LogItemPagingAdapter is being populated and updated
-    fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>){
-         lastSnapshotLogItems = logItems
+    fun setLastSnapshotLogItems(logItems: ItemSnapshotList<LogItem>) {
+        lastSnapshotLogItems = logItems
     }
 
     fun setSelectedLogItemToEdit(logItem: LogItem?) {
-        logItem?: return
-        _selectedLogItemToEdit.value = logItem!!
+        logItem ?: return
+        _selectedLogItemToEdit.value = logItem
     }
 
     /**
@@ -132,7 +137,7 @@ class SharedViewModel(
     /**
      * Translates database into csv format and writes this in the file given as param
      */
-    fun exportToCSV(file : File) {
+    fun exportToCSV(file: File) {
         val SEPERATOR = ","
 
         val fileWriter = FileWriter(file)
@@ -152,7 +157,7 @@ class SharedViewModel(
 
         retrieveAllItemsAndCategories().forEach { category ->
 // writes category/log values in file
-            category.logItems.forEach{ log ->
+            category.logItems.forEach { log ->
                 fileWriter.append(category.logCategory.name)
                 fileWriter.append(SEPERATOR)
                 fileWriter.append(category.logCategory.unit)
@@ -163,7 +168,7 @@ class SharedViewModel(
                 fileWriter.append(SEPERATOR)
                 fileWriter.append(log.date.toString())
                 fileWriter.appendLine()
-         }
+            }
             fileWriter.appendLine()
         }
         fileWriter.flush()
@@ -204,7 +209,7 @@ class SharedViewModel(
         }
     }
 
-    fun deleteCategory(logCategory: LogCategory){
+    fun deleteCategory(logCategory: LogCategory) {
         viewModelScope.launch {
             logCategoryDao.delete(logCategory)
             logItemDao.deleteLogsFrom(logCategory.name)

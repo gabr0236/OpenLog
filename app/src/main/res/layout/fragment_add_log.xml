@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context="com.example.openlog.ui.AddLogItemFragment"
-    android:background="?colorOnPrimary">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?colorOnPrimary"
+    tools:context="com.example.openlog.ui.AddLogItemFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.openlog.viewmodel.SharedViewModel" />
@@ -14,6 +15,7 @@
         <variable
             name="addLogItemFragment"
             type="com.example.openlog.ui.AddLogItemFragment" />
+
         <variable
             name="duplicateMethods"
             type="com.example.openlog.ui.DuplicateMethods" />
@@ -74,19 +76,19 @@
             <ImageView
                 android:id="@+id/button_microphone"
                 android:layout_width="35dp"
-                android:layout_marginTop="30dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:backgroundTint="#F9F8FA"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
+                android:backgroundTint="#F9F8FA"
                 android:src="@drawable/ic_baseline_mic_24" />
         </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:paddingHorizontal="16dp"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativelayout_textinput">
@@ -95,10 +97,10 @@
                 android:id="@+id/text_date"
                 android:layout_width="237dp"
                 android:layout_height="50dp"
-                android:gravity="center"
-                android:text="@string/today"
-
                 android:fontFamily="@font/redhatdisplay_regular"
+                android:gravity="center"
+
+                android:text="@string/today"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_edit_date"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,12 +110,12 @@
                 android:id="@+id/button_edit_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/change_date"
                 android:fontFamily="@font/redhatdisplay_semibold"
+                android:text="@string/change_date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/Rounded"/>
+                app:shapeAppearance="@style/Rounded" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -122,12 +124,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:enabled="true"
+            android:fontFamily="@font/redhatdisplay_semibold"
             android:gravity="center"
             android:onClick="@{() -> addLogItemFragment.addNewLogItem()}"
             android:text="@string/log"
-            android:textAllCaps="true"
             android:textAlignment="center"
-            android:fontFamily="@font/redhatdisplay_semibold"
+            android:textAllCaps="true"
             app:icon="@drawable/ic_log_item_create"
             app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="parent"

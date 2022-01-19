@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -11,15 +11,15 @@
             android:id="@+id/cardview_create_category"
             android:layout_width="100dp"
             android:layout_height="120dp"
-            app:cardUseCompatPadding="true"
-            tools:ignore="MissingConstraints"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:checkable="true"
             android:clickable="true"
             android:focusable="true"
-            android:checkable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/very_light_gray"
+            app:cardUseCompatPadding="true"
             app:strokeColor="@color/border_gray"
-            app:strokeWidth="1dp">
+            app:strokeWidth="1dp"
+            tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

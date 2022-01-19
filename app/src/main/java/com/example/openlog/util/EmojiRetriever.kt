@@ -1,11 +1,12 @@
 package com.example.openlog.util
+
 import com.example.openlog.R
 
 
 class EmojiRetriever {
     companion object {
-        fun getEmojiIDOf(emojiId: Int): Int{
-            return when(emojiId){
+        fun getEmojiIDOf(emojiId: Int): Int {
+            return when (emojiId) {
                 1 -> emojiArray[0]
                 2 -> emojiArray[1]
                 3 -> emojiArray[2]
@@ -65,7 +66,7 @@ class EmojiRetriever {
 
         fun getEmojiIdIndexes(): Array<Int?> {
             val arr = arrayOfNulls<Int>(emojiArray.size)
-            for(i in 1..arr.size) arr[i-1]=i
+            for (i in 1..arr.size) arr[i - 1] = i
             return arr
         }
     }

@@ -18,12 +18,14 @@ import com.example.openlog.ui.OnItemClickListenerLogItem
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.EmojiRetriever
 
-class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
-                           private val selectedCategory: LiveData<LogCategory>
-): PagingDataAdapter<LogItem, LogItemPagingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
+class LogItemPagingAdapter(
+    private val onItemClickListenerLogItem: OnItemClickListenerLogItem,
+    private val selectedCategory: LiveData<LogCategory>
+) : PagingDataAdapter<LogItem, LogItemPagingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
-    inner class ItemViewHolder(itemView: View
-    ) : RecyclerView.ViewHolder(itemView){
+    inner class ItemViewHolder(
+        itemView: View
+    ) : RecyclerView.ViewHolder(itemView) {
         private val logItemValue: TextView = itemView.findViewById(R.id.log_item_value)
         private val logItemDate: TextView = itemView.findViewById(R.id.log_item_date)
         private val editAction: Button = itemView.findViewById(R.id.edit_action)
@@ -49,15 +51,22 @@ class LogItemPagingAdapter(private val onItemClickListenerLogItem: OnItemClickLi
         holder.bind(current, onItemClickListenerLogItem)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogItemPagingAdapter.ItemViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): LogItemPagingAdapter.ItemViewHolder {
         Log.d("TEST", "CREATE VIEWHOLDER PAGING ADAPTER")
-        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false))
+        return ItemViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_log_item, parent, false)
+        )
     }
 
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>(){
-            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) = (oldItem.date == newItem.date && oldItem.id == newItem.id)
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LogItem>() {
+            override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem) =
+                (oldItem.date == newItem.date && oldItem.id == newItem.id)
+
             override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem) = oldItem == newItem
         }
     }

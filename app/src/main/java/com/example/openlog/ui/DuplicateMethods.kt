@@ -1,6 +1,5 @@
 package com.example.openlog.ui
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -13,12 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.openlog.LogItemApplication
 import com.example.openlog.R
 import com.example.openlog.data.entity.LogCategory
-import com.example.openlog.databinding.FragmentAddLogBinding
 import com.example.openlog.util.DateTimeFormatter
 import com.example.openlog.util.showCustomToast
 import com.example.openlog.viewmodel.SharedViewModel
 import com.example.openlog.viewmodel.SharedViewModelFactory
-import org.w3c.dom.Text
 import java.util.*
 
 abstract class DuplicateMethods : Fragment() {
@@ -33,7 +30,7 @@ abstract class DuplicateMethods : Fragment() {
 
     private var date: Date? = null
 
-    fun setDate(newDate: Date?){
+    fun setDate(newDate: Date?) {
         date = newDate
     }
 
@@ -41,7 +38,7 @@ abstract class DuplicateMethods : Fragment() {
         return date
     }
 
-    fun onCreateCategoryClicked(){
+    fun onCreateCategoryClicked() {
         findNavController().navigate(R.id.create_category_fragment)
     }
 
@@ -52,7 +49,7 @@ abstract class DuplicateMethods : Fragment() {
             .setIcon(R.drawable.emoji_warning)
             .setPositiveButton(
                 android.R.string.yes
-            ) { _ , _ ->
+            ) { _, _ ->
                 //If yes is selected
                 //Ask for confirmation
                 AlertDialog.Builder(context)
@@ -61,9 +58,14 @@ abstract class DuplicateMethods : Fragment() {
                     .setIcon(R.drawable.emoji_warning)
                     .setPositiveButton(
                         android.R.string.yes
-                    ) { _ , _ ->
+                    ) { _, _ ->
                         //If yes is selected
-                        Toast(context).showCustomToast(getString(R.string.category_deleted), R.drawable.emoji_checkmark, true, requireActivity())
+                        Toast(context).showCustomToast(
+                            getString(R.string.category_deleted),
+                            R.drawable.emoji_checkmark,
+                            true,
+                            requireActivity()
+                        )
                         sharedViewModel.deleteCategory(logCategory)
                     }
                     .setNegativeButton(android.R.string.no, null)
