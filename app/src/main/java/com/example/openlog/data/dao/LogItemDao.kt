@@ -25,4 +25,7 @@ interface LogItemDao {
 
     @Query("SELECT * FROM log_item WHERE log_category_owner_name = :categoryName ORDER BY log_item_date ASC")
     fun getLogsByCategoryPaged(categoryName: String?): PagingSource<Int,LogItem>
+
+    @Query("DELETE FROM log_item WHERE log_category_owner_name = :categoryName")
+    fun deleteLogsFrom(categoryName: String)
 }
