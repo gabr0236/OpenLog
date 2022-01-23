@@ -1,5 +1,5 @@
 # OpenLog
-This is an app for loggin medical and other data.
+This is an app for logging medical and other data.
 
 ## Getting started
 Just download the repo and run from the main branch.
@@ -8,7 +8,7 @@ Just download the repo and run from the main branch.
 
 #### Add log
 
-Starting from the home screen the user is able to select a category for witch to add a log.
+Starting from the home screen, the user is able to select a category for which to add a log.
 
 <img src="https://github.com/gabr0236/OpenLog/blob/the_big_merge/readmeImages/addlog.png" width="200">
 
@@ -16,8 +16,8 @@ Starting from the home screen the user is able to select a category for witch to
 
 #### Review log data
 
-When the user has added any log, the log will be availeble on the "Previous Logs" screen.
-Here the user will be able to view a graph of any log category. 
+When the user has added any log, the log will be available on the "Previous Logs" screen.
+Here, the user will be able to view a graph of any log category. 
 The user can also select a log to edit or delete.
 
 <img src="https://github.com/gabr0236/OpenLog/blob/the_big_merge/readmeImages/prevlogs.png" width="200">
@@ -26,7 +26,7 @@ The user can also select a log to edit or delete.
 
 #### Create category
 
-If no log category exists for the thing the user needs logged, the user can simply create a user-defined category by pressing the "Create Category" button.
+If no log category exists for the thing the user needs to log, the user can simply create a user-defined category by pressing the "Create Category" button.
 This button navigates the user to a screen where the user can select name, unit and emoji for the new category.
 
 <img src="https://github.com/gabr0236/OpenLog/blob/the_big_merge/readmeImages/addcategory.png" width="200">
@@ -35,7 +35,7 @@ This button navigates the user to a screen where the user can select name, unit 
 
 #### Share log data
 
-Lastly the user is able to send all data via email or other as a csv-file
+Lastly, the user is able to send all data via email or other as a csv-file
 
 <img src="https://github.com/gabr0236/OpenLog/blob/the_big_merge/readmeImages/sharelogs.png" width="200">
 
@@ -45,10 +45,10 @@ Lastly the user is able to send all data via email or other as a csv-file
 
 - Speech to text
 - Datetimepicker for selecting date
-- Edit log; Change category, datetime, logvalue
-- Many diffrent emojis to chose from when creating new category
+- Edit log; Change category, datetime, log value
+- Many different emojis to chose from when creating new category
 - Darkmode
-- Localization; App works in both english and danish depending on location
+- Localization; App works in both English and Danish depending on location
 
 ## Built with
 - Kotlin
@@ -63,6 +63,5 @@ Lastly the user is able to send all data via email or other as a csv-file
 - Tobias S205358:              https://github.com/s205358
 - Rohan Khalid S205352:        https://github.com/s205352
 - Mohamud Yusuf S205352
-
 
 
