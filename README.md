@@ -41,7 +41,7 @@ Lastly, the user is able to send all data via email or other as a csv-file
 
 ***
 
-#### Other features
+### Other features
 
 - Speech to text
 - Datetimepicker for selecting date
